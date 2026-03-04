@@ -159,8 +159,8 @@ const handleLogin = async () => {
 .blob {
   position: absolute;
   border-radius: 50%;
-  filter: blur(90px);
-  opacity: 0.6;
+  filter: blur(100px);
+  opacity: 0.60;
   /* anchor point at centre of screen */
   top: 50%;
   left: 50%;
@@ -243,15 +243,13 @@ const handleLogin = async () => {
   z-index: 10;
   width: 100%;
   max-width: 400px;
-  background: rgba(255, 255, 255, 0.07);
-  backdrop-filter: blur(24px) saturate(1.8);
-  -webkit-backdrop-filter: blur(24px) saturate(1.8);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(10, 8, 30, 0.45);
+  backdrop-filter: blur(64px) saturate(1.4) brightness(0.9);
+  -webkit-backdrop-filter: blur(64px) saturate(1.4) brightness(0.9);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 1.5rem;
   padding: 2.5rem 2rem;
-  box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.4),
-    0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1) inset;
 }
 
 /* ── Logo ── */

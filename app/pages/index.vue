@@ -78,11 +78,12 @@
     </section>
 
     <!-- ==================== TECH STACK ==================== -->
-    <SectionWrapper
-      title="Tech"
-      highlight=" Stack"
-      subtitle="Technologies and tools I work with."
-    >
+    <section id="techstack">
+      <SectionWrapper
+        title="Tech"
+        highlight=" Stack"
+        subtitle="Technologies and tools I work with."
+      >
       <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
         <ScrollReveal
           v-for="(category, i) in techStack"
@@ -115,7 +116,8 @@
           </div>
         </ScrollReveal>
       </div>
-    </SectionWrapper>
+      </SectionWrapper>
+    </section>
 
     <!-- ==================== ABOUT ==================== -->
     <section id="about">

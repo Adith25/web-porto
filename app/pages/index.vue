@@ -18,27 +18,39 @@
 
       <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div class="max-w-3xl">
-          <p class="text-accent font-mono text-sm mb-4 animate-fade-in">
+          <p 
+            class="text-accent font-mono text-sm mb-4"
+            v-motion
+            :initial="{ opacity: 0, y: 20 }"
+            :enter="{ opacity: 1, y: 0, transition: { type: 'spring', stiffness: 250, damping: 25 } }"
+          >
             Hello, I'm
           </p>
 
           <h1
-            class="text-4xl sm:text-6xl lg:text-7xl font-bold text-white mb-4 animate-fade-up"
+            class="text-4xl sm:text-6xl lg:text-7xl font-bold text-white mb-4"
+            v-motion
+            :initial="{ opacity: 0, y: 30 }"
+            :enter="{ opacity: 1, y: 0, transition: { type: 'spring', stiffness: 250, damping: 25, delay: 100 } }"
           >
             Muhammad Aditya
             <span class="block gradient-text">Yufnanda</span>
           </h1>
 
           <h2
-            class="text-xl sm:text-2xl font-medium text-gray-300 mb-6 animate-fade-up"
-            style="animation-delay: 0.1s"
+            class="text-xl sm:text-2xl font-medium text-gray-300 mb-6"
+            v-motion
+            :initial="{ opacity: 0, y: 30 }"
+            :enter="{ opacity: 1, y: 0, transition: { type: 'spring', stiffness: 250, damping: 25, delay: 200 } }"
           >
-            Fullstack &amp; Machine Learning Engineer
+            Software Developer &amp; Machine Learning Engineer
           </h2>
 
           <p
-            class="text-gray-400 text-lg max-w-xl mb-10 leading-relaxed animate-fade-up"
-            style="animation-delay: 0.2s"
+            class="text-gray-400 text-lg max-w-xl mb-10 leading-relaxed"
+            v-motion
+            :initial="{ opacity: 0, y: 30 }"
+            :enter="{ opacity: 1, y: 0, transition: { type: 'spring', stiffness: 250, damping: 25, delay: 300 } }"
           >
             Building intelligent systems with AI, Mobile, and IoT technologies.
             Passionate about creating solutions that bridge software and
@@ -46,8 +58,10 @@
           </p>
 
           <div
-            class="flex flex-wrap gap-4 animate-fade-up"
-            style="animation-delay: 0.3s"
+            class="flex flex-wrap gap-4"
+            v-motion
+            :initial="{ opacity: 0, y: 30 }"
+            :enter="{ opacity: 1, y: 0, transition: { type: 'spring', stiffness: 250, damping: 25, delay: 400 } }"
           >
             <a
               href="#projects"
@@ -116,6 +130,11 @@
           </div>
         </ScrollReveal>
       </div>
+
+      <!-- Scroll velocity logo strip -->
+      <div class="mt-10">
+        <ScrollVelocity />
+      </div>
       </SectionWrapper>
     </section>
 
@@ -133,29 +152,15 @@
               <h3 class="text-xl font-semibold text-white mb-4">Who I Am</h3>
               <div class="space-y-4 text-gray-400 leading-relaxed">
                 <p>
-                  I'm
-                  <strong class="text-white">Muhammad Aditya Yufnanda</strong>,
-                  a Computer Engineering graduate with a deep interest in
-                  building intelligent systems. My work spans across
-                  <span class="text-accent-light">Machine Learning</span>,
-                  <span class="text-violet-light">Mobile Development</span>, and
-                  <span class="text-emerald-400">IoT Systems</span>.
+                  I'm <strong class="text-white">Muhammad Aditya Yufnanda</strong>,
+                  a <span class="text-accent-light">Software Engineer</span> based in Surabaya, Indonesia. 
+                  My expertise spans across scalable <span class="text-violet-light">Web Development</span> and <span class="text-emerald-400">Cloud Computing</span> architectures.
                 </p>
                 <p>
-                  My ML research focused on
-                  <strong class="text-white"
-                    >dental caries classification</strong
-                  >
-                  using Feature Pyramid Network (FPN) architecture, aiming to
-                  improve segmentation and classification performance in dental
-                  imaging.
-                </p>
-                <p>
-                  Beyond ML, I've built IoT systems like
-                  <strong class="text-white">LeakGuard</strong> — an irrigation
-                  leak detection system — and
-                  <strong class="text-white">WudhuCycle</strong>, a greywater
-                  reuse system with Flutter mobile app integration.
+                  I have hands-on experience utilizing modern technology stacks and a solid foundation in cloud infrastructure. 
+                  Recently, I expanded my skills through intensive programs at 
+                  <strong class="text-white">Bangkit Academy (Cloud Computing)</strong> and 
+                  <strong class="text-white">Dicoding Indonesia (Front-End Web)</strong>.
                 </p>
               </div>
             </div>
@@ -186,10 +191,10 @@
                   Education
                 </h3>
                 <div>
-                  <p class="font-medium text-white">Computer Engineering</p>
-                  <p class="text-sm text-gray-400 mt-1">Bachelor's Degree</p>
+                  <p class="font-medium text-white">Universitas Trunojoyo Madura</p>
+                  <p class="text-sm text-gray-400 mt-1">Bachelor of Engineering (B.E.)</p>
                   <p class="text-xs text-gray-500 mt-1 font-mono">
-                    Focus: AI &amp; Embedded Systems
+                    Computer Engineering (2020 - 2024)
                   </p>
                 </div>
               </div>
@@ -362,6 +367,41 @@
       </SectionWrapper>
     </section>
 
+    <!-- ==================== CERTIFICATIONS ==================== -->
+    <section id="certifications">
+      <SectionWrapper
+        title="My"
+        highlight=" Certifications"
+        subtitle="Continuous learning and professional development."
+      >
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <ScrollReveal
+            v-for="(cert, i) in displayedCertificates"
+            :key="cert.title + i"
+            animation="fade-up"
+          >
+            <CertificateCard
+              :title="cert.title"
+              :description="cert.description"
+              :image="cert.image"
+              :credential-url="cert.credentialUrl"
+              @select="selectedCert = cert"
+            />
+          </ScrollReveal>
+        </div>
+
+        <div v-if="certificates.length > 6" class="mt-8 text-center" v-motion :initial="{ opacity: 0 }" :visible-once="{ opacity: 1 }">
+          <button 
+            @click="showAllCertificates = !showAllCertificates"
+            class="btn-outline inline-flex items-center gap-2"
+          >
+            {{ showAllCertificates ? 'Show Less' : `Show All (${certificates.length})` }}
+            <Icon :name="showAllCertificates ? 'mdi:chevron-up' : 'mdi:chevron-down'" class="w-5 h-5" />
+          </button>
+        </div>
+      </SectionWrapper>
+    </section>
+
     <!-- ==================== CONTACT ==================== -->
     <section id="contact">
       <SectionWrapper
@@ -443,16 +483,26 @@
       </SectionWrapper>
     </section>
   </div>
+
+  <!-- Certificate Modal -->
+  <CertificateModal :cert="selectedCert" @close="selectedCert = null" />
 </template>
 
 <script setup lang="ts">
 useHead({
-  title: "Adith — Fullstack & Machine Learning Engineer",
+  title: "Adith — Software Developer & Machine Learning Engineer",
 });
 
 const scrollTo = (id: string) => {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 };
+
+const selectedCert = ref<{
+  title: string;
+  description?: string;
+  image?: string;
+  credentialUrl?: string;
+} | null>(null);
 
 // ─── Data ───────────────────────────────────
 const techStack = [
@@ -571,68 +621,130 @@ const projects = [
 
 const experiences = [
   {
-    role: "IT Development Intern",
-    company: "Technology Company",
-    period: "2024 — 2025",
+    role: "Cloud Computing Learning Path",
+    company: "Bangkit Academy led by Google, Tokopedia, Gojek, & Traveloka",
+    period: "Feb 2024 — Jul 2024",
     description:
-      "Contributed to IT development projects involving web and mobile platforms. Worked collaboratively within a development team using agile methodologies.",
+      "Intensive cloud computing program focusing on Google Cloud Platform, backend APIs, and modern deployment architectures.",
     highlights: [
-      "Developed and maintained internal web applications using modern frameworks",
-      "Collaborated with senior developers on feature design and code reviews",
-      "Integrated REST APIs and ensured data consistency across platforms",
-      "Utilized Git for version control and collaborative development workflows",
-      "Participated in sprint planning and daily standups",
+      "Designed and deployed scalable cloud infrastructure on GCP",
+      "Developed robust backend services for team capstone projects",
+      "Achieved AWS Certified Cloud Practitioner certification",
+      "Collaborated in a multidisciplinary team simulating a tech industry environment"
     ],
-    tech: ["TypeScript", "NestJS", "Flutter", "MySQL", "Git"],
+    tech: ["Google Cloud Platform", "Node.js", "Docker", "REST API", "Cloud Shell"],
   },
   {
-    role: "ML Research — Dental Caries Classification",
-    company: "University Research Project",
-    period: "2024",
+    role: "Front-End Web Developer Learning Path",
+    company: "Dicoding Indonesia",
+    period: "Aug 2023 — Jan 2024",
     description:
-      "Conducted research on dental caries classification using deep learning approaches with Feature Pyramid Network architecture.",
+      "Comprehensive frontend development training covering fundamental to advanced web technologies and progressive web apps.",
     highlights: [
-      "Designed and trained FPN-based segmentation models for dental imagery",
-      "Preprocessed and augmented dental X-ray datasets for improved model generalization",
-      "Evaluated model performance using precision, recall, and IoU metrics",
-      "Documented findings and methodology for academic publication",
+      "Built responsive and accessible web applications using modern HTML/css and JavaScript",
+      "Implemented Progressive Web Apps (PWA) features including service workers and offline caching",
+      "Integrated REST APIs asynchronously to display dynamic content",
+      "Earned 'Belajar Dasar Pemrograman Web' certification"
     ],
-    tech: ["Python", "TensorFlow", "OpenCV", "NumPy", "Matplotlib"],
+    tech: ["HTML5/CSS3", "JavaScript (ES6+)", "PWA", "Webpack", "Web Accessibility"],
   },
   {
-    role: "IoT Systems Developer",
-    company: "Academic Projects",
-    period: "2023 — 2024",
+    role: "Web Developer Intern",
+    company: "PT. Telkom Indonesia (Persero) Tbk",
+    period: "Jul 2022 — Sep 2022",
     description:
-      "Designed and built multiple IoT systems addressing real-world challenges in water management and sustainability.",
+      "Assisted the development team in designing and implementing web-based internal tools and dashboards.",
     highlights: [
-      "Built LeakGuard — an IoT-based irrigation leak detection system (SDG 6.4)",
-      "Developed WudhuCycle — a greywater reuse system with Flutter mobile integration",
-      "Programmed Arduino microcontrollers with multiple sensors and actuators",
-      "Created mobile dashboards for real-time monitoring and control",
+      "Contributed to the frontend development of internal reporting dashboards",
+      "Collaborated with senior engineers to optimize web performance and UI/UX",
+      "Participated in code reviews and agile development cadences",
     ],
-    tech: ["Arduino", "Flutter", "Sensors", "IoT", "Dart"],
+    tech: ["Web Development", "UI/UX", "JavaScript", "Git"],
   },
 ];
+
+const showAllCertificates = ref(false);
+
+const certificates = [
+  {
+    title: "AWS Certified Cloud Practitioner",
+    description: "Validates technical expertise in designing and deploying scalable systems on Amazon Web Services.",
+    image: "",
+    credentialUrl: "#",
+  },
+  {
+    title: "Belajar Dasar Pemrograman Web",
+    description: "Foundational web development course covering HTML, CSS, and modern JavaScript.",
+    image: "",
+    credentialUrl: "#",
+  },
+  {
+    title: "Belajar Membuat Aplikasi Back-End untuk Pemula",
+    description: "Back-end development fundamentals using Node.js and REST APIs on Dicoding Indonesia.",
+    image: "",
+    credentialUrl: "#",
+  },
+  {
+    title: "Belajar Dasar Pemrograman JavaScript",
+    description: "Core JavaScript programming including ES6+ features, async programming, and DOM manipulation.",
+    image: "",
+    credentialUrl: "#",
+  },
+  {
+    title: "Cloud Computing Learning Path",
+    description: "Intensive program by Bangkit Academy focused on Google Cloud Platform, backend services, and modern cloud architectures.",
+    image: "",
+    credentialUrl: "#",
+  },
+  {
+    title: "Front-End Web Developer Learning Path",
+    description: "Comprehensive frontend path covering HTML5, CSS3, JavaScript, PWA, and web accessibility.",
+    image: "",
+    credentialUrl: "#",
+  },
+  {
+    title: "Machine Learning Foundations",
+    description: "Introductory machine learning concepts including supervised/unsupervised learning and model evaluation.",
+    image: "",
+    credentialUrl: "#",
+  },
+  {
+    title: "Flutter Development Bootcamp",
+    description: "End-to-end Flutter development including state management, Firebase integration, and publishing to app stores.",
+    image: "",
+    credentialUrl: "#",
+  },
+  // Add more certificates here — they will be hidden behind the "Show All" toggle.
+];
+
+const displayedCertificates = computed(() => {
+  return showAllCertificates.value ? certificates : certificates.slice(0, 6);
+});
 
 const contactInfo = [
   {
     label: "Email",
-    value: "adith@example.com",
+    value: "adityayufnanda25@gmail.com",
     icon: "mdi:email-outline",
-    url: "mailto:adith@example.com",
+    url: "mailto:adityayufnanda25@gmail.com",
   },
   {
     label: "LinkedIn",
-    value: "linkedin.com/in/adith",
+    value: "adityayufnanda",
     icon: "mdi:linkedin",
-    url: "https://linkedin.com/in/",
+    url: "https://www.linkedin.com/in/adityayufnanda/",
   },
   {
     label: "GitHub",
-    value: "github.com/adith",
+    value: "Adith25",
     icon: "mdi:github",
-    url: "https://github.com/",
+    url: "https://github.com/Adith25",
+  },
+  {
+    label: "Instagram",
+    value: "@adityayufnanda",
+    icon: "mdi:instagram",
+    url: "https://instagram.com/adityayufnanda",
   },
 ];
 </script>

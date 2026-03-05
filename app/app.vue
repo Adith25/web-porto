@@ -1,4 +1,5 @@
 <template>
+  <ParticlesBackground />
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>

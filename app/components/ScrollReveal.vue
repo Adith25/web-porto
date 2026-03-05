@@ -1,10 +1,12 @@
 <template>
-  <div ref="el" :class="classes" :style="delayStyle">
+  <div v-motion :initial="initialState" :visible-once="visibleState">
     <slot />
   </div>
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
+
 const props = withDefaults(
   defineProps<{
     animation?: "fade-up" | "fade-in" | "fade-left" | "fade-right" | "scale";
@@ -18,19 +20,30 @@ const props = withDefaults(
   },
 );
 
-const el = ref<HTMLElement | null>(null);
-const { observe } = useScrollAnimation();
-
-const classes = computed(() => ["scroll-reveal", `scroll-${props.animation}`]);
-
-const delayStyle = computed(() => ({
-  "--sr-delay": `${props.delay}ms`,
-  "--sr-duration": `${props.duration}ms`,
-}));
-
-onMounted(() => {
-  if (el.value) {
-    observe(el.value);
+const initialState = computed(() => {
+  switch (props.animation) {
+    case 'fade-up': return { opacity: 0, y: 40 };
+    case 'fade-in': return { opacity: 0 };
+    case 'fade-left': return { opacity: 0, x: -40 };
+    case 'fade-right': return { opacity: 0, x: 40 };
+    case 'scale': return { opacity: 0, scale: 0.85 };
+    default: return { opacity: 0, y: 40 };
   }
+});
+
+const visibleState = computed(() => {
+  return {
+    opacity: 1,
+    y: 0,
+    x: 0,
+    scale: 1,
+    transition: {
+      type: 'spring',
+      stiffness: 260,
+      damping: 25,
+      mass: 0.5,
+      delay: props.delay,
+    }
+  };
 });
 </script>

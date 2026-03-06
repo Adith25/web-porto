@@ -1,94 +1,220 @@
 <template>
   <div>
     <!-- ==================== HERO ==================== -->
-    <section
-      id="hero"
-      class="relative min-h-screen flex items-center pt-16 overflow-hidden"
-    >
-      <!-- Background Decorations -->
-      <div class="absolute inset-0 overflow-hidden pointer-events-none">
-        <div
-          class="absolute top-1/4 -left-32 w-96 h-96 bg-accent/5 rounded-full blur-3xl animate-float"
-        />
-        <div
-          class="absolute bottom-1/4 -right-32 w-96 h-96 bg-violet/5 rounded-full blur-3xl animate-float"
-          style="animation-delay: 3s"
-        />
-      </div>
+    <section id="hero" class="relative min-h-screen flex items-center pt-16 overflow-hidden">
 
-      <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div class="max-w-3xl">
-          <p 
-            class="text-accent font-mono text-sm mb-4"
-            v-motion
-            :initial="{ opacity: 0, y: 20 }"
-            :enter="{ opacity: 1, y: 0, transition: { type: 'spring', stiffness: 250, damping: 25 } }"
-          >
-            Hello, I'm
-          </p>
+      <!-- Dot-grid background -->
+      <div class="hero-grid" aria-hidden="true" />
 
-          <h1
-            class="text-4xl sm:text-6xl lg:text-7xl font-bold text-white mb-4"
-            v-motion
-            :initial="{ opacity: 0, y: 30 }"
-            :enter="{ opacity: 1, y: 0, transition: { type: 'spring', stiffness: 250, damping: 25, delay: 100 } }"
-          >
-            Muhammad Aditya
-            <span class="block gradient-text">Yufnanda</span>
-          </h1>
+      <!-- Ambient orbs -->
+      <div class="hero-orb hero-orb-1" aria-hidden="true" />
+      <div class="hero-orb hero-orb-2" aria-hidden="true" />
+      <div class="hero-orb hero-orb-3" aria-hidden="true" />
 
-          <h2
-            class="text-xl sm:text-2xl font-medium text-gray-300 mb-6"
-            v-motion
-            :initial="{ opacity: 0, y: 30 }"
-            :enter="{ opacity: 1, y: 0, transition: { type: 'spring', stiffness: 250, damping: 25, delay: 200 } }"
-          >
-            Software Developer &amp; Machine Learning Engineer
-          </h2>
+      <!-- Horizontal glow line -->
+      <div class="hero-glow-line" aria-hidden="true" />
 
-          <p
-            class="text-gray-400 text-lg max-w-xl mb-10 leading-relaxed"
-            v-motion
-            :initial="{ opacity: 0, y: 30 }"
-            :enter="{ opacity: 1, y: 0, transition: { type: 'spring', stiffness: 250, damping: 25, delay: 300 } }"
-          >
-            Building intelligent systems with AI, Mobile, and IoT technologies.
-            Passionate about creating solutions that bridge software and
-            hardware.
-          </p>
+      <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full">
+        <div class="flex flex-col lg:flex-row items-center lg:items-start gap-12">
 
-          <div
-            class="flex flex-wrap gap-4"
-            v-motion
-            :initial="{ opacity: 0, y: 30 }"
-            :enter="{ opacity: 1, y: 0, transition: { type: 'spring', stiffness: 250, damping: 25, delay: 400 } }"
-          >
-            <a
-              href="#projects"
-              class="btn-primary"
-              @click.prevent="scrollTo('projects')"
-            >
-              <Icon name="mdi:rocket-launch-outline" class="w-5 h-5" />
-              View Projects
-            </a>
-            <a
-              href="#contact"
-              class="btn-outline"
-              @click.prevent="scrollTo('contact')"
-            >
-              <Icon name="mdi:email-outline" class="w-5 h-5" />
-              Contact Me
-            </a>
+          <!-- Left: Text content -->
+          <div class="max-w-2xl">
+
+            <!-- Greeting badge -->
+            <div class="hero-badge mb-6">
+              <span class="badge-dot" />
+              <span class="font-mono text-xs tracking-widest text-accent-light">Hello World!, I'm&nbsp;</span>
+              <span class="font-mono text-xs font-semibold text-white">Adith</span>
+            </div>
+
+            <!-- Name -->
+            <h1 class="hero-name mb-4">
+              <span class="block text-white">Muhammad Aditya</span>
+              <span class="block gradient-text">Yufnanda</span>
+            </h1>
+
+            <!-- Animated role typewriter -->
+            <h2 class="hero-role mb-6">
+              <span class="role-prefix">I'm a </span>
+              <span class="role-typed">{{ displayedRole }}<span class="cursor-blink">|</span></span>
+            </h2>
+
+            <!-- Welcome message -->
+            <div class="hero-welcome mb-10">
+              <p class="welcome-text">Welcome to my personal website</p>
+              <div class="welcome-line" />
+            </div>
+
+            <!-- CTAs -->
+            <div class="flex flex-wrap gap-4 hero-cta">
+              <a href="/cv.pdf" target="_blank" class="btn-primary" download>
+                <Icon name="mdi:download" class="w-5 h-5" />
+                Download CV
+              </a>
+              <a href="#contact" class="btn-outline" @click.prevent="scrollTo('contact')">
+                <Icon name="mdi:email-outline" class="w-5 h-5" />
+                Contact Me
+              </a>
+              <a href="#about" class="btn-ghost" @click.prevent="scrollTo('about')">
+                Learn More
+                <Icon name="mdi:arrow-right" class="w-4 h-4" />
+              </a>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- Scroll indicator -->
-      <div
-        class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce hidden sm:block"
-      >
-        <Icon name="mdi:chevron-double-down" class="w-6 h-6 text-gray-600" />
+      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-1 animate-bounce">
+        <span class="text-xs font-mono text-gray-600 tracking-widest">SCROLL</span>
+        <Icon name="mdi:chevron-double-down" class="w-5 h-5 text-gray-600" />
       </div>
+    </section>
+
+
+    <!-- ==================== ABOUT ==================== -->
+    <section id="about">
+      <SectionWrapper
+        title="About"
+        highlight=" Me"
+        subtitle="A bit about my journey and what drives me."
+      >
+        <div class="grid lg:grid-cols-3 gap-8">
+
+          <!-- ── Profile MagicCard (left column on large screens) ── -->
+          <ScrollReveal animation="fade-right" class="lg:col-span-1 lg:self-start">
+            <MagicCard>
+              <div class="profile-card">
+                <!-- 3:4 Portrait Photo -->
+                <div class="photo-wrapper">
+                  <img
+                    src="/profile.png"
+                    alt="Muhammad Aditya Yufnanda"
+                    class="photo-img"
+                  />
+                  <!-- Gradient overlay for text readability -->
+                  <div class="photo-overlay" />
+
+                  <!-- Role badge top-left -->
+                  <div class="photo-header">
+                    <span class="role-badge">
+                      <Icon name="mdi:code-braces" class="w-3.5 h-3.5" />
+                      Software Engineer
+                    </span>
+                  </div>
+
+                  <!-- Meta info bottom overlay -->
+                  <div class="photo-footer">
+                    <div class="meta-line">
+                      <Icon name="mdi:map-marker-outline" class="meta-icon" />
+                      <span>Tangerang, Indonesia</span>
+                    </div>
+                    <div class="meta-line">
+                      <Icon name="mdi:email-outline" class="meta-icon" />
+                      <span>adityayufnanda25@gmail.com</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Card footer -->
+                <div class="card-footer">
+                  <div class="status-row">
+                    <span class="status-dot" />
+                    <span class="status-text">Available for Work</span>
+                  </div>
+                </div>
+              </div>
+            </MagicCard>
+          </ScrollReveal>
+
+          <!-- ── Right column: text cards + sidebar info ── -->
+          <div class="lg:col-span-2 space-y-6">
+            <ScrollReveal animation="fade-left">
+              <div class="glass-card p-6 sm:p-8">
+                <h3 class="text-xl font-semibold text-white mb-4">Who I Am</h3>
+                <div class="space-y-4 text-gray-400 leading-relaxed">
+                  <p>
+                    I'm <strong class="text-white">Muhammad Aditya Yufnanda</strong>,
+                    a Computer Engineer based in Tangerang, Banten, Indonesia.
+                    I'm specializing in <span class="text-violet-light">Web and Mobile Development</span>, <span class="text-violet-400">Machine Learning</span> and <span class="text-violet-400">Embedded Systems</span>.
+                  </p>
+                  <p>
+                    I have hands-on experience across the full development stack — from
+                    building scalable web and mobile applications to training ML models
+                    and designing IoT systems. I strengthened my cloud skills through
+                    <strong class="text-white">Bangkit Academy (Google, Tokopedia, Gojek & Traveloka)</strong>
+                    and front-end expertise through
+                    <strong class="text-white">Dicoding Indonesia</strong>.
+                  </p>
+                </div>
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal animation="fade-left" :delay="100">
+              <div class="glass-card p-6 sm:p-8">
+                <h3 class="text-xl font-semibold text-white mb-4 flex items-center gap-2">
+                  <Icon name="mdi:target" class="w-5 h-5 text-accent" />
+                  Career Objective
+                </h3>
+                <p class="text-gray-400 leading-relaxed">
+                  To apply my multidisciplinary background in Web & Mobile Development,
+                  Machine Learning, and Embedded Systems to build impactful,
+                  real-world solutions — and grow as an engineer who bridges software
+                  intelligence with physical hardware.
+                </p>
+              </div>
+            </ScrollReveal>
+
+            <div class="grid sm:grid-cols-2 gap-6">
+              <ScrollReveal animation="fade-left" :delay="150">
+                <div class="glass-card p-6">
+                  <h3 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                    <Icon name="mdi:school-outline" class="w-5 h-5 text-accent" />
+                    Education
+                  </h3>
+                  <div>
+                    <p class="font-medium text-white">Universitas Syiah Kuala</p>
+                    <p class="text-sm text-gray-400 mt-1">Bachelor of Engineering (B.E.)</p>
+                    <p class="text-xs text-gray-500 mt-1 font-mono">Computer Engineering (2021 – 2025)</p>
+                  </div>
+                </div>
+              </ScrollReveal>
+
+              <ScrollReveal animation="fade-left" :delay="200">
+                <div class="glass-card p-6">
+                  <h3 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                    <Icon name="mdi:lightbulb-outline" class="w-5 h-5 text-accent" />
+                    Interests
+                  </h3>
+                  <div class="flex flex-wrap gap-2">
+                    <TechBadge v-for="interest in interests" :key="interest" variant="accent">
+                      {{ interest }}
+                    </TechBadge>
+                  </div>
+                </div>
+              </ScrollReveal>
+            </div>
+
+            <ScrollReveal animation="fade-left" :delay="250">
+              <div class="glass-card p-6">
+                <h3 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                  <Icon name="mdi:star-four-points-outline" class="w-5 h-5 text-accent" />
+                  Key Strengths
+                </h3>
+                <ul class="grid sm:grid-cols-2 gap-3">
+                  <li v-for="s in strengths" :key="s.label" class="flex items-start gap-3">
+                    <Icon :name="s.icon" class="w-4 h-4 text-accent mt-1 shrink-0" />
+                    <div>
+                      <p class="text-sm font-medium text-white">{{ s.label }}</p>
+                      <p class="text-xs text-gray-500">{{ s.desc }}</p>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </ScrollReveal>
+          </div>
+        </div>
+      </SectionWrapper>
     </section>
 
     <!-- ==================== TECH STACK ==================== -->
@@ -135,127 +261,6 @@
       <div class="mt-10">
         <ScrollVelocity />
       </div>
-      </SectionWrapper>
-    </section>
-
-    <!-- ==================== ABOUT ==================== -->
-    <section id="about">
-      <SectionWrapper
-        title="About"
-        highlight=" Me"
-        subtitle="A bit about my journey and what drives me."
-      >
-        <div class="grid lg:grid-cols-3 gap-8">
-          <!-- Main -->
-          <ScrollReveal class="lg:col-span-2 space-y-6" animation="fade-right">
-            <div class="glass-card p-6 sm:p-8">
-              <h3 class="text-xl font-semibold text-white mb-4">Who I Am</h3>
-              <div class="space-y-4 text-gray-400 leading-relaxed">
-                <p>
-                  I'm <strong class="text-white">Muhammad Aditya Yufnanda</strong>,
-                  a <span class="text-accent-light">Software Engineer</span> based in Surabaya, Indonesia. 
-                  My expertise spans across scalable <span class="text-violet-light">Web Development</span> and <span class="text-emerald-400">Cloud Computing</span> architectures.
-                </p>
-                <p>
-                  I have hands-on experience utilizing modern technology stacks and a solid foundation in cloud infrastructure. 
-                  Recently, I expanded my skills through intensive programs at 
-                  <strong class="text-white">Bangkit Academy (Cloud Computing)</strong> and 
-                  <strong class="text-white">Dicoding Indonesia (Front-End Web)</strong>.
-                </p>
-              </div>
-            </div>
-
-            <div class="glass-card p-6 sm:p-8">
-              <h3
-                class="text-xl font-semibold text-white mb-4 flex items-center gap-2"
-              >
-                <Icon name="mdi:target" class="w-5 h-5 text-accent" />
-                Career Objective
-              </h3>
-              <p class="text-gray-400 leading-relaxed">
-                To leverage my multidisciplinary background in ML, mobile, and
-                embedded systems to contribute to innovative projects that
-                create meaningful impact.
-              </p>
-            </div>
-          </ScrollReveal>
-
-          <!-- Sidebar -->
-          <div class="space-y-6">
-            <ScrollReveal animation="fade-left" :delay="100">
-              <div class="glass-card p-6">
-                <h3
-                  class="text-lg font-semibold text-white mb-4 flex items-center gap-2"
-                >
-                  <Icon name="mdi:school-outline" class="w-5 h-5 text-accent" />
-                  Education
-                </h3>
-                <div>
-                  <p class="font-medium text-white">Universitas Trunojoyo Madura</p>
-                  <p class="text-sm text-gray-400 mt-1">Bachelor of Engineering (B.E.)</p>
-                  <p class="text-xs text-gray-500 mt-1 font-mono">
-                    Computer Engineering (2020 - 2024)
-                  </p>
-                </div>
-              </div>
-            </ScrollReveal>
-
-            <ScrollReveal animation="fade-left" :delay="200">
-              <div class="glass-card p-6">
-                <h3
-                  class="text-lg font-semibold text-white mb-4 flex items-center gap-2"
-                >
-                  <Icon
-                    name="mdi:star-four-points-outline"
-                    class="w-5 h-5 text-accent"
-                  />
-                  Key Strengths
-                </h3>
-                <ul class="space-y-3">
-                  <li
-                    v-for="s in strengths"
-                    :key="s.label"
-                    class="flex items-start gap-3"
-                  >
-                    <Icon
-                      :name="s.icon"
-                      class="w-4 h-4 text-accent mt-1 shrink-0"
-                    />
-                    <div>
-                      <p class="text-sm font-medium text-white">
-                        {{ s.label }}
-                      </p>
-                      <p class="text-xs text-gray-500">{{ s.desc }}</p>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </ScrollReveal>
-
-            <ScrollReveal animation="fade-left" :delay="300">
-              <div class="glass-card p-6">
-                <h3
-                  class="text-lg font-semibold text-white mb-4 flex items-center gap-2"
-                >
-                  <Icon
-                    name="mdi:lightbulb-outline"
-                    class="w-5 h-5 text-accent"
-                  />
-                  Interests
-                </h3>
-                <div class="flex flex-wrap gap-2">
-                  <TechBadge
-                    v-for="interest in interests"
-                    :key="interest"
-                    variant="accent"
-                  >
-                    {{ interest }}
-                  </TechBadge>
-                </div>
-              </div>
-            </ScrollReveal>
-          </div>
-        </div>
       </SectionWrapper>
     </section>
 
@@ -490,12 +495,48 @@
 
 <script setup lang="ts">
 useHead({
-  title: "Adith — Software Developer & Machine Learning Engineer",
+  title: "Adith — Computer Engineer & Machine Learning Enthusiast",
 });
 
 const scrollTo = (id: string) => {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 };
+
+// ── Typewriter role cycling ──────────────────────────
+const roles = [
+  'Computer Engineer',
+  'Web & Mobile Developer',
+  'Machine Learning Enthusiast',
+  'Embedded Systems Builder',
+];
+const displayedRole = ref('');
+onMounted(() => {
+  let roleIdx = 0;
+  let charIdx = 0;
+  let deleting = false;
+
+  const tick = () => {
+    const target = roles[roleIdx] ?? '';
+    if (!deleting) {
+      displayedRole.value = target.slice(0, charIdx + 1);
+      charIdx++;
+      if (charIdx === target.length) {
+        // Pause before deleting
+        setTimeout(() => { deleting = true; requestAnimationFrame(tick); }, 1800);
+        return;
+      }
+    } else {
+      displayedRole.value = target.slice(0, charIdx - 1);
+      charIdx--;
+      if (charIdx === 0) {
+        deleting = false;
+        roleIdx = (roleIdx + 1) % roles.length;
+      }
+    }
+    setTimeout(() => requestAnimationFrame(tick), deleting ? 45 : 80);
+  };
+  setTimeout(() => requestAnimationFrame(tick), 800);
+});
 
 const selectedCert = ref<{
   title: string;
@@ -621,11 +662,11 @@ const projects = [
 
 const experiences = [
   {
-    role: "Cloud Computing Learning Path",
+    role: "Machine Learning Path",
     company: "Bangkit Academy led by Google, Tokopedia, Gojek, & Traveloka",
     period: "Feb 2024 — Jul 2024",
     description:
-      "Intensive cloud computing program focusing on Google Cloud Platform, backend APIs, and modern deployment architectures.",
+      "Intensive Machine Learning program focusing on Machine Learning, backend APIs, and modern deployment architectures.",
     highlights: [
       "Designed and deployed scalable cloud infrastructure on GCP",
       "Developed robust backend services for team capstone projects",
@@ -748,3 +789,388 @@ const contactInfo = [
   },
 ];
 </script>
+
+<style scoped>
+/* ── Profile Card ── */
+.profile-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+/* 3:4 Portrait photo area */
+.photo-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.photo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  transition: transform 0.5s ease;
+}
+.profile-card:hover .photo-img {
+  transform: scale(1.03);
+}
+/* Dark gradient from top for badge legibility */
+.photo-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(10,10,20,0.55) 0%, transparent 30%),
+    linear-gradient(to top, rgba(5,5,15,0.88) 0%, rgba(5,5,15,0.4) 35%, transparent 60%);
+  pointer-events: none;
+}
+/* Role badge pinned top-left */
+.photo-header {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  right: 14px;
+  display: flex;
+  align-items: flex-start;
+}
+/* Meta info pinned bottom of photo */
+.photo-footer {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  right: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.role-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px;
+  border-radius: 99px;
+  background: rgba(15, 15, 25, 0.7);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(139, 92, 246, 0.4);
+  color: #a78bfa;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+}
+
+/* Card footer below photo */
+.card-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 18px 18px;
+  background: rgba(10, 10, 18, 0.95);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Meta lines inside photo overlay */
+.meta-line {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.85);
+  font-family: 'Inter', sans-serif;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+}
+.meta-icon {
+  width: 13px;
+  height: 13px;
+  color: #a78bfa;
+  flex-shrink: 0;
+}
+
+/* Name */
+.profile-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.3;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: -0.01em;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.7);
+}
+
+/* Status */
+.status-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #34d399;
+  box-shadow: 0 0 8px 2px rgba(52, 211, 153, 0.5);
+  animation: pulse-green 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+@keyframes pulse-green {
+  0%, 100% { box-shadow: 0 0 8px 2px rgba(52, 211, 153, 0.5); }
+  50%       { box-shadow: 0 0 14px 4px rgba(52, 211, 153, 0.8); }
+}
+.status-text {
+  font-size: 0.75rem;
+  color: #6ee7b7;
+  font-weight: 500;
+}
+
+/* Divider */
+.profile-divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(255,255,255,0.07);
+  border-radius: 1px;
+}
+
+
+/* ─────────────────────────────────────────
+   HERO SECTION
+───────────────────────────────────────── */
+
+/* Dot grid */
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(139, 92, 246, 0.12) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+  pointer-events: none;
+}
+
+/* Ambient orbs */
+.hero-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  pointer-events: none;
+  animation: heroFloat 10s ease-in-out infinite alternate;
+}
+.hero-orb-1 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.18) 0%, transparent 70%);
+  top: -8%; left: -6%;
+  animation-delay: 0s;
+}
+.hero-orb-2 {
+  width: 420px; height: 420px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.14) 0%, transparent 70%);
+  bottom: 0; right: -5%;
+  animation-delay: -4s;
+}
+.hero-orb-3 {
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(236, 72, 153, 0.1) 0%, transparent 70%);
+  top: 55%; left: 40%;
+  animation-delay: -7s;
+}
+@keyframes heroFloat {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(24px, 18px) scale(1.06); }
+}
+
+/* Glow line */
+.hero-glow-line {
+  position: absolute;
+  top: 62%;
+  left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(139,92,246,0.2) 40%, rgba(96,165,250,0.2) 60%, transparent);
+  pointer-events: none;
+}
+
+/* Badge */
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 99px;
+  background: rgba(139, 92, 246, 0.08);
+  border: 1px solid rgba(139, 92, 246, 0.25);
+  animation: fadeSlideDown 0.6s ease both;
+}
+.badge-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #7c3aed;
+  box-shadow: 0 0 8px 2px rgba(124,58,237,0.6);
+  animation: pulse-badge 2s ease-in-out infinite;
+}
+@keyframes pulse-badge {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.6; transform: scale(1.3); }
+}
+
+/* Name */
+.hero-name {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  font-family: 'Inter', sans-serif;
+  animation: fadeSlideUp 0.7s 0.1s ease both;
+}
+
+/* Role typewriter */
+.hero-role {
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
+  font-weight: 500;
+  color: #cbd5e1;
+  animation: fadeSlideUp 0.7s 0.25s ease both;
+}
+.role-prefix { color: #64748b; }
+.role-typed  { color: #a78bfa; font-weight: 600; }
+.cursor-blink {
+  color: #7c3aed;
+  animation: blink 0.75s step-end infinite;
+}
+@keyframes blink {
+  0%,100% { opacity: 1; }
+  50%      { opacity: 0; }
+}
+
+/* Description */
+.hero-desc { animation: fadeSlideUp 0.7s 0.35s ease both; }
+
+/* CTAs */
+.hero-cta { animation: fadeSlideUp 0.7s 0.5s ease both; }
+
+/* Ghost button */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #94a3b8;
+  transition: color 0.2s ease;
+}
+.btn-ghost:hover { color: #ffffff; }
+
+/* Shared entrance animations */
+@keyframes fadeSlideDown {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Floating code card ── */
+.hero-card-wrap {
+  position: relative;
+  animation: fadeSlideUp 0.9s 0.4s ease both;
+}
+.hero-float-card {
+  background: rgba(12, 12, 22, 0.85);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.04);
+  min-width: 300px;
+  animation: cardPulse 6s ease-in-out infinite alternate;
+}
+@keyframes cardPulse {
+  from { box-shadow: 0 24px 60px rgba(0,0,0,0.4), 0 0 30px rgba(124,58,237,0.06); }
+  to   { box-shadow: 0 30px 70px rgba(0,0,0,0.5), 0 0 50px rgba(124,58,237,0.14); }
+}
+
+.hfc-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  background: rgba(255,255,255,0.04);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.hfc-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+}
+.hfc-dot-red    { background: #ff5f57; }
+.hfc-dot-yellow { background: #febc2e; }
+.hfc-dot-green  { background: #28c840; }
+.hfc-filename {
+  margin-left: 8px;
+  font-size: 0.72rem;
+  font-family: monospace;
+  color: #64748b;
+}
+
+.hfc-body { padding: 18px 20px; color: #cbd5e1; }
+.hfc-kw   { color: #c084fc; }  /* purple — keyword */
+.hfc-var  { color: #60a5fa; }  /* blue   — variable */
+.hfc-key  { color: #f9a8d4; }  /* pink   — key */
+.hfc-str  { color: #86efac; }  /* green  — string */
+.hfc-bool { color: #fbbf24; }  /* amber  — boolean */
+
+/* Status badge below card */
+.hfc-status-badge {
+  margin-top: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 99px;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  font-size: 0.75rem;
+  color: #6ee7b7;
+  font-weight: 500;
+}
+.hfc-status-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #34d399;
+  box-shadow: 0 0 8px 2px rgba(52,211,153,0.5);
+  animation: pulse-green 2s ease-in-out infinite;
+}
+/* Welcome message */
+.hero-welcome {
+  animation: fadeSlideUp 0.7s 0.35s ease both;
+}
+.welcome-text {
+  font-size: clamp(0.95rem, 2vw, 1.15rem);
+  font-weight: 500;
+  background: linear-gradient(90deg, #94a3b8 0%, #c4b5fd 50%, #818cf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 0.01em;
+  margin-bottom: 12px;
+}
+.welcome-line {
+  height: 2px;
+  width: 48px;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #7c3aed, #60a5fa);
+  position: relative;
+  overflow: hidden;
+}
+.welcome-line::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+  animation: shimmer 2s ease-in-out infinite;
+}
+@keyframes shimmer {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+</style>

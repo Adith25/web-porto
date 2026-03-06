@@ -1,4 +1,5 @@
 <template>
+  <SplashScreen />
   <ParticlesBackground />
   <NuxtLayout>
     <NuxtPage />

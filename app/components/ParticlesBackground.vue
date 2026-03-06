@@ -53,7 +53,7 @@ const spawnParticle = (x: number, y: number) => {
   const angle = Math.random() * Math.PI * 2;
   // Very slow drift speed
   const speed = Math.random() * 0.25 + 0.05;
-  const color = COLORS[Math.floor(Math.random() * COLORS.length)] ?? COLORS[0];
+  const color = (COLORS[Math.floor(Math.random() * COLORS.length)] ?? COLORS[0]) as string;
   // Longer life so they linger more gracefully
   const maxLife = Math.random() * 140 + 80;
 

@@ -7,7 +7,7 @@
           <NuxtLink to="/" class="text-lg font-bold gradient-text"
             >Adith</NuxtLink
           >
-          <p class="text-sm text-gray-500 mt-1">Software Developer &amp; ML Engineer</p>
+          <p class="text-sm text-gray-500 mt-1">Computer Engineer &amp; ML Enthusiast</p>
         </div>
 
         <!-- Social Links -->

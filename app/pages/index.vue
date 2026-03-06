@@ -224,43 +224,40 @@
         highlight=" Stack"
         subtitle="Technologies and tools I work with."
       >
-      <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-        <ScrollReveal
-          v-for="(category, i) in techStack"
-          :key="category.name"
-          animation="fade-up"
-          :delay="i * 100"
-        >
-          <div
-            class="glass-card p-6 hover:border-accent/30 transition-all duration-300 h-full"
+        <div class="divide-y divide-white/5">
+          <ScrollReveal
+            v-for="(category, i) in techStack"
+            :key="category.name"
+            animation="fade-up"
+            :delay="i * 60"
           >
-            <div class="flex items-center gap-3 mb-4">
-              <div class="p-2 rounded-lg" :class="category.bgClass">
-                <Icon
-                  :name="category.icon"
-                  class="w-5 h-5"
-                  :class="category.iconClass"
-                />
+            <div class="flex items-start sm:items-center gap-4 py-2 group">
+              <!-- Category label -->
+              <div class="flex items-center gap-2 w-28 shrink-0">
+                <div class="p-1.5 rounded-md" :class="category.bgClass">
+                  <Icon :name="category.icon" class="w-3.5 h-3.5" :class="category.iconClass" />
+                </div>
+                <span class="text-xs font-semibold uppercase tracking-widest" :class="category.labelClass">{{ category.name }}</span>
               </div>
-              <h3 class="font-semibold text-white">{{ category.name }}</h3>
-            </div>
-            <div class="flex flex-wrap gap-2">
-              <TechBadge
-                v-for="tech in category.items"
-                :key="tech"
-                :variant="category.variant"
-              >
-                {{ tech }}
-              </TechBadge>
-            </div>
-          </div>
-        </ScrollReveal>
-      </div>
 
-      <!-- Scroll velocity logo strip -->
-      <div class="mt-10">
-        <ScrollVelocity />
-      </div>
+              <!-- Tech pills -->
+              <div class="flex flex-wrap gap-1.5">
+                <span
+                  v-for="tech in category.items"
+                  :key="tech"
+                  class="text-xs px-2 py-0.5 rounded-full bg-white/5 text-gray-300 border border-white/10 hover:border-accent/40 hover:text-white hover:bg-accent/10 transition-all duration-200 font-mono"
+                >
+                  {{ tech }}
+                </span>
+              </div>
+            </div>
+          </ScrollReveal>
+        </div>
+
+        <!-- Scroll velocity logo strip -->
+        <div class="mt-8">
+          <ScrollVelocity />
+        </div>
       </SectionWrapper>
     </section>
 
@@ -298,71 +295,70 @@
         highlight=" Experience"
         subtitle="Professional journey and technical contributions."
       >
-        <div class="relative">
+        <div class="relative" ref="experienceSectionRef">
+          <!-- Background vertical line -->
+          <div class="absolute left-32 top-0 bottom-0 w-px bg-white/5" />
+          <!-- Animated progress line -->
           <div
-            class="absolute left-4 sm:left-8 top-0 bottom-0 w-px bg-dark-border"
+            ref="progressLineRef"
+            class="absolute left-32 top-0 w-px bg-accent/60 origin-top transition-[height] duration-100 ease-linear"
+            :style="{ height: `${experienceProgress * 100}%` }"
           />
 
-          <div class="space-y-12">
+          <div class="space-y-2">
             <ScrollReveal
               v-for="(exp, index) in experiences"
               :key="index"
               animation="fade-up"
-              :delay="index * 150"
+              :delay="index * 60"
             >
-              <div class="relative pl-12 sm:pl-20">
-                <div
-                  class="absolute left-2.5 sm:left-6.5 top-1 w-3 h-3 rounded-full bg-accent ring-4 ring-dark"
-                />
+              <div class="relative flex items-center gap-4 group">
+                <!-- Date label (left side) -->
+                <div class="w-32 shrink-0 text-right pr-4">
+                  <span class="text-xs text-gray-400 font-mono leading-tight block">{{ (exp.period.split(' · ')[0] ?? '').split(' - ')[0] ?? '' }}</span>
+                  <span class="text-[11px] text-gray-600 font-mono">{{ (exp.period.split(' · ')[0] ?? '').split(' - ')[1] ?? '' }}</span>
+                </div>
 
-                <div
-                  class="glass-card p-6 sm:p-8 hover:border-accent/30 transition-all duration-300"
-                >
+                <!-- Animated dot on timeline -->
+                <div class="absolute left-[8rem] -translate-x-1/2 z-10 flex">
                   <div
-                    class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-4"
+                    class="w-5 h-5 rounded-full bg-dark/90 border border-accent/40 flex items-center justify-center experience-dot transition-all duration-400"
+                    :class="{ 'border-accent shadow-[0_0_10px_rgba(124,58,237,0.5)]': activeDots.includes(index) }"
                   >
-                    <div>
-                      <h3 class="text-lg font-semibold text-white">
-                        {{ exp.role }}
-                      </h3>
-                      <p class="text-accent-light font-medium">
-                        {{ exp.company }}
-                      </p>
-                    </div>
                     <div
-                      class="flex items-center gap-2 text-sm text-gray-500 font-mono shrink-0"
-                    >
-                      <Icon name="mdi:calendar-outline" class="w-4 h-4" />
-                      {{ exp.period }}
-                    </div>
+                      class="w-[55%] h-[55%] rounded-full bg-gradient-to-tr from-accent to-accent-light"
+                      :class="activeDots.includes(index) ? 'opacity-100 scale-100 animate-pulse' : 'opacity-0 scale-0'"
+                      style="transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);"
+                    />
+                  </div>
+                </div>
+
+                <!-- Content row -->
+                <div class="flex-1 flex items-center gap-4 pl-10 py-3 rounded-xl border border-transparent hover:border-accent/15 hover:bg-white/[0.025] transition-all duration-300">
+                  <!-- Logo -->
+                  <div class="shrink-0 w-10 h-10 flex items-center justify-center">
+                    <img
+                      v-if="exp.logo"
+                      :src="exp.logo"
+                      :alt="exp.company"
+                      class="w-full h-full object-contain"
+                    />
+                    <Icon v-else name="mdi:office-building-outline" class="w-6 h-6 text-gray-500" />
                   </div>
 
-                  <p class="text-gray-400 text-sm leading-relaxed mb-4">
-                    {{ exp.description }}
-                  </p>
-
-                  <ul class="space-y-2 mb-4">
-                    <li
-                      v-for="(point, i) in exp.highlights"
-                      :key="i"
-                      class="flex items-start gap-2 text-sm text-gray-400"
-                    >
-                      <Icon
-                        name="mdi:chevron-right"
-                        class="w-4 h-4 text-accent mt-0.5 shrink-0"
-                      />
-                      <span>{{ point }}</span>
-                    </li>
-                  </ul>
-
-                  <div class="flex flex-wrap gap-2">
-                    <TechBadge
-                      v-for="tech in exp.tech"
-                      :key="tech"
-                      variant="accent"
-                    >
-                      {{ tech }}
-                    </TechBadge>
+                  <!-- Text -->
+                  <div class="flex-1 min-w-0">
+                    <div class="flex flex-col gap-0.5">
+                      <span class="font-semibold text-white text-base leading-tight">{{ exp.role }}</span>
+                      <span class="text-accent-light/70 text-sm font-medium">{{ exp.company }}</span>
+                    </div>
+                    <div v-if="exp.tech?.length" class="flex flex-wrap gap-1.5 mt-1.5">
+                      <span
+                        v-for="tech in exp.tech"
+                        :key="tech"
+                        class="text-[11px] px-2 py-0.5 rounded bg-accent/10 text-accent-light/70 font-mono"
+                      >{{ tech }}</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -511,6 +507,11 @@ const roles = [
 ];
 const displayedRole = ref('');
 onMounted(() => {
+  if (typeof window !== 'undefined' && window.history) {
+    window.history.scrollRestoration = 'manual';
+    window.scrollTo(0, 0);
+  }
+
   let roleIdx = 0;
   let charIdx = 0;
   let deleting = false;
@@ -538,6 +539,38 @@ onMounted(() => {
   setTimeout(() => requestAnimationFrame(tick), 800);
 });
 
+// ── Experience timeline scroll progress ───────────────
+const experienceSectionRef = ref<HTMLElement | null>(null);
+const progressLineRef = ref<HTMLElement | null>(null);
+const experienceProgress = ref(0);
+const activeDots = ref<number[]>([]);
+
+const calculateExperienceProgress = () => {
+  if (!experienceSectionRef.value || !progressLineRef.value) return;
+  const rect = experienceSectionRef.value.getBoundingClientRect();
+  const windowHeight = window.innerHeight;
+  const progress = (windowHeight * 0.6 - rect.top) / rect.height;
+  experienceProgress.value = Math.max(0, Math.min(1, progress));
+
+  const lineBottomY = progressLineRef.value.getBoundingClientRect().bottom;
+  const dots = experienceSectionRef.value.querySelectorAll('.experience-dot');
+  const newActive: number[] = [];
+  Array.from(dots).forEach((dot, i) => {
+    const dr = dot.getBoundingClientRect();
+    if (dr.top + dr.height / 2 <= lineBottomY) newActive.push(i);
+  });
+  activeDots.value = newActive;
+};
+
+onMounted(() => {
+  window.addEventListener('scroll', calculateExperienceProgress, { passive: true });
+  calculateExperienceProgress();
+});
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', calculateExperienceProgress);
+});
+
 const selectedCert = ref<{
   title: string;
   description?: string;
@@ -548,44 +581,52 @@ const selectedCert = ref<{
 // ─── Data ───────────────────────────────────
 const techStack = [
   {
-    name: "Machine Learning",
-    icon: "mdi:brain",
-    bgClass: "bg-violet/10",
-    iconClass: "text-violet-light",
-    variant: "violet" as const,
-    items: ["Python", "TensorFlow", "PyTorch", "OpenCV"],
+    name: "Frontend",
+    icon: "mdi:palette-outline",
+    bgClass: "bg-sky-500/10",
+    iconClass: "text-sky-400",
+    labelClass: "text-sky-400",
+    items: ["React.js", "Nuxt.js", "Flutter", "Tailwind", "Bootstrap", "JavaScript"],
   },
   {
     name: "Backend",
     icon: "mdi:server",
     bgClass: "bg-emerald-500/10",
     iconClass: "text-emerald-400",
-    variant: "emerald" as const,
-    items: ["NestJS", "TypeScript", "MySQL"],
+    labelClass: "text-emerald-400",
+    items: ["NestJS", "TypeScript", "MySQL", "PostgreSQL"],
   },
   {
-    name: "Frontend",
-    icon: "mdi:palette-outline",
-    bgClass: "bg-sky-500/10",
-    iconClass: "text-sky-400",
-    variant: "sky" as const,
-    items: ["Nuxt.js", "Flutter"],
-  },
-  {
-    name: "Embedded / IoT",
-    icon: "mdi:chip",
-    bgClass: "bg-amber-500/10",
-    iconClass: "text-amber-400",
-    variant: "amber" as const,
-    items: ["Arduino", "Sensors", "Actuators"],
+    name: "Design",
+    icon: "mdi:vector-square",
+    bgClass: "bg-pink-500/10",
+    iconClass: "text-pink-400",
+    labelClass: "text-pink-400",
+    items: ["Figma", "Canva"],
   },
   {
     name: "Tools",
     icon: "mdi:wrench-outline",
     bgClass: "bg-accent/10",
     iconClass: "text-accent-light",
-    variant: "accent" as const,
-    items: ["Git", "Docker", "Linux"],
+    labelClass: "text-accent-light",
+    items: ["Git", "Docker", "Firebase"],
+  },
+  {
+    name: "ML",
+    icon: "mdi:brain",
+    bgClass: "bg-violet-500/10",
+    iconClass: "text-violet-400",
+    labelClass: "text-violet-400",
+    items: ["Python", "TensorFlow", "PyTorch", "OpenCV"],
+  },
+  {
+    name: "Embedded",
+    icon: "mdi:chip",
+    bgClass: "bg-amber-500/10",
+    iconClass: "text-amber-400",
+    labelClass: "text-amber-400",
+    items: ["Arduino Uno", "ESP32", "Sensors", "Actuators"],
   },
 ];
 
@@ -662,45 +703,84 @@ const projects = [
 
 const experiences = [
   {
-    role: "Machine Learning Path",
-    company: "Bangkit Academy led by Google, Tokopedia, Gojek, & Traveloka",
-    period: "Feb 2024 — Jul 2024",
-    description:
-      "Intensive Machine Learning program focusing on Machine Learning, backend APIs, and modern deployment architectures.",
-    highlights: [
-      "Designed and deployed scalable cloud infrastructure on GCP",
-      "Developed robust backend services for team capstone projects",
-      "Achieved AWS Certified Cloud Practitioner certification",
-      "Collaborated in a multidisciplinary team simulating a tech industry environment"
-    ],
-    tech: ["Google Cloud Platform", "Node.js", "Docker", "REST API", "Cloud Shell"],
+    role: "Intern Information Technology Department",
+    company: "AirNav Indonesia · Internship",
+    period: "Oct 2025 - Present · 6 mos",
+    location: "Tangerang, Banten, Indonesia · On-site",
+    logo: "/images/logo_airnav.png",
+    description: "",
+    highlights: [],
+    tech: ["Flutter", "Mobile Application Development", "Engineering", "Software Infrastructure", "Information Technology Infrastructure"],
   },
   {
-    role: "Front-End Web Developer Learning Path",
-    company: "Dicoding Indonesia",
-    period: "Aug 2023 — Jan 2024",
-    description:
-      "Comprehensive frontend development training covering fundamental to advanced web technologies and progressive web apps.",
-    highlights: [
-      "Built responsive and accessible web applications using modern HTML/css and JavaScript",
-      "Implemented Progressive Web Apps (PWA) features including service workers and offline caching",
-      "Integrated REST APIs asynchronously to display dynamic content",
-      "Earned 'Belajar Dasar Pemrograman Web' certification"
-    ],
-    tech: ["HTML5/CSS3", "JavaScript (ES6+)", "PWA", "Webpack", "Web Accessibility"],
+    role: "Signal Processing Teaching Assistant",
+    company: "Universitas Syiah Kuala · Part-time",
+    period: "Mar 2025 - Jun 2025 · 4 mos",
+    location: "Banda Aceh, Aceh, Indonesia · On-site",
+    logo: "/images/logo_usk.svg.png",
+    description: "",
+    highlights: [],
+    tech: ["MATLAB"],
   },
   {
-    role: "Web Developer Intern",
-    company: "PT. Telkom Indonesia (Persero) Tbk",
-    period: "Jul 2022 — Sep 2022",
-    description:
-      "Assisted the development team in designing and implementing web-based internal tools and dashboards.",
-    highlights: [
-      "Contributed to the frontend development of internal reporting dashboards",
-      "Collaborated with senior engineers to optimize web performance and UI/UX",
-      "Participated in code reviews and agile development cadences",
-    ],
-    tech: ["Web Development", "UI/UX", "JavaScript", "Git"],
+    role: "Multimedia Signal Processing Teaching Assistant",
+    company: "Universitas Syiah Kuala",
+    period: "Jul 2024 - Dec 2024 · 6 mos",
+    location: "Banda Aceh, Aceh, Indonesia · On-site",
+    logo: "/images/logo_usk.svg.png",
+    description: "",
+    highlights: [],
+    tech: ["MATLAB", "Encoding", "Decoding", "Signal Processing", "Image Processing"],
+  },
+  {
+    role: "Software Engineering Lab Assistant",
+    company: "Universitas Syiah Kuala",
+    period: "Feb 2024 - Jun 2024 · 5 mos",
+    location: "Banda Aceh, Aceh, Indonesia · On-site",
+    logo: "/images/logo_usk.svg.png",
+    description: "",
+    highlights: [],
+    tech: ["Scrum", "Unified Modeling Language (UML)"],
+  },
+  {
+    role: "Head of Public Relations Division",
+    company: "Himpunan Mahasiswa Teknik Komputer USK",
+    period: "Jan 2024 - Dec 2024 · 1 yr",
+    location: "Banda Aceh, Aceh, Indonesia · On-site",
+    logo: "/images/logo_himatekkom.png",
+    description: "",
+    highlights: [],
+    tech: ["Public Speaking", "Leadership", "Teamwork"],
+  },
+  {
+    role: "Member of Public Relations Division",
+    company: "Himpunan Mahasiswa Teknik Komputer USK",
+    period: "Jan 2023 - Dec 2023 · 1 yr",
+    location: "Banda Aceh, Aceh, Indonesia · On-site",
+    logo: "/images/logo_himatekkom.png",
+    description: "",
+    highlights: [],
+    tech: ["Teamwork"],
+  },
+  {
+    role: "Member of Talent and Interests Division",
+    company: "Himpunan Mahasiswa Teknik Komputer USK",
+    period: "Jan 2022 - Dec 2022 · 1 yr",
+    location: "Banda Aceh, Aceh, Indonesia · On-site",
+    logo: "/images/logo_himatekkom.png",
+    description: "",
+    highlights: [],
+    tech: [],
+  },
+  {
+    role: "Bangkit Academy 2023 - Machine Learning Path",
+    company: "Bangkit Academy led by Google, Tokopedia, Gojek, & Traveloka · Seasonal",
+    period: "Aug 2023 - Jan 2024 · 6 mos",
+    location: "Banda Aceh, Aceh, Indonesia · Remote",
+    logo: "/images/bangkit_logo.jpg",
+    description: "",
+    highlights: [],
+    tech: ["Machine Learning", "Deep Learning"],
   },
 ];
 

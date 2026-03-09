@@ -7,8 +7,13 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     '@nuxtjs/google-fonts',
     '@nuxt/icon',
-    '@vueuse/motion/nuxt'
+    '@vueuse/motion/nuxt',
+    '@nuxtjs/color-mode'
   ],
+
+  colorMode: {
+    classSuffix: ''
+  },
 
   googleFonts: {
     families: {

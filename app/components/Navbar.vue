@@ -1,7 +1,7 @@
 <template>
   <nav
-    class="fixed top-0 left-0 right-0 z-50 bg-dark/80 backdrop-blur-md border-b border-dark-border/50 transition-all duration-300"
-    :class="{ 'bg-dark/95 shadow-lg shadow-dark/50': scrolled }"
+    class="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-dark/80 backdrop-blur-md border-b border-gray-200/50 dark:border-dark-border/50 transition-all duration-300"
+    :class="{ 'bg-white/95 dark:bg-dark/95 shadow-lg shadow-gray-200/50 dark:shadow-dark/50': scrolled }"
   >
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
@@ -26,8 +26,8 @@
             class="px-4 py-2 text-sm font-medium rounded-lg transition-colors duration-200 relative group"
             :class="
               activeSection === link.id
-                ? 'text-white'
-                : 'text-gray-400 hover:text-white'
+                ? 'text-gray-900 dark:text-white'
+                : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
             "
             @click.prevent="scrollToSection(link.id)"
           >
@@ -39,11 +39,14 @@
               "
             />
           </a>
+          <AnimatedThemeToggler class="ml-2" />
         </div>
 
-        <!-- Mobile Hamburger -->
-        <button
-          class="md:hidden p-2 text-gray-400 hover:text-white transition-colors"
+        <!-- Mobile: Toggle + Hamburger -->
+        <div class="md:hidden flex items-center gap-2">
+          <AnimatedThemeToggler />
+          <button
+          class="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
           aria-label="Toggle menu"
           @click="isOpen = !isOpen"
         >
@@ -63,6 +66,7 @@
         </button>
       </div>
     </div>
+  </div>
 
     <!-- Mobile Menu -->
     <Transition
@@ -75,7 +79,7 @@
     >
       <div
         v-if="isOpen"
-        class="md:hidden bg-dark-card/95 backdrop-blur-md border-b border-dark-border"
+        class="md:hidden bg-white/95 dark:bg-dark-card/95 backdrop-blur-md border-b border-gray-200 dark:border-dark-border"
       >
         <div class="px-4 py-3 space-y-1">
           <a
@@ -85,8 +89,8 @@
             class="block px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200"
             :class="
               activeSection === link.id
-                ? 'text-white bg-dark-lighter'
-                : 'text-gray-400 hover:text-white hover:bg-dark-lighter'
+                ? 'text-gray-900 dark:text-white bg-gray-100 dark:bg-dark-lighter'
+                : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-dark-lighter'
             "
             @click.prevent="
               scrollToSection(link.id);
@@ -102,6 +106,8 @@
 </template>
 
 <script setup lang="ts">
+import AnimatedThemeToggler from '~/components/ui/animated-theme-toggler.vue';
+
 const isOpen = ref(false);
 const scrolled = ref(false);
 const activeSection = ref("hero");

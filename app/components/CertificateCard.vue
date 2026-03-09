@@ -68,11 +68,15 @@ const isPdf = computed(
 .cert-card {
   display: flex;
   flex-direction: column;
-  background: rgba(10, 8, 30, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.09);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 1rem;
   overflow: hidden;
-  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, background 0.3s ease;
+}
+.dark .cert-card {
+  background: rgba(10, 8, 30, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.09);
 }
 .cert-card:hover {
   transform: translateY(-4px);
@@ -85,11 +89,14 @@ const isPdf = computed(
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
-  background: rgba(255, 255, 255, 0.04);
+  background: #f8fafc;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.dark .cert-thumb {
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .cert-img {
@@ -149,7 +156,7 @@ const isPdf = computed(
 .cert-title {
   font-size: 1rem;
   font-weight: 700;
-  color: #fff;
+  color: #0f172a;
   line-height: 1.35;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -158,19 +165,25 @@ const isPdf = computed(
   overflow: hidden;
   transition: color 0.2s;
 }
+.dark .cert-title {
+  color: #fff;
+}
 .cert-card:hover .cert-title {
   color: #c4b5fd;
 }
 
 .cert-desc {
   font-size: 0.78rem;
-  color: rgba(200, 200, 230, 0.55);
+  color: #64748b;
   line-height: 1.5;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+.dark .cert-desc {
+  color: rgba(200, 200, 230, 0.55);
 }
 
 .cert-link {

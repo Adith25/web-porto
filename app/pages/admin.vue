@@ -141,9 +141,9 @@
               <template #item="{ element: p }">
                 <div class="list-row group">
                   <div class="flex items-center gap-2">
-                    <button class="drag-handle opacity-0 group-hover:opacity-100 cursor-move text-gray-500 hover:text-white transition-opacity"><Icon name="mdi:drag" class="w-4 h-4" /></button>
+                    <button class="drag-handle opacity-0 group-hover:opacity-100 cursor-move text-gray-500 hover:text-gray-900 dark:hover:text-white transition-opacity"><Icon name="mdi:drag" class="w-4 h-4" /></button>
                     <Icon v-if="p.icon" :name="p.icon" class="w-4 h-4 text-accent-light shrink-0" />
-                    <span class="font-medium text-white text-sm truncate">{{ p.title }}</span>
+                    <span class="font-medium text-gray-900 dark:text-white text-sm truncate">{{ p.title }}</span>
                   </div>
               <div class="flex flex-wrap gap-1">
                 <span v-for="t in splitItems(p.techStack)" :key="t" class="tag">{{ t }}</span>
@@ -186,10 +186,10 @@
               <template #item="{ element: e }">
                 <div class="list-row list-row--exp group">
                   <div class="flex items-center gap-2">
-                    <button class="drag-handle opacity-0 group-hover:opacity-100 cursor-move text-gray-500 hover:text-white transition-opacity"><Icon name="mdi:drag" class="w-4 h-4" /></button>
-                    <span class="font-medium text-white text-sm truncate">{{ e.role }}</span>
+                    <button class="drag-handle opacity-0 group-hover:opacity-100 cursor-move text-gray-500 hover:text-gray-900 dark:hover:text-white transition-opacity"><Icon name="mdi:drag" class="w-4 h-4" /></button>
+                    <span class="font-medium text-gray-900 dark:text-white text-sm truncate">{{ e.role }}</span>
                   </div>
-              <span class="text-gray-400 text-sm truncate">{{ e.company }}</span>
+              <span class="text-gray-600 dark:text-gray-400 text-sm truncate">{{ e.company }}</span>
               <span class="text-gray-500 text-xs font-mono">{{ e.period }}</span>
                   <div class="flex gap-2">
                     <button class="icon-btn icon-btn--edit" @click="editItem('experience', e)"><Icon name="mdi:pencil-outline" class="w-3.5 h-3.5" /></button>
@@ -224,9 +224,9 @@
               <template #item="{ element: s }">
                 <div class="list-row list-row--skill group">
                   <div class="flex items-center gap-2">
-                    <button class="drag-handle opacity-0 group-hover:opacity-100 cursor-move text-gray-500 hover:text-white transition-opacity"><Icon name="mdi:drag" class="w-4 h-4" /></button>
+                    <button class="drag-handle opacity-0 group-hover:opacity-100 cursor-move text-gray-500 hover:text-gray-900 dark:hover:text-white transition-opacity"><Icon name="mdi:drag" class="w-4 h-4" /></button>
                     <Icon v-if="s.icon" :name="s.icon" class="w-4 h-4 text-accent-light" />
-                    <span class="font-medium text-white text-sm">{{ s.category }}</span>
+                    <span class="font-medium text-gray-900 dark:text-white text-sm">{{ s.category }}</span>
                   </div>
               <div class="flex flex-wrap gap-1">
                 <span v-for="item in splitItems(s.items)" :key="item" class="tag">{{ item }}</span>
@@ -259,7 +259,7 @@
               <template #item="{ element: c }">
                 <div class="cert-card group">
                   <div class="flex items-center mr-2">
-                    <button class="drag-handle opacity-0 group-hover:opacity-100 cursor-move text-gray-500 hover:text-white transition-opacity"><Icon name="mdi:drag" class="w-5 h-5" /></button>
+                    <button class="drag-handle opacity-0 group-hover:opacity-100 cursor-move text-gray-500 hover:text-gray-900 dark:hover:text-white transition-opacity"><Icon name="mdi:drag" class="w-5 h-5" /></button>
                   </div>
                   <div class="cert-thumb">
                     <img v-if="c.fileUrl && !c.isPdf" :src="`${API_BASE}${c.fileUrl}`" alt="" class="cert-img" />
@@ -267,8 +267,8 @@
                     <Icon v-else name="mdi:certificate-outline" class="w-8 h-8 text-accent/40" />
                   </div>
               <div class="cert-info">
-                <p class="font-medium text-white text-sm leading-tight">{{ c.title }}</p>
-                <p class="text-xs text-gray-500 mt-0.5 truncate">{{ c.description || 'No description' }}</p>
+                <p class="font-medium text-gray-900 dark:text-white text-sm leading-tight">{{ c.title }}</p>
+                <p class="text-xs text-gray-600 dark:text-gray-500 mt-0.5 truncate">{{ c.description || 'No description' }}</p>
               </div>
                   <button class="icon-btn icon-btn--del mt-1" @click="deleteItem('certificate', c.id)">
                     <Icon name="mdi:trash-can-outline" class="w-3.5 h-3.5" />
@@ -630,10 +630,15 @@ const handleDrop = (e: DragEvent) => {
 /* ── Login ── */
 .glass-wrapper {
   position: relative; z-index: 10; width: 100%; max-width: 400px;
+  background: rgba(255,255,255,0.85); backdrop-filter: blur(64px) saturate(1.4) brightness(1);
+  -webkit-backdrop-filter: blur(64px) saturate(1.4) brightness(1);
+  border: 1px solid rgba(0,0,0,0.1); border-radius: 1.5rem; padding: 2.5rem 2rem;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+}
+.dark .glass-wrapper {
   background: rgba(10,8,30,0.45); backdrop-filter: blur(64px) saturate(1.4) brightness(0.9);
   -webkit-backdrop-filter: blur(64px) saturate(1.4) brightness(0.9);
-  border: 1px solid rgba(255,255,255,0.12); border-radius: 1.5rem; padding: 2.5rem 2rem;
-  box-shadow: 0 1px 0 rgba(255,255,255,0.1) inset;
+  border-color: rgba(255,255,255,0.12); box-shadow: 0 1px 0 rgba(255,255,255,0.1) inset;
 }
 
 /* ── Dashboard layout ── */
@@ -645,11 +650,15 @@ const handleDrop = (e: DragEvent) => {
 /* ── Sidebar ── */
 .sidebar {
   width: 220px; min-height: 100vh; flex-shrink: 0;
-  background: rgba(7,7,24,0.85); backdrop-filter: blur(32px);
-  border-right: 1px solid rgba(255,255,255,0.07);
+  background: rgba(255,255,255,0.9); backdrop-filter: blur(32px);
+  border-right: 1px solid rgba(0,0,0,0.05);
   display: flex; flex-direction: column;
   padding: 1.5rem 1rem;
   position: sticky; top: 0; height: 100vh; overflow-y: auto;
+}
+.dark .sidebar {
+  background: rgba(7,7,24,0.85);
+  border-right: 1px solid rgba(255,255,255,0.07);
 }
 
 .sidebar-brand {
@@ -707,7 +716,8 @@ const handleDrop = (e: DragEvent) => {
   display: flex; align-items: flex-start; justify-content: space-between;
   gap: 1rem;
 }
-.tab-title { font-size: 1.5rem; font-weight: 800; color: #fff; }
+.tab-title { font-size: 1.5rem; font-weight: 800; color: #0f172a; }
+.dark .tab-title { color: #fff; }
 .tab-subtitle { font-size: 0.78rem; color: rgba(180,180,220,0.5); margin-top: 0.2rem; font-mono: monospace; }
 
 /* ── Stats ── */
@@ -717,9 +727,12 @@ const handleDrop = (e: DragEvent) => {
 
 .stat-card {
   display: flex; align-items: center; gap: 1rem;
-  background: rgba(10,8,30,0.5); backdrop-filter: blur(32px);
-  border: 1px solid rgba(255,255,255,0.09); border-radius: 1rem; padding: 1.1rem 1.2rem;
+  background: rgba(255,255,255,0.8); backdrop-filter: blur(32px);
+  border: 1px solid rgba(0,0,0,0.05); border-radius: 1rem; padding: 1.1rem 1.2rem;
   cursor: pointer; transition: all 0.25s;
+}
+.dark .stat-card {
+  background: rgba(10,8,30,0.5); border-color: rgba(255,255,255,0.09);
 }
 .stat-card:hover { border-color: rgba(139,92,246,0.3); transform: translateY(-2px); }
 
@@ -739,15 +752,23 @@ const handleDrop = (e: DragEvent) => {
 
 /* ── List table ── */
 .list-table {
-  background: rgba(10,8,30,0.5); backdrop-filter: blur(32px);
-  border: 1px solid rgba(255,255,255,0.09); border-radius: 1rem; overflow: hidden;
+  background: rgba(255,255,255,0.7); backdrop-filter: blur(32px);
+  border: 1px solid rgba(0,0,0,0.05); border-radius: 1rem; overflow: hidden;
+}
+.dark .list-table {
+  background: rgba(10,8,30,0.5); border-color: rgba(255,255,255,0.09);
 }
 .list-head {
   display: grid; grid-template-columns: 2fr 2fr 1fr 1fr;
   padding: 0.65rem 1.25rem;
-  background: rgba(255,255,255,0.03);
-  border-bottom: 1px solid rgba(255,255,255,0.07);
-  font-size: 0.65rem; font-weight: 600; color: rgba(180,180,220,0.4);
+  background: rgba(0,0,0,0.03);
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  font-size: 0.65rem; font-weight: 600; color: rgba(15,23,42,0.6);
+  text-transform: uppercase; letter-spacing: 0.1em;
+}
+.dark .list-head {
+  background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.07); color: rgba(180,180,220,0.4);
+}
   text-transform: uppercase; letter-spacing: 0.1em;
 }
 .list-head--exp { grid-template-columns: 2fr 2fr 1.5fr 0.7fr; }
@@ -830,14 +851,18 @@ const handleDrop = (e: DragEvent) => {
 }
 .modal-box {
   width: 100%; max-width: 480px; max-height: 90vh; overflow-y: auto;
-  background: rgba(10,8,30,0.95); backdrop-filter: blur(64px);
-  border: 1px solid rgba(255,255,255,0.12); border-radius: 1.25rem;
+  background: rgba(255,255,255,0.98); backdrop-filter: blur(64px);
+  border: 1px solid rgba(0,0,0,0.1); border-radius: 1.25rem;
+}
+.dark .modal-box {
+  background: rgba(10,8,30,0.95); border-color: rgba(255,255,255,0.12);
 }
 .modal-header {
   display: flex; align-items: center; justify-content: space-between;
   padding: 1.25rem 1.5rem;
-  border-bottom: 1px solid rgba(255,255,255,0.07);
+  border-bottom: 1px solid rgba(0,0,0,0.07);
 }
+.dark .modal-header { border-color: rgba(255,255,255,0.07); }
 .modal-title { font-size: 1rem; font-weight: 700; color: #fff; }
 .modal-close {
   padding: 0.35rem; border-radius: 0.4rem; color: rgba(180,180,220,0.4);

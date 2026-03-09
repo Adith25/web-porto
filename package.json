@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "@iconify-json/logos": "^1.2.10",
+    "@nuxtjs/color-mode": "^4.0.0",
     "@vueuse/motion": "^3.0.3"
   }
 }

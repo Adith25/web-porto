@@ -24,12 +24,12 @@
             <div class="hero-badge mb-6">
               <span class="badge-dot" />
               <span class="font-mono text-xs tracking-widest text-accent-light">Hello World!, I'm&nbsp;</span>
-              <span class="font-mono text-xs font-semibold text-white">Adith</span>
+              <span class="font-mono text-xs font-semibold text-gray-900 dark:text-white">Adith</span>
             </div>
 
             <!-- Name -->
             <h1 class="hero-name mb-4">
-              <span class="block text-white">Muhammad Aditya</span>
+              <span class="block text-gray-900 dark:text-white">Muhammad Aditya</span>
               <span class="block gradient-text">Yufnanda</span>
             </h1>
 
@@ -66,8 +66,8 @@
 
       <!-- Scroll indicator -->
       <div class="absolute bottom-8 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-1 animate-bounce">
-        <span class="text-xs font-mono text-gray-600 tracking-widest">SCROLL</span>
-        <Icon name="mdi:chevron-double-down" class="w-5 h-5 text-gray-600" />
+        <span class="text-xs font-mono text-gray-400 dark:text-gray-600 tracking-widest">SCROLL</span>
+        <Icon name="mdi:chevron-double-down" class="w-5 h-5 text-gray-400 dark:text-gray-600" />
       </div>
     </section>
 
@@ -131,12 +131,12 @@
           <div class="lg:col-span-2 space-y-6">
             <ScrollReveal animation="fade-left">
               <div class="glass-card p-6 sm:p-8">
-                <h3 class="text-xl font-semibold text-white mb-4">Who I Am</h3>
-                <div class="space-y-4 text-gray-400 leading-relaxed">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Who I Am</h3>
+                <div class="space-y-4 text-gray-600 dark:text-gray-400 leading-relaxed">
                   <p>
-                    I'm <strong class="text-white">Muhammad Aditya Yufnanda</strong>,
+                    I'm <strong class="text-gray-900 dark:text-white">Muhammad Aditya Yufnanda</strong>,
                     a Computer Engineer based in Tangerang, Banten, Indonesia.
-                    I'm specializing in <span class="text-violet-light">Web and Mobile Development</span>, <span class="text-violet-400">Machine Learning</span> and <span class="text-violet-400">Embedded Systems</span>.
+                    I'm specializing in <span class="text-violet-600 dark:text-violet-light">Web and Mobile Development</span>, <span class="text-violet-600 dark:text-violet-400">Machine Learning</span> and <span class="text-violet-600 dark:text-violet-400">Embedded Systems</span>.
                   </p>
                   <p>
                     I have hands-on experience across the full development stack — from
@@ -152,11 +152,11 @@
 
             <ScrollReveal animation="fade-left" :delay="100">
               <div class="glass-card p-6 sm:p-8">
-                <h3 class="text-xl font-semibold text-white mb-4 flex items-center gap-2">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
                   <Icon name="mdi:target" class="w-5 h-5 text-accent" />
                   Career Objective
                 </h3>
-                <p class="text-gray-400 leading-relaxed">
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
                   To apply my multidisciplinary background in Web & Mobile Development,
                   Machine Learning, and Embedded Systems to build impactful,
                   real-world solutions — and grow as an engineer who bridges software
@@ -168,21 +168,21 @@
             <div class="grid sm:grid-cols-2 gap-6">
               <ScrollReveal animation="fade-left" :delay="150">
                 <div class="glass-card p-6">
-                  <h3 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                  <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
                     <Icon name="mdi:school-outline" class="w-5 h-5 text-accent" />
                     Education
                   </h3>
                   <div>
-                    <p class="font-medium text-white">Universitas Syiah Kuala</p>
-                    <p class="text-sm text-gray-400 mt-1">Bachelor of Engineering (B.E.)</p>
-                    <p class="text-xs text-gray-500 mt-1 font-mono">Computer Engineering (2021 – 2025)</p>
+                    <p class="font-medium text-gray-900 dark:text-white">Universitas Syiah Kuala</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Bachelor of Engineering (B.E.)</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 font-mono">Computer Engineering (2021 – 2025)</p>
                   </div>
                 </div>
               </ScrollReveal>
 
               <ScrollReveal animation="fade-left" :delay="200">
                 <div class="glass-card p-6">
-                  <h3 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                  <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
                     <Icon name="mdi:lightbulb-outline" class="w-5 h-5 text-accent" />
                     Interests
                   </h3>
@@ -197,7 +197,7 @@
 
             <ScrollReveal animation="fade-left" :delay="250">
               <div class="glass-card p-6">
-                <h3 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
                   <Icon name="mdi:star-four-points-outline" class="w-5 h-5 text-accent" />
                   Key Strengths
                 </h3>
@@ -205,8 +205,8 @@
                   <li v-for="s in strengths" :key="s.label" class="flex items-start gap-3">
                     <Icon :name="s.icon" class="w-4 h-4 text-accent mt-1 shrink-0" />
                     <div>
-                      <p class="text-sm font-medium text-white">{{ s.label }}</p>
-                      <p class="text-xs text-gray-500">{{ s.desc }}</p>
+                      <p class="text-sm font-medium text-gray-900 dark:text-white">{{ s.label }}</p>
+                      <p class="text-xs text-gray-600 dark:text-gray-500">{{ s.desc }}</p>
                     </div>
                   </li>
                 </ul>
@@ -224,7 +224,7 @@
         highlight=" Stack"
         subtitle="Technologies and tools I work with."
       >
-        <div class="divide-y divide-white/5">
+        <div class="divide-y divide-gray-200 dark:divide-white/5">
           <ScrollReveal
             v-for="(category, i) in techStack"
             :key="category.name"
@@ -245,7 +245,7 @@
                 <span
                   v-for="tech in category.items"
                   :key="tech"
-                  class="text-xs px-2 py-0.5 rounded-full bg-white/5 text-gray-300 border border-white/10 hover:border-accent/40 hover:text-white hover:bg-accent/10 transition-all duration-200 font-mono"
+                  class="text-xs px-2 py-0.5 rounded-full bg-gray-100 dark:bg-white/5 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-white/10 hover:border-accent/40 dark:hover:border-accent/40 hover:text-gray-900 dark:hover:text-white hover:bg-accent/10 transition-all duration-200 font-mono"
                 >
                   {{ tech }}
                 </span>
@@ -297,7 +297,7 @@
       >
         <div class="relative" ref="experienceSectionRef">
           <!-- Background vertical line -->
-          <div class="absolute left-32 top-0 bottom-0 w-px bg-white/5" />
+          <div class="absolute left-32 top-0 bottom-0 w-px bg-gray-200 dark:bg-white/5" />
           <!-- Animated progress line -->
           <div
             ref="progressLineRef"
@@ -315,14 +315,14 @@
               <div class="relative flex items-center gap-4 group">
                 <!-- Date label (left side) -->
                 <div class="w-32 shrink-0 text-right pr-4">
-                  <span class="text-xs text-gray-400 font-mono leading-tight block">{{ (exp.period.split(' · ')[0] ?? '').split(' - ')[0] ?? '' }}</span>
-                  <span class="text-[11px] text-gray-600 font-mono">{{ (exp.period.split(' · ')[0] ?? '').split(' - ')[1] ?? '' }}</span>
+                  <span class="text-xs text-gray-500 dark:text-gray-400 font-mono leading-tight block">{{ (exp.period.split(' · ')[0] ?? '').split(' - ')[0] ?? '' }}</span>
+                  <span class="text-[11px] text-gray-400 dark:text-gray-600 font-mono">{{ (exp.period.split(' · ')[0] ?? '').split(' - ')[1] ?? '' }}</span>
                 </div>
 
                 <!-- Animated dot on timeline -->
                 <div class="absolute left-[8rem] -translate-x-1/2 z-10 flex">
                   <div
-                    class="w-5 h-5 rounded-full bg-dark/90 border border-accent/40 flex items-center justify-center experience-dot transition-all duration-400"
+                    class="w-5 h-5 rounded-full bg-white/90 dark:bg-dark/90 border border-accent/40 flex items-center justify-center experience-dot transition-all duration-400"
                     :class="{ 'border-accent shadow-[0_0_10px_rgba(124,58,237,0.5)]': activeDots.includes(index) }"
                   >
                     <div
@@ -334,7 +334,7 @@
                 </div>
 
                 <!-- Content row -->
-                <div class="flex-1 flex items-center gap-4 pl-10 py-3 rounded-xl border border-transparent hover:border-accent/15 hover:bg-white/[0.025] transition-all duration-300">
+                <div class="flex-1 flex items-center gap-4 pl-10 py-3 rounded-xl border border-transparent hover:border-accent/15 hover:bg-gray-50 dark:hover:bg-white/[0.025] transition-all duration-300">
                   <!-- Logo -->
                   <div class="shrink-0 w-10 h-10 flex items-center justify-center">
                     <img
@@ -349,14 +349,14 @@
                   <!-- Text -->
                   <div class="flex-1 min-w-0">
                     <div class="flex flex-col gap-0.5">
-                      <span class="font-semibold text-white text-base leading-tight">{{ exp.role }}</span>
-                      <span class="text-accent-light/70 text-sm font-medium">{{ exp.company }}</span>
+                      <span class="font-semibold text-gray-900 dark:text-white text-base leading-tight">{{ exp.role }}</span>
+                      <span class="text-accent-dark/80 dark:text-accent-light/70 text-sm font-medium">{{ exp.company }}</span>
                     </div>
                     <div v-if="exp.tech?.length" class="flex flex-wrap gap-1.5 mt-1.5">
                       <span
                         v-for="tech in exp.tech"
                         :key="tech"
-                        class="text-[11px] px-2 py-0.5 rounded bg-accent/10 text-accent-light/70 font-mono"
+                        class="text-[11px] px-2 py-0.5 rounded bg-accent/10 text-accent-dark/80 dark:text-accent-light/70 font-mono"
                       >{{ tech }}</span>
                     </div>
                   </div>
@@ -413,7 +413,7 @@
         <div class="grid lg:grid-cols-2 gap-12">
           <ScrollReveal animation="fade-right">
             <div class="glass-card p-6 sm:p-8">
-              <h3 class="text-lg font-semibold text-white mb-6">
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-6">
                 Send a Message
               </h3>
               <ContactForm />
@@ -423,7 +423,7 @@
           <div class="space-y-6">
             <ScrollReveal animation="fade-left" :delay="100">
               <div class="glass-card p-6 sm:p-8">
-                <h3 class="text-lg font-semibold text-white mb-6">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-6">
                   Contact Info
                 </h3>
                 <div class="space-y-4">
@@ -433,7 +433,7 @@
                     :href="info.url"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="flex items-center gap-4 p-3 rounded-lg hover:bg-dark-lighter transition-colors duration-200 group"
+                    class="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-dark-lighter transition-colors duration-200 group"
                   >
                     <div
                       class="p-2 rounded-lg bg-accent/10 group-hover:bg-accent/20 transition-colors"
@@ -448,7 +448,7 @@
                         {{ info.label }}
                       </p>
                       <p
-                        class="text-sm text-gray-300 group-hover:text-white transition-colors"
+                        class="text-sm text-gray-600 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white transition-colors"
                       >
                         {{ info.value }}
                       </p>
@@ -469,11 +469,11 @@
                       class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"
                     />
                   </span>
-                  <h3 class="text-lg font-semibold text-white">
+                  <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
                     Available for Work
                   </h3>
                 </div>
-                <p class="text-sm text-gray-400 leading-relaxed">
+                <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
                   I'm currently open to full-time positions, freelance projects,
                   and collaboration opportunities. Feel free to reach out!
                 </p>

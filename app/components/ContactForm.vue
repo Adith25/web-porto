@@ -1,7 +1,7 @@
 <template>
   <form class="space-y-6" @submit.prevent="handleSubmit">
     <div>
-      <label for="name" class="block text-sm font-medium text-gray-300 mb-2"
+      <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
         >Name</label
       >
       <input
@@ -10,12 +10,12 @@
         type="text"
         required
         placeholder="Your name"
-        class="w-full px-4 py-3 bg-dark-card border border-dark-border rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/50 transition-all duration-200"
+        class="w-full px-4 py-3 bg-white dark:bg-dark-card border border-gray-200 dark:border-dark-border rounded-lg text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/50 transition-all duration-200"
       />
     </div>
 
     <div>
-      <label for="email" class="block text-sm font-medium text-gray-300 mb-2"
+      <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
         >Email</label
       >
       <input
@@ -24,12 +24,12 @@
         type="email"
         required
         placeholder="your@email.com"
-        class="w-full px-4 py-3 bg-dark-card border border-dark-border rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/50 transition-all duration-200"
+        class="w-full px-4 py-3 bg-white dark:bg-dark-card border border-gray-200 dark:border-dark-border rounded-lg text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/50 transition-all duration-200"
       />
     </div>
 
     <div>
-      <label for="message" class="block text-sm font-medium text-gray-300 mb-2"
+      <label for="message" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
         >Message</label
       >
       <textarea
@@ -38,7 +38,7 @@
         rows="5"
         required
         placeholder="Tell me about your project or idea..."
-        class="w-full px-4 py-3 bg-dark-card border border-dark-border rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/50 transition-all duration-200 resize-none"
+        class="w-full px-4 py-3 bg-white dark:bg-dark-card border border-gray-200 dark:border-dark-border rounded-lg text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/50 transition-all duration-200 resize-none"
       />
     </div>
 

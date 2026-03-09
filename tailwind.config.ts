@@ -16,10 +16,10 @@ export default {
       },
       colors: {
         dark: {
-          DEFAULT: '#0a0a0f',
-          card: '#111118',
-          lighter: '#1a1a24',
-          border: '#2a2a3a',
+          DEFAULT: 'rgb(var(--color-bg-base) / <alpha-value>)',
+          card: 'rgb(var(--color-bg-card) / <alpha-value>)',
+          lighter: 'rgb(var(--color-bg-lighter) / <alpha-value>)',
+          border: 'rgb(var(--color-border) / <alpha-value>)',
         },
         accent: {
           DEFAULT: '#6366f1',

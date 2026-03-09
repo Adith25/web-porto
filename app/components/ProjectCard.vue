@@ -16,7 +16,7 @@
           :href="github"
           target="_blank"
           rel="noopener noreferrer"
-          class="p-2 text-gray-500 hover:text-white transition-colors"
+          class="p-2 text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"
           aria-label="GitHub repository"
         >
           <Icon name="mdi:github" class="w-5 h-5" />
@@ -36,11 +36,11 @@
 
     <!-- Content -->
     <h3
-      class="text-lg font-semibold text-white mb-2 group-hover:text-accent-light transition-colors"
+      class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-accent-dark dark:group-hover:text-accent-light transition-colors"
     >
       {{ title }}
     </h3>
-    <p class="text-sm text-gray-400 leading-relaxed mb-4">{{ description }}</p>
+    <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-4">{{ description }}</p>
 
     <!-- Tags -->
     <div class="flex flex-wrap gap-2">

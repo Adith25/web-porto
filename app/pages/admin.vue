@@ -137,11 +137,14 @@
               <span>Actions</span>
             </div>
             <p v-if="projects.length === 0" class="empty-state">No projects yet. Click "Add Project" to get started.</p>
-            <div v-for="p in projects" :key="p.id" class="list-row">
-              <div class="flex items-center gap-2">
-                <Icon v-if="p.icon" :name="p.icon" class="w-4 h-4 text-accent-light shrink-0" />
-                <span class="font-medium text-white text-sm truncate">{{ p.title }}</span>
-              </div>
+            <draggable v-model="projects" item-key="id" handle=".drag-handle" @end="onReorder('project')" :animation="200" v-else>
+              <template #item="{ element: p }">
+                <div class="list-row group">
+                  <div class="flex items-center gap-2">
+                    <button class="drag-handle opacity-0 group-hover:opacity-100 cursor-move text-gray-500 hover:text-white transition-opacity"><Icon name="mdi:drag" class="w-4 h-4" /></button>
+                    <Icon v-if="p.icon" :name="p.icon" class="w-4 h-4 text-accent-light shrink-0" />
+                    <span class="font-medium text-white text-sm truncate">{{ p.title }}</span>
+                  </div>
               <div class="flex flex-wrap gap-1">
                 <span v-for="t in splitItems(p.techStack)" :key="t" class="tag">{{ t }}</span>
               </div>
@@ -149,11 +152,13 @@
                 <a v-if="p.githubUrl && p.githubUrl !== '#'" :href="p.githubUrl" target="_blank" class="link-chip"><Icon name="mdi:github" class="w-3.5 h-3.5" /></a>
                 <a v-if="p.demoUrl && p.demoUrl !== '#'" :href="p.demoUrl" target="_blank" class="link-chip"><Icon name="mdi:open-in-new" class="w-3.5 h-3.5" /></a>
               </div>
-              <div class="flex gap-2">
-                <button class="icon-btn icon-btn--edit" @click="editItem('project', p)"><Icon name="mdi:pencil-outline" class="w-3.5 h-3.5" /></button>
-                <button class="icon-btn icon-btn--del" @click="deleteItem('project', p.id)"><Icon name="mdi:trash-can-outline" class="w-3.5 h-3.5" /></button>
-              </div>
-            </div>
+                  <div class="flex gap-2">
+                    <button class="icon-btn icon-btn--edit" @click="editItem('project', p)"><Icon name="mdi:pencil-outline" class="w-3.5 h-3.5" /></button>
+                    <button class="icon-btn icon-btn--del" @click="deleteItem('project', p.id)"><Icon name="mdi:trash-can-outline" class="w-3.5 h-3.5" /></button>
+                  </div>
+                </div>
+              </template>
+            </draggable>
           </div>
         </section>
 
@@ -177,15 +182,22 @@
               <span>Actions</span>
             </div>
             <p v-if="experiences.length === 0" class="empty-state">No experience entries yet.</p>
-            <div v-for="e in experiences" :key="e.id" class="list-row list-row--exp">
-              <span class="font-medium text-white text-sm truncate">{{ e.role }}</span>
+            <draggable v-model="experiences" item-key="id" handle=".drag-handle" @end="onReorder('experience')" :animation="200" v-else>
+              <template #item="{ element: e }">
+                <div class="list-row list-row--exp group">
+                  <div class="flex items-center gap-2">
+                    <button class="drag-handle opacity-0 group-hover:opacity-100 cursor-move text-gray-500 hover:text-white transition-opacity"><Icon name="mdi:drag" class="w-4 h-4" /></button>
+                    <span class="font-medium text-white text-sm truncate">{{ e.role }}</span>
+                  </div>
               <span class="text-gray-400 text-sm truncate">{{ e.company }}</span>
               <span class="text-gray-500 text-xs font-mono">{{ e.period }}</span>
-              <div class="flex gap-2">
-                <button class="icon-btn icon-btn--edit" @click="editItem('experience', e)"><Icon name="mdi:pencil-outline" class="w-3.5 h-3.5" /></button>
-                <button class="icon-btn icon-btn--del" @click="deleteItem('experience', e.id)"><Icon name="mdi:trash-can-outline" class="w-3.5 h-3.5" /></button>
-              </div>
-            </div>
+                  <div class="flex gap-2">
+                    <button class="icon-btn icon-btn--edit" @click="editItem('experience', e)"><Icon name="mdi:pencil-outline" class="w-3.5 h-3.5" /></button>
+                    <button class="icon-btn icon-btn--del" @click="deleteItem('experience', e.id)"><Icon name="mdi:trash-can-outline" class="w-3.5 h-3.5" /></button>
+                  </div>
+                </div>
+              </template>
+            </draggable>
           </div>
         </section>
 
@@ -208,19 +220,24 @@
               <span>Actions</span>
             </div>
             <p v-if="skills.length === 0" class="empty-state">No skill categories yet.</p>
-            <div v-for="s in skills" :key="s.id" class="list-row list-row--skill">
-              <div class="flex items-center gap-2">
-                <Icon v-if="s.icon" :name="s.icon" class="w-4 h-4 text-accent-light" />
-                <span class="font-medium text-white text-sm">{{ s.category }}</span>
-              </div>
+            <draggable v-model="skills" item-key="id" handle=".drag-handle" @end="onReorder('skill')" :animation="200" v-else>
+              <template #item="{ element: s }">
+                <div class="list-row list-row--skill group">
+                  <div class="flex items-center gap-2">
+                    <button class="drag-handle opacity-0 group-hover:opacity-100 cursor-move text-gray-500 hover:text-white transition-opacity"><Icon name="mdi:drag" class="w-4 h-4" /></button>
+                    <Icon v-if="s.icon" :name="s.icon" class="w-4 h-4 text-accent-light" />
+                    <span class="font-medium text-white text-sm">{{ s.category }}</span>
+                  </div>
               <div class="flex flex-wrap gap-1">
                 <span v-for="item in splitItems(s.items)" :key="item" class="tag">{{ item }}</span>
               </div>
-              <div class="flex gap-2">
-                <button class="icon-btn icon-btn--edit" @click="editItem('skill', s)"><Icon name="mdi:pencil-outline" class="w-3.5 h-3.5" /></button>
-                <button class="icon-btn icon-btn--del" @click="deleteItem('skill', s.id)"><Icon name="mdi:trash-can-outline" class="w-3.5 h-3.5" /></button>
-              </div>
-            </div>
+                  <div class="flex gap-2">
+                    <button class="icon-btn icon-btn--edit" @click="editItem('skill', s)"><Icon name="mdi:pencil-outline" class="w-3.5 h-3.5" /></button>
+                    <button class="icon-btn icon-btn--del" @click="deleteItem('skill', s.id)"><Icon name="mdi:trash-can-outline" class="w-3.5 h-3.5" /></button>
+                  </div>
+                </div>
+              </template>
+            </draggable>
           </div>
         </section>
 
@@ -238,20 +255,27 @@
 
           <div class="cert-grid">
             <p v-if="certificates.length === 0" class="empty-state">No certificates yet.</p>
-            <div v-for="c in certificates" :key="c.id" class="cert-card">
-              <div class="cert-thumb">
-                <img v-if="c.fileUrl && !c.isPdf" :src="`${API_BASE}${c.fileUrl}`" alt="" class="cert-img" />
-                <Icon v-else-if="c.isPdf" name="mdi:file-pdf-box" class="w-8 h-8 text-red-400" />
-                <Icon v-else name="mdi:certificate-outline" class="w-8 h-8 text-accent/40" />
-              </div>
+            <draggable v-model="certificates" item-key="id" handle=".drag-handle" @end="onReorder('certificate')" :animation="200" v-else>
+              <template #item="{ element: c }">
+                <div class="cert-card group">
+                  <div class="flex items-center mr-2">
+                    <button class="drag-handle opacity-0 group-hover:opacity-100 cursor-move text-gray-500 hover:text-white transition-opacity"><Icon name="mdi:drag" class="w-5 h-5" /></button>
+                  </div>
+                  <div class="cert-thumb">
+                    <img v-if="c.fileUrl && !c.isPdf" :src="`${API_BASE}${c.fileUrl}`" alt="" class="cert-img" />
+                    <Icon v-else-if="c.isPdf" name="mdi:file-pdf-box" class="w-8 h-8 text-red-400" />
+                    <Icon v-else name="mdi:certificate-outline" class="w-8 h-8 text-accent/40" />
+                  </div>
               <div class="cert-info">
                 <p class="font-medium text-white text-sm leading-tight">{{ c.title }}</p>
                 <p class="text-xs text-gray-500 mt-0.5 truncate">{{ c.description || 'No description' }}</p>
               </div>
-              <button class="icon-btn icon-btn--del mt-1" @click="deleteItem('certificate', c.id)">
-                <Icon name="mdi:trash-can-outline" class="w-3.5 h-3.5" />
-              </button>
-            </div>
+                  <button class="icon-btn icon-btn--del mt-1" @click="deleteItem('certificate', c.id)">
+                    <Icon name="mdi:trash-can-outline" class="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </template>
+            </draggable>
           </div>
         </section>
       </main>
@@ -342,6 +366,8 @@
 </template>
 
 <script setup lang="ts">
+import draggable from 'vuedraggable'
+
 definePageMeta({ layout: 'admin' })
 useHead({ title: 'Admin — Adith', meta: [{ name: 'robots', content: 'noindex, nofollow' }] })
 
@@ -505,6 +531,29 @@ const deleteItem = async (type: string, id: number) => {
     })
     await fetchAll()
   } catch (err) { console.error(err) }
+}
+
+const onReorder = async (type: string) => {
+  let list: any[] = []
+  if (type === 'project') list = projects.value
+  else if (type === 'experience') list = experiences.value
+  else if (type === 'skill') list = skills.value
+  else if (type === 'certificate') list = certificates.value
+
+  const payload = list.map((item, index) => ({ id: item.id, order: index }))
+
+  try {
+    await $fetch(`${API_BASE}/${type}s/reorder`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${token.value}`, 'Content-Type': 'application/json' },
+      body: payload
+    })
+    // No need to refetch all, dragging already handles local state update
+  } catch (err: any) {
+    console.error('Reorder failed:', err)
+    alert('Failed to save order on server.')
+    await fetchAll() // revert
+  }
 }
 
 // ── Certificate file upload ──

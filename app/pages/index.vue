@@ -579,56 +579,7 @@ const selectedCert = ref<{
 } | null>(null);
 
 // ─── Data ───────────────────────────────────
-const techStack = [
-  {
-    name: "Frontend",
-    icon: "mdi:palette-outline",
-    bgClass: "bg-sky-500/10",
-    iconClass: "text-sky-400",
-    labelClass: "text-sky-400",
-    items: ["React.js", "Nuxt.js", "Flutter", "Tailwind", "Bootstrap", "JavaScript"],
-  },
-  {
-    name: "Backend",
-    icon: "mdi:server",
-    bgClass: "bg-emerald-500/10",
-    iconClass: "text-emerald-400",
-    labelClass: "text-emerald-400",
-    items: ["NestJS", "TypeScript", "MySQL", "PostgreSQL"],
-  },
-  {
-    name: "Design",
-    icon: "mdi:vector-square",
-    bgClass: "bg-pink-500/10",
-    iconClass: "text-pink-400",
-    labelClass: "text-pink-400",
-    items: ["Figma", "Canva"],
-  },
-  {
-    name: "Tools",
-    icon: "mdi:wrench-outline",
-    bgClass: "bg-accent/10",
-    iconClass: "text-accent-light",
-    labelClass: "text-accent-light",
-    items: ["Git", "Docker", "Firebase"],
-  },
-  {
-    name: "ML",
-    icon: "mdi:brain",
-    bgClass: "bg-violet-500/10",
-    iconClass: "text-violet-400",
-    labelClass: "text-violet-400",
-    items: ["Python", "TensorFlow", "PyTorch", "OpenCV"],
-  },
-  {
-    name: "Embedded",
-    icon: "mdi:chip",
-    bgClass: "bg-amber-500/10",
-    iconClass: "text-amber-400",
-    labelClass: "text-amber-400",
-    items: ["Arduino Uno", "ESP32", "Sensors", "Actuators"],
-  },
-];
+const techStack = ref<any[]>([]);
 
 const strengths = [
   {
@@ -662,184 +613,93 @@ const interests = [
   "Open Source",
 ];
 
-const projects = [
-  {
-    title: "Dental Caries Classification using FPN",
-    description:
-      "Deep learning research project utilizing Feature Pyramid Network architecture for dental caries segmentation and classification. Focused on improving diagnostic accuracy through multi-scale feature extraction.",
-    tags: ["Python", "TensorFlow", "OpenCV", "Deep Learning", "FPN"],
-    icon: "mdi:tooth-outline",
-    github: "#",
-    demo: "#",
-  },
-  {
-    title: "LeakGuard — IoT Irrigation Monitoring",
-    description:
-      "IoT-based irrigation leak detection system designed to improve water efficiency aligned with SDG 6.4. Utilizes sensor networks for real-time monitoring and alert mechanisms.",
-    tags: ["Arduino", "IoT", "Sensors", "Water Efficiency", "SDG 6.4"],
-    icon: "mdi:water-alert-outline",
-    github: "#",
-    demo: "#",
-  },
-  {
-    title: "WudhuCycle — Greywater Reuse System",
-    description:
-      "Smart greywater reuse system with integrated mobile application built in Flutter. Combines IoT sensing with a user-friendly interface for monitoring water recycling processes.",
-    tags: ["Flutter", "Arduino", "IoT", "Mobile App", "Sustainability"],
-    icon: "mdi:recycle-variant",
-    github: "#",
-    demo: "#",
-  },
-  {
-    title: "Mobile App Projects",
-    description:
-      "Collection of Flutter-based mobile applications showcasing cross-platform development skills. Includes various apps with clean architecture, state management, and API integrations.",
-    tags: ["Flutter", "Dart", "REST API", "Firebase", "Mobile"],
-    icon: "mdi:cellphone",
-    github: "#",
-    demo: "#",
-  },
-];
+const projects = ref<any[]>([]);
 
-const experiences = [
-  {
-    role: "Intern Information Technology Department",
-    company: "AirNav Indonesia · Internship",
-    period: "Oct 2025 - Present · 6 mos",
-    location: "Tangerang, Banten, Indonesia · On-site",
-    logo: "/images/logo_airnav.png",
-    description: "",
-    highlights: [],
-    tech: ["Flutter", "Mobile Application Development", "Engineering", "Software Infrastructure", "Information Technology Infrastructure"],
-  },
-  {
-    role: "Signal Processing Teaching Assistant",
-    company: "Universitas Syiah Kuala · Part-time",
-    period: "Mar 2025 - Jun 2025 · 4 mos",
-    location: "Banda Aceh, Aceh, Indonesia · On-site",
-    logo: "/images/logo_usk.svg.png",
-    description: "",
-    highlights: [],
-    tech: ["MATLAB"],
-  },
-  {
-    role: "Multimedia Signal Processing Teaching Assistant",
-    company: "Universitas Syiah Kuala",
-    period: "Jul 2024 - Dec 2024 · 6 mos",
-    location: "Banda Aceh, Aceh, Indonesia · On-site",
-    logo: "/images/logo_usk.svg.png",
-    description: "",
-    highlights: [],
-    tech: ["MATLAB", "Encoding", "Decoding", "Signal Processing", "Image Processing"],
-  },
-  {
-    role: "Software Engineering Lab Assistant",
-    company: "Universitas Syiah Kuala",
-    period: "Feb 2024 - Jun 2024 · 5 mos",
-    location: "Banda Aceh, Aceh, Indonesia · On-site",
-    logo: "/images/logo_usk.svg.png",
-    description: "",
-    highlights: [],
-    tech: ["Scrum", "Unified Modeling Language (UML)"],
-  },
-  {
-    role: "Head of Public Relations Division",
-    company: "Himpunan Mahasiswa Teknik Komputer USK",
-    period: "Jan 2024 - Dec 2024 · 1 yr",
-    location: "Banda Aceh, Aceh, Indonesia · On-site",
-    logo: "/images/logo_himatekkom.png",
-    description: "",
-    highlights: [],
-    tech: ["Public Speaking", "Leadership", "Teamwork"],
-  },
-  {
-    role: "Member of Public Relations Division",
-    company: "Himpunan Mahasiswa Teknik Komputer USK",
-    period: "Jan 2023 - Dec 2023 · 1 yr",
-    location: "Banda Aceh, Aceh, Indonesia · On-site",
-    logo: "/images/logo_himatekkom.png",
-    description: "",
-    highlights: [],
-    tech: ["Teamwork"],
-  },
-  {
-    role: "Member of Talent and Interests Division",
-    company: "Himpunan Mahasiswa Teknik Komputer USK",
-    period: "Jan 2022 - Dec 2022 · 1 yr",
-    location: "Banda Aceh, Aceh, Indonesia · On-site",
-    logo: "/images/logo_himatekkom.png",
-    description: "",
-    highlights: [],
-    tech: [],
-  },
-  {
-    role: "Bangkit Academy 2023 - Machine Learning Path",
-    company: "Bangkit Academy led by Google, Tokopedia, Gojek, & Traveloka · Seasonal",
-    period: "Aug 2023 - Jan 2024 · 6 mos",
-    location: "Banda Aceh, Aceh, Indonesia · Remote",
-    logo: "/images/bangkit_logo.jpg",
-    description: "",
-    highlights: [],
-    tech: ["Machine Learning", "Deep Learning"],
-  },
-];
+const experiences = ref<any[]>([]);
+
+const API_BASE = 'http://localhost:3001';
+
+const fetchExperiences = async () => {
+  try {
+    const data = await $fetch<any[]>(`${API_BASE}/experiences`);
+    experiences.value = data.map(exp => ({
+      ...exp,
+      tech: exp.tech ? exp.tech.split(',').map((t: string) => t.trim()).filter(Boolean) : []
+    }));
+  } catch (error) {
+    console.error('Failed to fetch experiences:', error);
+  }
+};
+
+const fetchProjects = async () => {
+  try {
+    const data = await $fetch<any[]>(`${API_BASE}/projects`);
+    projects.value = data.map(p => ({
+      ...p,
+      tags: p.techStack ? p.techStack.split(',').map((t: string) => t.trim()).filter(Boolean) : [],
+      github: p.githubUrl,
+      demo: p.demoUrl
+    }));
+  } catch (error) {
+    console.error('Failed to fetch projects:', error);
+  }
+};
+
+const fetchSkills = async () => {
+  try {
+    const data = await $fetch<any[]>(`${API_BASE}/skills`);
+    techStack.value = data.map(s => {
+        let bgClass = "bg-accent/10";
+        let iconClass = "text-accent-light";
+        
+        switch(s.category.toLowerCase()) {
+            case 'frontend': bgClass = "bg-sky-500/10"; iconClass = "text-sky-400"; break;
+            case 'backend': bgClass = "bg-emerald-500/10"; iconClass = "text-emerald-400"; break;
+            case 'design': bgClass = "bg-pink-500/10"; iconClass = "text-pink-400"; break;
+            case 'tools': bgClass = "bg-accent/10"; iconClass = "text-accent-light"; break;
+            case 'ml': bgClass = "bg-violet-500/10"; iconClass = "text-violet-400"; break;
+            case 'embedded': bgClass = "bg-amber-500/10"; iconClass = "text-amber-400"; break;
+        }
+
+        return {
+            name: s.category,
+            icon: s.icon || 'mdi:code-tags',
+            bgClass,
+            iconClass,
+            labelClass: iconClass,
+            items: s.items ? s.items.split(',').map((t: string) => t.trim()).filter(Boolean) : []
+        };
+    });
+  } catch (error) {
+    console.error('Failed to fetch skills:', error);
+  }
+};
+
+const fetchCertificates = async () => {
+  try {
+    const data = await $fetch<any[]>(`${API_BASE}/certificates`);
+    certificates.value = data.map(c => ({
+      ...c,
+      image: c.fileUrl && !c.isPdf ? `${API_BASE}${c.fileUrl}` : ''
+    }));
+  } catch (error) {
+    console.error('Failed to fetch certificates:', error);
+  }
+};
+
+onMounted(() => {
+  fetchExperiences();
+  fetchProjects();
+  fetchSkills();
+  fetchCertificates();
+});
 
 const showAllCertificates = ref(false);
 
-const certificates = [
-  {
-    title: "AWS Certified Cloud Practitioner",
-    description: "Validates technical expertise in designing and deploying scalable systems on Amazon Web Services.",
-    image: "",
-    credentialUrl: "#",
-  },
-  {
-    title: "Belajar Dasar Pemrograman Web",
-    description: "Foundational web development course covering HTML, CSS, and modern JavaScript.",
-    image: "",
-    credentialUrl: "#",
-  },
-  {
-    title: "Belajar Membuat Aplikasi Back-End untuk Pemula",
-    description: "Back-end development fundamentals using Node.js and REST APIs on Dicoding Indonesia.",
-    image: "",
-    credentialUrl: "#",
-  },
-  {
-    title: "Belajar Dasar Pemrograman JavaScript",
-    description: "Core JavaScript programming including ES6+ features, async programming, and DOM manipulation.",
-    image: "",
-    credentialUrl: "#",
-  },
-  {
-    title: "Cloud Computing Learning Path",
-    description: "Intensive program by Bangkit Academy focused on Google Cloud Platform, backend services, and modern cloud architectures.",
-    image: "",
-    credentialUrl: "#",
-  },
-  {
-    title: "Front-End Web Developer Learning Path",
-    description: "Comprehensive frontend path covering HTML5, CSS3, JavaScript, PWA, and web accessibility.",
-    image: "",
-    credentialUrl: "#",
-  },
-  {
-    title: "Machine Learning Foundations",
-    description: "Introductory machine learning concepts including supervised/unsupervised learning and model evaluation.",
-    image: "",
-    credentialUrl: "#",
-  },
-  {
-    title: "Flutter Development Bootcamp",
-    description: "End-to-end Flutter development including state management, Firebase integration, and publishing to app stores.",
-    image: "",
-    credentialUrl: "#",
-  },
-  // Add more certificates here — they will be hidden behind the "Show All" toggle.
-];
+const certificates = ref<any[]>([]);
 
 const displayedCertificates = computed(() => {
-  return showAllCertificates.value ? certificates : certificates.slice(0, 6);
+  return showAllCertificates.value ? certificates.value : certificates.value.slice(0, 6);
 });
 
 const contactInfo = [

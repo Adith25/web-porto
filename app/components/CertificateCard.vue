@@ -1,6 +1,6 @@
 <template>
-  <article
-    class="cert-card group cursor-pointer"
+  <MagicCard
+    class="cert-card-container flex flex-col h-full group cursor-pointer !bg-white dark:!bg-[#0a081e]/45 !p-0"
     @click="$emit('select')"
     :title="title"
   >
@@ -45,10 +45,11 @@
         View Credential
       </a>
     </div>
-  </article>
+  </MagicCard>
 </template>
 
 <script setup lang="ts">
+import MagicCard from '~/components/MagicCard.vue';
 const props = defineProps<{
   title: string;
   description?: string;
@@ -65,22 +66,14 @@ const isPdf = computed(
 
 <style scoped>
 /* ── Card shell ── */
-.cert-card {
+.cert-card-container {
   display: flex;
   flex-direction: column;
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 1rem;
   overflow: hidden;
-  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, background 0.3s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
-.dark .cert-card {
-  background: rgba(10, 8, 30, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.09);
-}
-.cert-card:hover {
+.cert-card-container:hover {
   transform: translateY(-4px);
-  border-color: rgba(139, 92, 246, 0.4);
   box-shadow: 0 12px 40px rgba(139, 92, 246, 0.15);
 }
 
@@ -105,7 +98,7 @@ const isPdf = computed(
   object-fit: cover;
   transition: transform 0.4s ease;
 }
-.cert-card:hover .cert-img {
+.cert-card-container:hover .cert-img {
   transform: scale(1.04);
 }
 
@@ -127,7 +120,7 @@ const isPdf = computed(
   opacity: 0;
   transition: opacity 0.3s ease;
 }
-.cert-card:hover .cert-shine {
+.cert-card-container:hover .cert-shine {
   opacity: 1;
 }
 
@@ -168,7 +161,7 @@ const isPdf = computed(
 .dark .cert-title {
   color: #fff;
 }
-.cert-card:hover .cert-title {
+.cert-card-container:hover .cert-title {
   color: #c4b5fd;
 }
 

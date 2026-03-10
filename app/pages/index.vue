@@ -333,33 +333,37 @@
                   </div>
                 </div>
 
-                <!-- Content row -->
-                <div class="flex-1 flex items-center gap-4 pl-10 py-3 rounded-xl border border-transparent hover:border-accent/15 hover:bg-gray-50 dark:hover:bg-white/[0.025] transition-all duration-300">
-                  <!-- Logo -->
-                  <div class="shrink-0 w-10 h-10 flex items-center justify-center">
-                    <img
-                      v-if="exp.logo"
-                      :src="exp.logo"
-                      :alt="exp.company"
-                      class="w-full h-full object-contain"
-                    />
-                    <Icon v-else name="mdi:office-building-outline" class="w-6 h-6 text-gray-500" />
-                  </div>
+                <!-- Content row via MagicCard -->
+                <div class="flex-1">
+                  <MagicCard class="!bg-transparent border border-transparent hover:border-accent/15 hover:bg-gray-50 dark:hover:bg-white/[0.025] transition-all duration-300">
+                    <div class="flex items-center gap-4 pl-10 py-3 rounded-xl">
+                      <!-- Logo -->
+                      <div class="shrink-0 w-10 h-10 flex items-center justify-center">
+                        <img
+                          v-if="exp.logo"
+                          :src="exp.logo"
+                          :alt="exp.company"
+                          class="w-full h-full object-contain"
+                        />
+                        <Icon v-else name="mdi:office-building-outline" class="w-6 h-6 text-gray-500" />
+                      </div>
 
-                  <!-- Text -->
-                  <div class="flex-1 min-w-0">
-                    <div class="flex flex-col gap-0.5">
-                      <span class="font-semibold text-gray-900 dark:text-white text-base leading-tight">{{ exp.role }}</span>
-                      <span class="text-accent-dark/80 dark:text-accent-light/70 text-sm font-medium">{{ exp.company }}</span>
+                      <!-- Text -->
+                      <div class="flex-1 min-w-0">
+                        <div class="flex flex-col gap-0.5">
+                          <span class="font-semibold text-gray-900 dark:text-white text-base leading-tight">{{ exp.role }}</span>
+                          <span class="text-accent-dark/80 dark:text-accent-light/70 text-sm font-medium">{{ exp.company }}</span>
+                        </div>
+                        <div v-if="exp.tech?.length" class="flex flex-wrap gap-1.5 mt-1.5">
+                          <span
+                            v-for="tech in exp.tech"
+                            :key="tech"
+                            class="text-[11px] px-2 py-0.5 rounded bg-accent/10 text-accent-dark/80 dark:text-accent-light/70 font-mono"
+                          >{{ tech }}</span>
+                        </div>
+                      </div>
                     </div>
-                    <div v-if="exp.tech?.length" class="flex flex-wrap gap-1.5 mt-1.5">
-                      <span
-                        v-for="tech in exp.tech"
-                        :key="tech"
-                        class="text-[11px] px-2 py-0.5 rounded bg-accent/10 text-accent-dark/80 dark:text-accent-light/70 font-mono"
-                      >{{ tech }}</span>
-                    </div>
-                  </div>
+                  </MagicCard>
                 </div>
               </div>
             </ScrollReveal>
@@ -617,7 +621,8 @@ const projects = ref<any[]>([]);
 
 const experiences = ref<any[]>([]);
 
-const API_BASE = 'http://localhost:3001';
+const config = useRuntimeConfig();
+const API_BASE = config.public.apiBase;
 
 const fetchExperiences = async () => {
   try {

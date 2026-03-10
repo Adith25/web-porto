@@ -1,6 +1,6 @@
 <template>
-  <article
-    class="glass-card p-6 group hover:border-accent/40 transition-all duration-300 hover:-translate-y-1"
+  <MagicCard
+    class="flex flex-col h-full !bg-white dark:!bg-[#0f0f19]/75 p-6 group transition-all duration-300 hover:-translate-y-1"
   >
     <!-- Header -->
     <div class="flex items-start justify-between mb-4">
@@ -48,10 +48,11 @@
         {{ tag }}
       </TechBadge>
     </div>
-  </article>
+  </MagicCard>
 </template>
 
 <script setup lang="ts">
+import MagicCard from '~/components/MagicCard.vue';
 defineProps<{
   title: string;
   description: string;

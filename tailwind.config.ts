@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss'
+// Triggering cache invalidation after fixing CSS syntax
 
 export default {
   content: [

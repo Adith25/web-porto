@@ -1,7 +1,7 @@
 <template>
   <div
     ref="cardRef"
-    class="magic-card"
+    class="magic-card group"
     @mousemove="onMouseMove"
     @mouseleave="onMouseLeave"
   >
@@ -9,6 +9,8 @@
     <div class="magic-spotlight" :style="spotlightStyle" />
     <!-- Border glow layer -->
     <div class="magic-border" :style="borderStyle" />
+    <!-- Static outer border -->
+    <div class="magic-static-border" />
     <!-- Content slot -->
     <div class="magic-content">
       <slot />
@@ -59,10 +61,10 @@ const borderStyle = computed(() => {
   if (mouseX.value === null || mouseY.value === null) {
     return { opacity: '0' };
   }
-  const r = props.gradientSize * 1.2;
+  const r = props.gradientSize;
   return {
     opacity: '1',
-    background: `radial-gradient(${r}px circle at ${mouseX.value}px ${mouseY.value}px, rgba(139, 92, 246, 0.55), transparent 65%)`,
+    background: `radial-gradient(${r}px circle at ${mouseX.value}px ${mouseY.value}px, rgba(236, 72, 153, 0.8), rgba(139, 92, 246, 0.8) 40%, transparent 80%)`,
   };
 });
 </script>
@@ -74,9 +76,18 @@ const borderStyle = computed(() => {
   overflow: hidden;
   /* Dark base */
   background: rgba(15, 15, 25, 0.75);
-  /* Normal border — overridden by border-glow on hover via parent */
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  transition: border-color 0.3s ease;
+}
+
+.magic-static-border {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: inherit;
+  z-index: 1;
+}
+.magic-card:hover .magic-static-border {
+  opacity: 0.3;
 }
 
 /* Spotlight glow that follows cursor */
@@ -89,13 +100,13 @@ const borderStyle = computed(() => {
   border-radius: inherit;
 }
 
-/* Border glow — sits just behind via negative inset trick */
+/* Border glow — sits exactly on the edge */
 .magic-border {
   position: absolute;
-  inset: -1px;
+  inset: 0;
   pointer-events: none;
   transition: opacity 0.3s ease;
-  z-index: 0;
+  z-index: 2;
   border-radius: inherit;
   /* Masked so only the 1px edge is visible */
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -108,6 +119,6 @@ const borderStyle = computed(() => {
 /* Actual card content sits above the glow layers */
 .magic-content {
   position: relative;
-  z-index: 1;
+  z-index: 3;
 }
 </style>

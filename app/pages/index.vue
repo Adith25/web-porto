@@ -3,12 +3,7 @@
     <!-- ==================== HERO ==================== -->
     <section id="hero" class="relative min-h-screen flex items-center pt-16 overflow-hidden">
 
-      <!-- Development Warning Banner -->
-      <div class="absolute top-0 left-0 w-full bg-amber-500/90 text-amber-950 dark:bg-amber-500/90 dark:text-amber-950 py-1.5 z-50 overflow-hidden flex items-center shadow-md backdrop-blur-sm">
-        <div class="whitespace-nowrap animate-marquee-ltr font-semibold text-sm tracking-wider">
-          <span class="mx-4">⚠️ This website is still under development ⚠️</span>
-        </div>
-      </div>
+
 
       <!-- Dot-grid background -->
       <div class="hero-grid" aria-hidden="true" />
@@ -115,14 +110,6 @@
                       <Icon name="mdi:email-outline" class="meta-icon" />
                       <span>adityayufnanda25@gmail.com</span>
                     </div>
-                  </div>
-                </div>
-
-                <!-- Card footer -->
-                <div class="card-footer">
-                  <div class="status-row">
-                    <span class="status-dot" />
-                    <span class="status-text">Available for Work</span>
                   </div>
                 </div>
               </div>

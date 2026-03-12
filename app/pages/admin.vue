@@ -208,9 +208,15 @@
                 {{ projects.length }} project(s) in database
               </p>
             </div>
-            <button class="add-btn" @click="openModal('project')">
-              <Icon name="mdi:plus" class="w-4 h-4" /> Add Project
-            </button>
+            <div class="flex items-center gap-3">
+              <button class="bg-emerald-500 text-white px-3 py-1.5 rounded-lg text-sm font-medium flex items-center gap-1.5 hover:bg-emerald-600 transition-colors shadow-sm" :disabled="savingOrderFor === 'project'" @click="onReorder('project')">
+                <Icon v-if="savingOrderFor === 'project'" name="mdi:loading" class="w-4 h-4 animate-spin" />
+                <Icon v-else name="mdi:content-save-outline" class="w-4 h-4" /> Save Changes
+              </button>
+              <button class="add-btn" @click="openModal('project')">
+                <Icon name="mdi:plus" class="w-4 h-4" /> Add Project
+              </button>
+            </div>
           </div>
 
           <div class="list-table">
@@ -227,7 +233,6 @@
               v-model="projects"
               item-key="id"
               handle=".drag-handle"
-              @end="onReorder('project')"
               :animation="200"
               v-else
             >
@@ -302,9 +307,15 @@
                 {{ experiences.length }} entry(s) in database
               </p>
             </div>
-            <button class="add-btn" @click="openModal('experience')">
-              <Icon name="mdi:plus" class="w-4 h-4" /> Add Experience
-            </button>
+            <div class="flex items-center gap-3">
+              <button class="bg-emerald-500 text-white px-3 py-1.5 rounded-lg text-sm font-medium flex items-center gap-1.5 hover:bg-emerald-600 transition-colors shadow-sm" :disabled="savingOrderFor === 'experience'" @click="onReorder('experience')">
+                <Icon v-if="savingOrderFor === 'experience'" name="mdi:loading" class="w-4 h-4 animate-spin" />
+                <Icon v-else name="mdi:content-save-outline" class="w-4 h-4" /> Save Changes
+              </button>
+              <button class="add-btn" @click="openModal('experience')">
+                <Icon name="mdi:plus" class="w-4 h-4" /> Add Experience
+              </button>
+            </div>
           </div>
 
           <div class="list-table">
@@ -321,7 +332,6 @@
               v-model="experiences"
               item-key="id"
               handle=".drag-handle"
-              @end="onReorder('experience')"
               :animation="200"
               v-else
             >
@@ -374,9 +384,15 @@
                 {{ skills.length }} category(s) in database
               </p>
             </div>
-            <button class="add-btn" @click="openModal('skill')">
-              <Icon name="mdi:plus" class="w-4 h-4" /> Add Skill Category
-            </button>
+            <div class="flex items-center gap-3">
+              <button class="bg-emerald-500 text-white px-3 py-1.5 rounded-lg text-sm font-medium flex items-center gap-1.5 hover:bg-emerald-600 transition-colors shadow-sm" :disabled="savingOrderFor === 'skill'" @click="onReorder('skill')">
+                <Icon v-if="savingOrderFor === 'skill'" name="mdi:loading" class="w-4 h-4 animate-spin" />
+                <Icon v-else name="mdi:content-save-outline" class="w-4 h-4" /> Save Changes
+              </button>
+              <button class="add-btn" @click="openModal('skill')">
+                <Icon name="mdi:plus" class="w-4 h-4" /> Add Skill Category
+              </button>
+            </div>
           </div>
 
           <div class="list-table">
@@ -392,7 +408,6 @@
               v-model="skills"
               item-key="id"
               handle=".drag-handle"
-              @end="onReorder('skill')"
               :animation="200"
               v-else
             >
@@ -451,9 +466,15 @@
                 {{ certificates.length }} certificate(s) in database
               </p>
             </div>
-            <button class="add-btn" @click="openModal('certificate')">
-              <Icon name="mdi:plus" class="w-4 h-4" /> Add Certificate
-            </button>
+            <div class="flex items-center gap-3">
+              <button class="bg-emerald-500 text-white px-3 py-1.5 rounded-lg text-sm font-medium flex items-center gap-1.5 hover:bg-emerald-600 transition-colors shadow-sm" :disabled="savingOrderFor === 'certificate'" @click="onReorder('certificate')">
+                <Icon v-if="savingOrderFor === 'certificate'" name="mdi:loading" class="w-4 h-4 animate-spin" />
+                <Icon v-else name="mdi:content-save-outline" class="w-4 h-4" /> Save Changes
+              </button>
+              <button class="add-btn" @click="openModal('certificate')">
+                <Icon name="mdi:plus" class="w-4 h-4" /> Add Certificate
+              </button>
+            </div>
           </div>
 
           <div class="cert-grid">
@@ -464,7 +485,6 @@
               v-model="certificates"
               item-key="id"
               handle=".drag-handle"
-              @end="onReorder('certificate')"
               :animation="200"
               v-else
             >
@@ -528,9 +548,15 @@
                 {{ aboutCards.length }} card(s) in database
               </p>
             </div>
-            <button class="add-btn" @click="openModal('about-card')">
-              <Icon name="mdi:plus" class="w-4 h-4" /> Add About Card
-            </button>
+            <div class="flex items-center gap-3">
+              <button class="bg-emerald-500 text-white px-3 py-1.5 rounded-lg text-sm font-medium flex items-center gap-1.5 hover:bg-emerald-600 transition-colors shadow-sm" :disabled="savingOrderFor === 'about-card'" @click="onReorder('about-card')">
+                <Icon v-if="savingOrderFor === 'about-card'" name="mdi:loading" class="w-4 h-4 animate-spin" />
+                <Icon v-else name="mdi:content-save-outline" class="w-4 h-4" /> Save Changes
+              </button>
+              <button class="add-btn" @click="openModal('about-card')">
+                <Icon name="mdi:plus" class="w-4 h-4" /> Add About Card
+              </button>
+            </div>
           </div>
 
           <div class="list-table">
@@ -547,7 +573,6 @@
               v-model="aboutCards"
               item-key="id"
               handle=".drag-handle"
-              @end="onReorder('about-card')"
               :animation="200"
               v-else
             >
@@ -590,6 +615,60 @@
                 </div>
               </template>
             </draggable>
+          </div>
+        </section>
+
+        <!-- ── SETTINGS ── -->
+        <section v-if="activeTab === 'settings'" class="tab-section">
+          <div class="tab-header">
+            <div>
+              <h1 class="tab-title">Global Settings</h1>
+              <p class="tab-subtitle">
+                Manage website-wide configurations
+              </p>
+            </div>
+          </div>
+
+          <div class="glass-card p-6 sm:p-8 mt-6">
+            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-6">Announcement Banner</h3>
+            <form @submit.prevent="saveSettings" class="space-y-6">
+              
+              <div class="flex items-center justify-between">
+                <div>
+                  <label class="block text-sm font-medium text-gray-900 dark:text-white">Enable Banner</label>
+                  <p class="text-xs text-gray-500 mt-1">Show the scrolling announcement on the public site.</p>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" v-model="siteSetting.announcementActive" class="sr-only peer">
+                  <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-emerald-500"></div>
+                </label>
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-gray-900 dark:text-gray-300 mb-2">
+                  Announcement Text (HTML allowed)
+                </label>
+                <textarea
+                  v-model="siteSetting.announcementText"
+                  rows="3"
+                  class="input-field font-mono text-sm leading-relaxed whitespace-pre-line"
+                  placeholder="Hello World!"
+                ></textarea>
+                <p class="text-xs text-gray-400 mt-2">Example: <code>&lt;strong&gt;⚠️ This website is strictly under development ⚠️&lt;/strong&gt;</code></p>
+              </div>
+
+              <div class="flex justify-start">
+                <button
+                  type="submit"
+                  class="bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-2.5 rounded-xl text-sm font-medium transition-colors shadow flex items-center gap-2"
+                  :disabled="isSavingSettings"
+                >
+                  <Icon v-if="isSavingSettings" name="mdi:loading" class="w-4 h-4 animate-spin" />
+                  <Icon v-else name="mdi:content-save-outline" class="w-4 h-4" />
+                  Save Settings
+                </button>
+              </div>
+            </form>
           </div>
         </section>
       </main>
@@ -937,7 +1016,8 @@ type TabName =
   | "experience"
   | "skills"
   | "certificates"
-  | "about";
+  | "about"
+  | "settings";
 const activeTab = ref<TabName>("dashboard");
 
 const navItems = [
@@ -955,6 +1035,11 @@ const navItems = [
     icon: "mdi:card-account-details-outline",
     label: "About Me",
   },
+  {
+    tab: "settings",
+    icon: "mdi:cog-outline",
+    label: "Global Settings",
+  },
 ] as const;
 
 // ── Data ──
@@ -963,6 +1048,28 @@ const experiences = ref<any[]>([]);
 const skills = ref<any[]>([]);
 const certificates = ref<any[]>([]);
 const aboutCards = ref<any[]>([]);
+const siteSetting = ref({ announcementText: "", announcementActive: false });
+const isSavingSettings = ref(false);
+
+const saveSettings = async () => {
+  isSavingSettings.value = true;
+  try {
+    await $fetch(`${API_BASE}/settings`, {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+        "Content-Type": "application/json",
+      },
+      body: siteSetting.value,
+    });
+    alert('Settings saved successfully!');
+  } catch (err: any) {
+    console.error('Failed to save settings:', err);
+    alert('Failed to save settings on server.');
+  } finally {
+    isSavingSettings.value = false;
+  }
+};
 
 const stats = computed(() => [
   {
@@ -1015,18 +1122,23 @@ const splitItems = (str: string) =>
 
 const fetchAll = async () => {
   const headers = { Authorization: `Bearer ${token.value}` };
-  const [p, e, s, c, a] = await Promise.allSettled([
+  const [p, e, s, c, a, setting] = await Promise.allSettled([
     $fetch<any[]>(`${API_BASE}/projects`),
     $fetch<any[]>(`${API_BASE}/experiences`),
     $fetch<any[]>(`${API_BASE}/skills`),
     $fetch<any[]>(`${API_BASE}/certificates`),
     $fetch<any[]>(`${API_BASE}/about-cards`),
+    $fetch<any>(`${API_BASE}/settings`),
   ]);
   if (p.status === "fulfilled") projects.value = p.value || [];
   if (e.status === "fulfilled") experiences.value = e.value || [];
   if (s.status === "fulfilled") skills.value = s.value || [];
   if (c.status === "fulfilled") certificates.value = c.value || [];
   if (a.status === "fulfilled") aboutCards.value = a.value || [];
+  if (setting.status === "fulfilled" && setting.value) {
+    siteSetting.value.announcementText = setting.value.announcementText || "";
+    siteSetting.value.announcementActive = setting.value.announcementActive || false;
+  }
 };
 
 onMounted(() => {
@@ -1261,7 +1373,10 @@ const deleteItem = async (type: string, id: number) => {
   }
 };
 
+const savingOrderFor = ref<string | null>(null);
+
 const onReorder = async (type: string) => {
+  savingOrderFor.value = type;
   let list: any[] = [];
   if (type === "project") list = projects.value;
   else if (type === "experience") list = experiences.value;
@@ -1280,11 +1395,13 @@ const onReorder = async (type: string) => {
       },
       body: payload,
     });
-    // No need to refetch all, dragging already handles local state update
+    alert("New changes saved successfully!");
   } catch (err: any) {
     console.error("Reorder failed:", err);
-    alert("Failed to save order on server.");
-    await fetchAll(); // revert
+    alert("Failed to save changes on server.");
+    await fetchAll(); // revert locally if failed
+  } finally {
+    savingOrderFor.value = null;
   }
 };
 

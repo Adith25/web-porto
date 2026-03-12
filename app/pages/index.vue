@@ -155,7 +155,7 @@
         highlight=" Stack"
         subtitle="Technologies and tools I work with."
       >
-        <div class="divide-y divide-gray-200 dark:divide-white/5">
+        <div class="space-y-4">
           <ScrollReveal
             v-for="(category, i) in techStack"
             :key="category.name"
@@ -164,21 +164,18 @@
           >
             <div class="flex items-start sm:items-center gap-4 py-2 group">
               <!-- Category label -->
-              <div class="flex items-center gap-2 w-28 shrink-0">
-                <div class="p-1.5 rounded-md" :class="category.bgClass">
-                  <Icon :name="category.icon" class="w-3.5 h-3.5" :class="category.iconClass" />
-                </div>
+              <div class="flex items-center w-28 shrink-0">
                 <span class="text-xs font-semibold uppercase tracking-widest" :class="category.labelClass">{{ category.name }}</span>
               </div>
 
-              <!-- Tech pills -->
-              <div class="flex flex-wrap gap-1.5">
+              <!-- Tech pills row -->
+              <div class="flex flex-wrap gap-2">
                 <span
                   v-for="tech in category.items"
-                  :key="tech"
-                  class="text-xs px-2 py-0.5 rounded-full bg-gray-100 dark:bg-white/5 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-white/10 hover:border-accent/40 dark:hover:border-accent/40 hover:text-gray-900 dark:hover:text-white hover:bg-accent/10 transition-all duration-200 font-mono"
+                  :key="tech.name"
+                  class="text-xs px-3 py-1.5 rounded-full bg-gray-100 dark:bg-dark-lighter text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-800 hover:border-accent/40 dark:hover:border-accent/40 hover:text-gray-900 dark:hover:text-white hover:bg-accent/10 dark:hover:bg-accent/10 transition-all duration-200 shadow-sm"
                 >
-                  {{ tech }}
+                  {{ tech.name }}
                 </span>
               </div>
             </div>
@@ -557,6 +554,51 @@ const fetchSkills = async () => {
   try {
     const data = await $fetch<any[]>(`${API_BASE}/skills`);
     techStack.value = data.map(s => {
+        // Icon mapping for tech stack logos
+        const getBrandIcon = (techName: string) => {
+          const lower = techName.toLowerCase();
+          if (lower.includes('js') || lower === 'javascript') return 'logos:javascript';
+          if (lower.includes('ts') || lower === 'typescript') return 'logos:typescript-icon';
+          if (lower.includes('node') || lower === 'nodejs') return 'logos:nodejs-icon';
+          if (lower.includes('react')) return 'logos:react';
+          if (lower.includes('vue')) return 'logos:vue';
+          if (lower.includes('nuxt')) return 'logos:nuxt-icon';
+          if (lower.includes('next')) return 'logos:nextjs-icon';
+          if (lower.includes('tailwind')) return 'logos:tailwindcss-icon';
+          if (lower.includes('bootstrap')) return 'logos:bootstrap';
+          if (lower.includes('html')) return 'logos:html-5';
+          if (lower.includes('css')) return 'logos:css-3';
+          if (lower.includes('python')) return 'logos:python';
+          if (lower.includes('java') && !lower.includes('script')) return 'logos:java';
+          if (lower.includes('php')) return 'logos:php';
+          if (lower.includes('laravel')) return 'logos:laravel';
+          if (lower.includes('nest') || lower.includes('nestjs')) return 'logos:nestjs';
+          if (lower.includes('express')) return 'logos:express';
+          if (lower.includes('django')) return 'logos:django-icon';
+          if (lower.includes('postgres') || lower.includes('postgresql')) return 'logos:postgresql';
+          if (lower.includes('mongo') || lower.includes('mongodb')) return 'logos:mongodb-icon';
+          if (lower.includes('mysql')) return 'logos:mysql';
+          if (lower.includes('docker')) return 'logos:docker-icon';
+          if (lower.includes('kubernetes')) return 'logos:kubernetes';
+          if (lower.includes('aws')) return 'logos:aws';
+          if (lower.includes('git') && !lower.includes('github') && !lower.includes('gitlab')) return 'logos:git-icon';
+          if (lower.includes('github')) return 'mdi:github';
+          if (lower.includes('figma')) return 'logos:figma';
+          if (lower.includes('flutter')) return 'logos:flutter';
+          if (lower.includes('dart')) return 'logos:dart';
+          if (lower.includes('tensor') || lower.includes('tensorflow')) return 'logos:tensorflow';
+          if (lower.includes('pytorch')) return 'logos:pytorch-icon';
+          if (lower.includes('arduino')) return 'logos:arduino';
+          if (lower.includes('firebase')) return 'logos:firebase';
+          return 'mdi:code-tags'; // default fallback
+        };
+
+        const parsedItems = s.items ? s.items.split(',').map((t: string) => t.trim()).filter(Boolean) : [];
+        const techObjects = parsedItems.map((tech: string) => ({
+          name: tech,
+          icon: getBrandIcon(tech)
+        }));
+
         let bgClass = "bg-accent/10";
         let iconClass = "text-accent-light";
         
@@ -575,7 +617,7 @@ const fetchSkills = async () => {
             bgClass,
             iconClass,
             labelClass: iconClass,
-            items: s.items ? s.items.split(',').map((t: string) => t.trim()).filter(Boolean) : []
+            items: techObjects
         };
     });
   } catch (error) {

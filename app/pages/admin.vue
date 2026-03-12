@@ -161,7 +161,7 @@
             <p class="tab-subtitle">Overview of your portfolio content</p>
           </div>
 
-          <div class="stats-grid">
+          <div class="stats-grid w-full">
             <div
               v-for="stat in stats"
               :key="stat.label"
@@ -186,7 +186,7 @@
             </div>
           </div>
 
-          <div class="dash-welcome">
+          <div class="dash-welcome w-full">
             <Icon name="mdi:hand-wave" class="w-6 h-6 text-yellow-400" />
             <div>
               <p class="text-white font-semibold">
@@ -219,7 +219,7 @@
             </div>
           </div>
 
-          <div class="list-table">
+          <div class="list-table w-full">
             <div class="list-head">
               <span>Title</span>
               <span>Tech Stack</span>
@@ -318,7 +318,7 @@
             </div>
           </div>
 
-          <div class="list-table">
+          <div class="list-table w-full">
             <div class="list-head list-head--exp">
               <span>Role</span>
               <span>Company</span>
@@ -395,7 +395,7 @@
             </div>
           </div>
 
-          <div class="list-table">
+          <div class="list-table w-full">
             <div class="list-head list-head--skill">
               <span>Category</span>
               <span>Items</span>
@@ -419,23 +419,19 @@
                     >
                       <Icon name="mdi:drag" class="w-4 h-4" />
                     </button>
-                    <Icon
-                      v-if="s.icon"
-                      :name="s.icon"
-                      class="w-4 h-4 text-accent-light"
-                    />
                     <span
                       class="font-medium text-gray-900 dark:text-white text-sm"
                       >{{ s.category }}</span
                     >
                   </div>
-                  <div class="flex flex-wrap gap-1">
+                  <div class="flex flex-wrap gap-1.5">
                     <span
                       v-for="item in splitItems(s.items)"
                       :key="item"
-                      class="tag"
-                      >{{ item }}</span
+                      class="px-2 py-0.5 rounded-full bg-gray-100 dark:bg-white/5 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-white/10 text-[11px]"
                     >
+                      {{ item }}
+                    </span>
                   </div>
                   <div class="flex gap-2">
                     <button
@@ -477,7 +473,7 @@
             </div>
           </div>
 
-          <div class="cert-grid">
+          <div class="cert-grid w-full">
             <p v-if="certificates.length === 0" class="empty-state">
               No certificates yet.
             </p>
@@ -559,7 +555,7 @@
             </div>
           </div>
 
-          <div class="list-table">
+          <div class="list-table w-full">
             <div class="list-head">
               <span>Title</span>
               <span>Content</span>
@@ -629,7 +625,7 @@
             </div>
           </div>
 
-          <div class="glass-card p-6 sm:p-8 mt-6">
+          <div class="glass-card w-full p-6 sm:p-8 mt-6">
             <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-6">Announcement Banner</h3>
             <form @submit.prevent="saveSettings" class="space-y-6">
               
@@ -651,13 +647,51 @@
                 <textarea
                   v-model="siteSetting.announcementText"
                   rows="3"
-                  class="input-field font-mono text-sm leading-relaxed whitespace-pre-line"
+                  class="input-field font-mono text-sm leading-relaxed whitespace-pre-line bg-gray-50 dark:bg-dark-lighter border border-gray-300 dark:border-gray-700 p-3 rounded-lg w-full"
                   placeholder="Hello World!"
                 ></textarea>
                 <p class="text-xs text-gray-400 mt-2">Example: <code>&lt;strong&gt;⚠️ This website is strictly under development ⚠️&lt;/strong&gt;</code></p>
               </div>
 
-              <div class="flex justify-start">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Banner Background Color -->
+                <div>
+                  <label class="block text-sm font-medium text-gray-900 dark:text-gray-300 mb-2">
+                    Banner Background Color
+                  </label>
+                  <div class="flex items-center gap-3">
+                    <input type="color" v-model="siteSetting.bannerColor" class="h-10 w-14 p-1 rounded cursor-pointer border border-gray-300 dark:border-gray-700 bg-white dark:bg-dark-card shadow-sm">
+                    <input type="text" v-model="siteSetting.bannerColor" class="input-field font-mono text-sm max-w-[120px] bg-gray-50 dark:bg-dark-lighter border border-gray-300 dark:border-gray-700" placeholder="#4f46e5">
+                  </div>
+                </div>
+
+                <!-- Text Color -->
+                <div>
+                  <label class="block text-sm font-medium text-gray-900 dark:text-gray-300 mb-2">
+                    Text Color
+                  </label>
+                  <div class="flex items-center gap-3">
+                    <input type="color" v-model="siteSetting.textColor" class="h-10 w-14 p-1 rounded cursor-pointer border border-gray-300 dark:border-gray-700 bg-white dark:bg-dark-card shadow-sm">
+                    <input type="text" v-model="siteSetting.textColor" class="input-field font-mono text-sm max-w-[120px] bg-gray-50 dark:bg-dark-lighter border border-gray-300 dark:border-gray-700" placeholder="#ffffff">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Animation Speed -->
+              <div>
+                <label class="block text-sm font-medium text-gray-900 dark:text-gray-300 mb-2 flex justify-between">
+                  <span>Marquee Speed (Seconds per cycle)</span>
+                  <span class="text-accent font-semibold">{{ siteSetting.animationSpeed }}s</span>
+                </label>
+                <input type="range" v-model.number="siteSetting.animationSpeed" min="5" max="60" class="w-full accent-emerald-500">
+                <div class="flex justify-between text-xs text-gray-500 mt-1">
+                  <span>Fast (5s)</span>
+                  <span>Slow (60s)</span>
+                </div>
+                <p class="text-xs text-gray-400 mt-2">Adjust how many seconds it takes for the text to scroll entirely across the screen.</p>
+              </div>
+
+              <div class="flex justify-start pt-4 border-t border-gray-200 dark:border-gray-800">
                 <button
                   type="submit"
                   class="bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-2.5 rounded-xl text-sm font-medium transition-colors shadow flex items-center gap-2"
@@ -1048,7 +1082,13 @@ const experiences = ref<any[]>([]);
 const skills = ref<any[]>([]);
 const certificates = ref<any[]>([]);
 const aboutCards = ref<any[]>([]);
-const siteSetting = ref({ announcementText: "", announcementActive: false });
+const siteSetting = ref({ 
+  announcementText: "", 
+  announcementActive: false,
+  bannerColor: "#4f46e5",
+  textColor: "#ffffff",
+  animationSpeed: 25
+});
 const isSavingSettings = ref(false);
 
 const saveSettings = async () => {
@@ -1120,6 +1160,8 @@ const splitItems = (str: string) =>
     .map((s) => s.trim())
     .filter(Boolean);
 
+
+
 const fetchAll = async () => {
   const headers = { Authorization: `Bearer ${token.value}` };
   const [p, e, s, c, a, setting] = await Promise.allSettled([
@@ -1138,6 +1180,9 @@ const fetchAll = async () => {
   if (setting.status === "fulfilled" && setting.value) {
     siteSetting.value.announcementText = setting.value.announcementText || "";
     siteSetting.value.announcementActive = setting.value.announcementActive || false;
+    if (setting.value.bannerColor) siteSetting.value.bannerColor = setting.value.bannerColor;
+    if (setting.value.textColor) siteSetting.value.textColor = setting.value.textColor;
+    if (setting.value.animationSpeed) siteSetting.value.animationSpeed = setting.value.animationSpeed;
   }
 };
 
@@ -1459,6 +1504,7 @@ const handleDrop = (e: DragEvent) => {
 .admin-page {
   position: relative;
   min-height: 100vh;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1743,7 +1789,7 @@ const handleDrop = (e: DragEvent) => {
   font-size: 0.78rem;
   color: rgba(180, 180, 220, 0.5);
   margin-top: 0.2rem;
-  font-mono: monospace;
+  font-family: monospace;
 }
 
 /* ── Stats ── */

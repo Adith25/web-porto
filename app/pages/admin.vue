@@ -518,6 +518,80 @@
             </draggable>
           </div>
         </section>
+
+        <!-- ── ABOUT ME ── -->
+        <section v-if="activeTab === 'about'" class="tab-section">
+          <div class="tab-header">
+            <div>
+              <h1 class="tab-title">About Me Cards</h1>
+              <p class="tab-subtitle">
+                {{ aboutCards.length }} card(s) in database
+              </p>
+            </div>
+            <button class="add-btn" @click="openModal('about-card')">
+              <Icon name="mdi:plus" class="w-4 h-4" /> Add About Card
+            </button>
+          </div>
+
+          <div class="list-table">
+            <div class="list-head">
+              <span>Title</span>
+              <span>Content</span>
+              <span>Icon/Color</span>
+              <span>Actions</span>
+            </div>
+            <p v-if="aboutCards.length === 0" class="empty-state">
+              No About Cards yet. Click "Add About Card" to get started.
+            </p>
+            <draggable
+              v-model="aboutCards"
+              item-key="id"
+              handle=".drag-handle"
+              @end="onReorder('about-card')"
+              :animation="200"
+              v-else
+            >
+              <template #item="{ element: a }">
+                <div class="list-row group">
+                  <div class="flex items-center gap-2">
+                    <button
+                      class="drag-handle opacity-0 group-hover:opacity-100 cursor-move text-gray-500 hover:text-gray-900 dark:hover:text-white transition-opacity"
+                    >
+                      <Icon name="mdi:drag" class="w-4 h-4" />
+                    </button>
+                    <Icon
+                      v-if="a.icon"
+                      :name="a.icon"
+                      class="w-4 h-4 text-accent-light shrink-0"
+                    />
+                    <span
+                      class="font-medium text-gray-900 dark:text-white text-sm truncate"
+                      >{{ a.title }}</span
+                    >
+                  </div>
+                  <div class="text-sm text-gray-500 truncate">{{ (a.content || '').substring(0, 50) }}...</div>
+                  <div class="flex items-center gap-1">
+                    <span class="text-xs font-mono bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded text-gray-600 dark:text-gray-300">{{ a.textColor }}</span>
+                  </div>
+                  <div class="flex gap-2">
+                    <button
+                      class="icon-btn icon-btn--edit"
+                      @click="editItem('about-card', a)"
+                    >
+                      <Icon name="mdi:pencil-outline" class="w-3.5 h-3.5" />
+                    </button>
+                    <button
+                      class="icon-btn icon-btn--del"
+                      @click="deleteItem('about-card', a.id)"
+                    >
+                      <Icon name="mdi:trash-can-outline" class="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                </div>
+              </template>
+            </draggable>
+          </div>
+        </section>
       </main>
     </div>
 
@@ -779,6 +853,44 @@
                 />
               </div>
             </template>
+
+            <!-- About Card Form -->
+            <template v-if="modal.type === 'about-card'">
+              <div class="field-group">
+                <label class="field-label">Title *</label
+                ><input
+                  v-model="form2.title"
+                  class="glass-input"
+                  placeholder="e.g. Who I Am"
+                />
+              </div>
+              <div class="field-group">
+                <label class="field-label">Content *</label
+                ><textarea
+                  v-model="form2.content"
+                  class="glass-input"
+                  rows="4"
+                  placeholder="Supports HTML. e.g. <p>Hello I am...</p>"
+                />
+              </div>
+              <div class="field-group">
+                <label class="field-label">Icon (MDI name)</label
+                ><input
+                  v-model="form2.icon"
+                  class="glass-input"
+                  placeholder="e.g. mdi:account"
+                />
+              </div>
+              <div class="field-group">
+                <label class="field-label">Text Color Classes</label
+                ><input
+                  v-model="form2.textColor"
+                  class="glass-input font-mono text-sm"
+                  placeholder="e.g. text-gray-600 dark:text-gray-400"
+                />
+                <p class="text-xs text-gray-500 mt-1">Tailwind text color classes to apply to content.</p>
+              </div>
+            </template>
           </div>
 
           <div class="modal-footer">
@@ -824,7 +936,8 @@ type TabName =
   | "projects"
   | "experience"
   | "skills"
-  | "certificates";
+  | "certificates"
+  | "about";
 const activeTab = ref<TabName>("dashboard");
 
 const navItems = [
@@ -837,6 +950,11 @@ const navItems = [
     icon: "mdi:certificate-outline",
     label: "Certificates",
   },
+  {
+    tab: "about",
+    icon: "mdi:card-account-details-outline",
+    label: "About Me",
+  },
 ] as const;
 
 // ── Data ──
@@ -844,6 +962,7 @@ const projects = ref<any[]>([]);
 const experiences = ref<any[]>([]);
 const skills = ref<any[]>([]);
 const certificates = ref<any[]>([]);
+const aboutCards = ref<any[]>([]);
 
 const stats = computed(() => [
   {
@@ -878,6 +997,14 @@ const stats = computed(() => [
     bg: "rgba(236,72,153,0.12)",
     color: "#f472b6",
   },
+  {
+    label: "About Cards",
+    count: aboutCards.value.length,
+    icon: "mdi:card-account-details-outline",
+    tab: "about" as TabName,
+    bg: "rgba(59,130,246,0.12)",
+    color: "#3b82f6",
+  },
 ]);
 
 const splitItems = (str: string) =>
@@ -888,16 +1015,18 @@ const splitItems = (str: string) =>
 
 const fetchAll = async () => {
   const headers = { Authorization: `Bearer ${token.value}` };
-  const [p, e, s, c] = await Promise.allSettled([
+  const [p, e, s, c, a] = await Promise.allSettled([
     $fetch<any[]>(`${API_BASE}/projects`),
     $fetch<any[]>(`${API_BASE}/experiences`),
     $fetch<any[]>(`${API_BASE}/skills`),
     $fetch<any[]>(`${API_BASE}/certificates`),
+    $fetch<any[]>(`${API_BASE}/about-cards`),
   ]);
   if (p.status === "fulfilled") projects.value = p.value || [];
   if (e.status === "fulfilled") experiences.value = e.value || [];
   if (s.status === "fulfilled") skills.value = s.value || [];
   if (c.status === "fulfilled") certificates.value = c.value || [];
+  if (a.status === "fulfilled") aboutCards.value = a.value || [];
 };
 
 onMounted(() => {
@@ -939,6 +1068,7 @@ const doLogout = () => {
   experiences.value = [];
   skills.value = [];
   certificates.value = [];
+  aboutCards.value = [];
 };
 
 // ── Modal ──
@@ -957,6 +1087,7 @@ const modalTitle = computed(() => {
     experience: "Experience",
     skill: "Skill Category",
     certificate: "Certificate",
+    "about-card": "About Card",
   };
   return titles[modal.type] || "";
 });
@@ -1032,6 +1163,8 @@ const openModal = (type: string) => {
       isPdf: false,
       file: null,
     });
+  } else if (type === "about-card") {
+    Object.assign(form2, { textColor: "text-gray-600 dark:text-gray-400" });
   }
   modal.open = true;
 };
@@ -1134,6 +1267,7 @@ const onReorder = async (type: string) => {
   else if (type === "experience") list = experiences.value;
   else if (type === "skill") list = skills.value;
   else if (type === "certificate") list = certificates.value;
+  else if (type === "about-card") list = aboutCards.value;
 
   const payload = list.map((item, index) => ({ id: item.id, order: index }));
 

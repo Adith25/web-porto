@@ -40,11 +40,6 @@
               <span class="block gradient-text">Yufnanda</span>
             </h1>
 
-            <!-- Animated role typewriter -->
-            <h2 class="hero-role mb-6">
-              <span class="role-prefix">I'm a </span>
-              <span class="role-typed">{{ displayedRole }}<span class="cursor-blink">|</span></span>
-            </h2>
 
             <!-- Welcome message -->
             <div class="hero-welcome mb-10">
@@ -134,91 +129,33 @@
             </MagicCard>
           </ScrollReveal>
 
-          <!-- ── Right column: text cards + sidebar info ── -->
+          <!-- ── Right column: dynamic About Cards ── -->
           <div class="lg:col-span-2 space-y-6">
-            <ScrollReveal animation="fade-left">
-              <div class="glass-card p-6 sm:p-8">
-                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Who I Am</h3>
-                <div class="space-y-4 text-gray-600 dark:text-gray-400 leading-relaxed">
-                  <p>
-                    I'm <strong class="text-gray-900 dark:text-white">Muhammad Aditya Yufnanda</strong>,
-                    a Computer Engineer based in Tangerang, Banten, Indonesia.
-                    I'm specializing in <span class="text-violet-600 dark:text-violet-light">Web and Mobile Development</span>, <span class="text-violet-600 dark:text-violet-400">Machine Learning</span> and <span class="text-violet-600 dark:text-violet-400">Embedded Systems</span>.
-                  </p>
-                  <p>
-                    I have hands-on experience across the full development stack — from
-                    building scalable web and mobile applications to training ML models
-                    and designing IoT systems. I strengthened my cloud skills through
-                    <strong class="text-white">Bangkit Academy (Google, Tokopedia, Gojek & Traveloka)</strong>
-                    and front-end expertise through
-                    <strong class="text-white">Dicoding Indonesia</strong>.
-                  </p>
-                </div>
-              </div>
-            </ScrollReveal>
-
-            <ScrollReveal animation="fade-left" :delay="100">
-              <div class="glass-card p-6 sm:p-8">
-                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                  <Icon name="mdi:target" class="w-5 h-5 text-accent" />
-                  Career Objective
-                </h3>
-                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
-                  To apply my multidisciplinary background in Web & Mobile Development,
-                  Machine Learning, and Embedded Systems to build impactful,
-                  real-world solutions — and grow as an engineer who bridges software
-                  intelligence with physical hardware.
-                </p>
-              </div>
-            </ScrollReveal>
-
-            <div class="grid sm:grid-cols-2 gap-6">
-              <ScrollReveal animation="fade-left" :delay="150">
-                <div class="glass-card p-6">
-                  <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                    <Icon name="mdi:school-outline" class="w-5 h-5 text-accent" />
-                    Education
+            <template v-if="aboutCards.length > 0">
+              <ScrollReveal
+                v-for="(card, i) in aboutCards"
+                :key="card.id"
+                animation="fade-left"
+                :delay="i * 50"
+              >
+                <div class="glass-card p-6 sm:p-8">
+                  <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                    <Icon v-if="card.icon" :name="card.icon" class="w-5 h-5 text-accent" />
+                    {{ card.title }}
                   </h3>
-                  <div>
-                    <p class="font-medium text-gray-900 dark:text-white">Universitas Syiah Kuala</p>
-                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Bachelor of Engineering (B.E.)</p>
-                    <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 font-mono">Computer Engineering (2021 – 2025)</p>
+                  <div class="space-y-4 leading-relaxed whitespace-pre-line" :class="card.textColor">
+                    <span v-html="card.content"></span>
                   </div>
                 </div>
               </ScrollReveal>
-
-              <ScrollReveal animation="fade-left" :delay="200">
-                <div class="glass-card p-6">
-                  <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                    <Icon name="mdi:lightbulb-outline" class="w-5 h-5 text-accent" />
-                    Interests
-                  </h3>
-                  <div class="flex flex-wrap gap-2">
-                    <TechBadge v-for="interest in interests" :key="interest" variant="accent">
-                      {{ interest }}
-                    </TechBadge>
-                  </div>
+            </template>
+            <template v-else>
+              <ScrollReveal animation="fade-left">
+                <div class="glass-card p-6 sm:p-8">
+                  <p class="text-gray-500 italic">About Me information is empty.</p>
                 </div>
               </ScrollReveal>
-            </div>
-
-            <ScrollReveal animation="fade-left" :delay="250">
-              <div class="glass-card p-6">
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                  <Icon name="mdi:star-four-points-outline" class="w-5 h-5 text-accent" />
-                  Key Strengths
-                </h3>
-                <ul class="grid sm:grid-cols-2 gap-3">
-                  <li v-for="s in strengths" :key="s.label" class="flex items-start gap-3">
-                    <Icon :name="s.icon" class="w-4 h-4 text-accent mt-1 shrink-0" />
-                    <div>
-                      <p class="text-sm font-medium text-gray-900 dark:text-white">{{ s.label }}</p>
-                      <p class="text-xs text-gray-600 dark:text-gray-500">{{ s.desc }}</p>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </ScrollReveal>
+            </template>
           </div>
         </div>
       </SectionWrapper>
@@ -507,45 +444,11 @@ const scrollTo = (id: string) => {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 };
 
-// ── Typewriter role cycling ──────────────────────────
-const roles = [
-  'Computer Engineer',
-  'Web & Mobile Developer',
-  'Machine Learning Enthusiast',
-  'Embedded Systems Builder',
-];
-const displayedRole = ref('');
 onMounted(() => {
   if (typeof window !== 'undefined' && window.history) {
     window.history.scrollRestoration = 'manual';
     window.scrollTo(0, 0);
   }
-
-  let roleIdx = 0;
-  let charIdx = 0;
-  let deleting = false;
-
-  const tick = () => {
-    const target = roles[roleIdx] ?? '';
-    if (!deleting) {
-      displayedRole.value = target.slice(0, charIdx + 1);
-      charIdx++;
-      if (charIdx === target.length) {
-        // Pause before deleting
-        setTimeout(() => { deleting = true; requestAnimationFrame(tick); }, 1800);
-        return;
-      }
-    } else {
-      displayedRole.value = target.slice(0, charIdx - 1);
-      charIdx--;
-      if (charIdx === 0) {
-        deleting = false;
-        roleIdx = (roleIdx + 1) % roles.length;
-      }
-    }
-    setTimeout(() => requestAnimationFrame(tick), deleting ? 45 : 80);
-  };
-  setTimeout(() => requestAnimationFrame(tick), 800);
 });
 
 // ── Experience timeline scroll progress ───────────────
@@ -626,6 +529,8 @@ const projects = ref<any[]>([]);
 
 const experiences = ref<any[]>([]);
 
+const aboutCards = ref<any[]>([]);
+
 const config = useRuntimeConfig();
 const API_BASE = config.public.apiBase;
 
@@ -635,6 +540,15 @@ const fetchExperiences = async () => {
     experiences.value = data;
   } catch (error) {
     console.error('Failed to fetch experiences:', error);
+  }
+};
+
+const fetchAboutCards = async () => {
+  try {
+    const data = await $fetch<any[]>(`${API_BASE}/about-cards`);
+    aboutCards.value = data;
+  } catch (error) {
+    console.error('Failed to fetch about cards:', error);
   }
 };
 
@@ -695,6 +609,7 @@ const fetchCertificates = async () => {
 };
 
 onMounted(() => {
+  fetchAboutCards();
   fetchExperiences();
   fetchProjects();
   fetchSkills();

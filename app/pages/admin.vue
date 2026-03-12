@@ -603,16 +603,43 @@
                 ><input
                   v-model="form2.company"
                   class="glass-input"
-                  placeholder="e.g. PT. Example · Internship"
+                  placeholder="e.g. Universitas Syiah Kuala"
                 />
               </div>
               <div class="field-group">
-                <label class="field-label">Period *</label
+                <label class="field-label">Position (Job Type)</label
                 ><input
-                  v-model="form2.period"
+                  v-model="form2.position"
                   class="glass-input"
-                  placeholder="e.g. Jan 2024 - Jun 2024 · 6 mos"
+                  placeholder="e.g. Part-time, Internship, Full-time"
                 />
+              </div>
+              <div class="field-group">
+                <label class="field-label">Period *</label>
+                <div class="flex items-center gap-3">
+                  <input
+                    type="month"
+                    v-model="form2.startDate"
+                    class="glass-input flex-1"
+                  />
+                  <span class="text-gray-400">to</span>
+                  <input
+                    type="month"
+                    v-model="form2.endDate"
+                    class="glass-input flex-1"
+                    :disabled="form2.currentJob"
+                  />
+                </div>
+                <div class="mt-2 flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    id="currentJob"
+                    v-model="form2.currentJob"
+                    class="rounded border-gray-600 bg-gray-800 text-accent focus:ring-accent accent-purple-500"
+                    @change="form2.currentJob ? form2.endDate = '' : null"
+                  />
+                  <label for="currentJob" class="text-sm text-gray-300 cursor-pointer">I currently work here</label>
+                </div>
               </div>
               <div class="field-group">
                 <label class="field-label">Location</label
@@ -631,11 +658,12 @@
                 />
               </div>
               <div class="field-group">
-                <label class="field-label">Tech (comma-separated)</label
-                ><input
-                  v-model="form2.tech"
-                  class="glass-input"
-                  placeholder="e.g. Flutter, Dart, REST API"
+                <label class="field-label">Description</label
+                ><textarea
+                  v-model="form2.description"
+                  class="glass-input resize-none"
+                  rows="3"
+                  placeholder="Describe your responsibilities and achievements..."
                 />
               </div>
             </template>
@@ -933,12 +961,68 @@ const modalTitle = computed(() => {
   return titles[modal.type] || "";
 });
 
+// Helper functions for Date Parsing
+const parsePeriodStrToForm = (periodStr: string, formObj: any) => {
+  if (!periodStr) return;
+  // Expected format: "Jan 2024 - Jun 2024 · 6 mos" or "Oct 2025 - Present · 6 mos"
+  try {
+    const parts = periodStr.split(' · ')[0];
+    if (!parts) return;
+    const [startStr, endStr] = parts.split(' - ');
+    
+    // Parse "Jan 2024" to "2024-01"
+    const toMonthYear = (str: string | undefined) => {
+      if (!str || str === 'Present') return '';
+      const d = new Date(str + ' 1'); 
+      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+    };
+
+    formObj.startDate = toMonthYear(startStr?.trim());
+    if (endStr?.trim() === 'Present') {
+      formObj.endDate = '';
+      formObj.currentJob = true;
+    } else {
+      formObj.endDate = toMonthYear(endStr?.trim());
+      formObj.currentJob = false;
+    }
+  } catch (err) {
+    console.error('Error parsing period string', err);
+  }
+};
+
+const compileFormToPeriodStr = (formObj: any) => {
+  if (!formObj.startDate) return "";
+  
+  const start = new Date(formObj.startDate + "-01");
+  const startStr = start.toLocaleDateString("en-US", { month: "short", year: "numeric" });
+  
+  let endStr = "Present";
+  let end = new Date(); // Use today for "Present" math
+  
+  if (!formObj.currentJob && formObj.endDate) {
+    end = new Date(formObj.endDate + "-01");
+    endStr = end.toLocaleDateString("en-US", { month: "short", year: "numeric" });
+  }
+
+  // Calculate duration in months
+  let months = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth()) + 1; // inclusive
+  if (months < 1) months = 1;
+  const durationStr = months >= 12 
+    ? (months % 12 === 0 ? `${months / 12} yr${months/12 > 1 ? 's' : ''}` : `${Math.floor(months / 12)} yr ${months % 12} mos`)
+    : `${months} mos`;
+
+  return `${startStr} - ${endStr} · ${durationStr}`;
+};
+
 const openModal = (type: string) => {
   modal.type = type;
   modal.editing = false;
   modal.editId = null;
   Object.keys(form2).forEach((k) => delete form2[k]);
-  if (type === "certificate") {
+  
+  if (type === "experience") {
+    Object.assign(form2, { startDate: "", endDate: "", currentJob: false });
+  } else if (type === "certificate") {
     Object.assign(certForm, {
       title: "",
       description: "",
@@ -958,6 +1042,11 @@ const editItem = (type: string, item: any) => {
   modal.editId = item.id;
   Object.keys(form2).forEach((k) => delete form2[k]);
   Object.assign(form2, { ...item });
+  
+  if (type === "experience") {
+    parsePeriodStrToForm(item.period, form2);
+  }
+  
   modal.open = true;
 };
 
@@ -992,6 +1081,20 @@ const saveItem = async () => {
         });
       }
     } else {
+      let payload = { ...form2 };
+      
+      if (modal.type === "experience") {
+        if (!form2.startDate) {
+          alert("Start Date is required!");
+          isSaving.value = false;
+          return;
+        }
+        payload.period = compileFormToPeriodStr(form2);
+        delete payload.startDate;
+        delete payload.endDate;
+        delete payload.currentJob;
+      }
+      
       const url = isEdit
         ? `${API_BASE}/${modal.type}s/${id}`
         : `${API_BASE}/${modal.type}s`;
@@ -999,7 +1102,7 @@ const saveItem = async () => {
       await $fetch(url, {
         method,
         headers: { ...headers, "Content-Type": "application/json" },
-        body: form2,
+        body: payload,
       });
     }
     closeModal();

@@ -39,6 +39,7 @@ export default {
         'slide-in-right': 'slideInRight 0.5s ease-out forwards',
         float: 'float 6s ease-in-out infinite',
         glow: 'glow 2s ease-in-out infinite alternate',
+        'marquee-ltr': 'marqueeLtr 20s linear infinite',
       },
       keyframes: {
         fadeUp: {
@@ -60,6 +61,10 @@ export default {
         glow: {
           '0%': { boxShadow: '0 0 5px rgba(99,102,241,0.2)' },
           '100%': { boxShadow: '0 0 20px rgba(99,102,241,0.4)' },
+        },
+        marqueeLtr: {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(100vw)' },
         },
       },
     },

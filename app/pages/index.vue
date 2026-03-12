@@ -3,6 +3,13 @@
     <!-- ==================== HERO ==================== -->
     <section id="hero" class="relative min-h-screen flex items-center pt-16 overflow-hidden">
 
+      <!-- Development Warning Banner -->
+      <div class="absolute top-0 left-0 w-full bg-amber-500/90 text-amber-950 dark:bg-amber-500/90 dark:text-amber-950 py-1.5 z-50 overflow-hidden flex items-center shadow-md backdrop-blur-sm">
+        <div class="whitespace-nowrap animate-marquee-ltr font-semibold text-sm tracking-wider">
+          <span class="mx-4">⚠️ This website is still under development ⚠️</span>
+        </div>
+      </div>
+
       <!-- Dot-grid background -->
       <div class="hero-grid" aria-hidden="true" />
 
@@ -352,14 +359,12 @@
                       <div class="flex-1 min-w-0">
                         <div class="flex flex-col gap-0.5">
                           <span class="font-semibold text-gray-900 dark:text-white text-base leading-tight">{{ exp.role }}</span>
-                          <span class="text-accent-dark/80 dark:text-accent-light/70 text-sm font-medium">{{ exp.company }}</span>
+                          <span class="text-accent-dark/80 dark:text-accent-light/70 text-sm font-medium">
+                            {{ exp.company }}<template v-if="exp.position"> &middot; {{ exp.position }}</template>
+                          </span>
                         </div>
-                        <div v-if="exp.tech?.length" class="flex flex-wrap gap-1.5 mt-1.5">
-                          <span
-                            v-for="tech in exp.tech"
-                            :key="tech"
-                            class="text-[11px] px-2 py-0.5 rounded bg-accent/10 text-accent-dark/80 dark:text-accent-light/70 font-mono"
-                          >{{ tech }}</span>
+                        <div v-if="exp.description" class="mt-2 text-sm text-gray-600 dark:text-gray-400 leading-relaxed whitespace-pre-line">
+                          {{ exp.description }}
                         </div>
                       </div>
                     </div>
@@ -627,10 +632,7 @@ const API_BASE = config.public.apiBase;
 const fetchExperiences = async () => {
   try {
     const data = await $fetch<any[]>(`${API_BASE}/experiences`);
-    experiences.value = data.map(exp => ({
-      ...exp,
-      tech: exp.tech ? exp.tech.split(',').map((t: string) => t.trim()).filter(Boolean) : []
-    }));
+    experiences.value = data;
   } catch (error) {
     console.error('Failed to fetch experiences:', error);
   }

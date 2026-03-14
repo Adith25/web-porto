@@ -44,10 +44,10 @@
 
             <!-- CTAs -->
             <div class="flex flex-wrap gap-4 hero-cta">
-              <a href="/cv.pdf" target="_blank" class="btn-primary" download>
-                <Icon name="mdi:download" class="w-5 h-5" />
-                Download CV
-              </a>
+              <NuxtLink to="/resume" target="_blank" class="btn-primary">
+                <Icon name="mdi:eye-outline" class="w-5 h-5" />
+                View & Download CV
+              </NuxtLink>
               <a href="#contact" class="btn-outline" @click.prevent="scrollTo('contact')">
                 <Icon name="mdi:email-outline" class="w-5 h-5" />
                 Contact Me
@@ -263,7 +263,7 @@
 
                 <!-- Content row via MagicCard -->
                 <div class="flex-1">
-                  <MagicCard class="!bg-transparent border border-transparent hover:border-accent/15 hover:bg-gray-50 dark:hover:bg-white/[0.025] transition-all duration-300">
+                  <MagicCard :showBorder="false" class="!bg-transparent border border-transparent hover:border-accent/15 hover:bg-gray-50 dark:hover:bg-white/[0.025] transition-all duration-300">
                     <div class="flex items-center gap-4 pl-10 py-3 rounded-xl">
                       <!-- Logo -->
                       <div class="shrink-0 w-10 h-10 flex items-center justify-center">
@@ -514,6 +514,7 @@ const projects = ref<any[]>([]);
 const experiences = ref<any[]>([]);
 
 const aboutCards = ref<any[]>([]);
+const cvUrl = ref("");
 
 const config = useRuntimeConfig();
 const API_BASE = config.public.apiBase;
@@ -637,12 +638,22 @@ const fetchCertificates = async () => {
   }
 };
 
-onMounted(() => {
+onMounted(async () => {
   fetchAboutCards();
   fetchExperiences();
   fetchProjects();
   fetchSkills();
   fetchCertificates();
+  
+  // Fetch settings for CV
+  try {
+    const settings = await $fetch<any>(`${API_BASE}/settings`);
+    if (settings.cvUrl) {
+      cvUrl.value = `${API_BASE}${settings.cvUrl}`;
+    }
+  } catch (error) {
+    console.error('Failed to fetch settings:', error);
+  }
 });
 
 const showAllCertificates = ref(false);
@@ -1063,5 +1074,4 @@ const contactInfo = [
   0%   { transform: translateX(-100%); }
   100% { transform: translateX(200%); }
 }
-
 </style>

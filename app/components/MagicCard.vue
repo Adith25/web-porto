@@ -8,9 +8,9 @@
     <!-- Gradient spotlight that follows the cursor -->
     <div class="magic-spotlight" :style="spotlightStyle" />
     <!-- Border glow layer -->
-    <div class="magic-border" :style="borderStyle" />
+    <div v-if="showBorder" class="magic-border" :style="borderStyle" />
     <!-- Static outer border -->
-    <div class="magic-static-border" />
+    <div v-if="showBorder" class="magic-static-border" />
     <!-- Content slot -->
     <div class="magic-content">
       <slot />
@@ -23,11 +23,14 @@ interface Props {
   /** Spotlight color, default violet */
   gradientColor?: string;
   gradientSize?: number;
+  /** Whether to show the border glow and static border */
+  showBorder?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   gradientColor: 'rgba(139, 92, 246, 0.18)',
   gradientSize: 280,
+  showBorder: true,
 });
 
 const cardRef = ref<HTMLDivElement | null>(null);

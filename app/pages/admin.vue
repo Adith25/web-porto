@@ -691,6 +691,61 @@
                 <p class="text-xs text-gray-400 mt-2">Adjust how many seconds it takes for the text to scroll entirely across the screen.</p>
               </div>
 
+              <div class="pt-6 border-t border-gray-200 dark:border-gray-800">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                  <Icon name="mdi:file-document-outline" class="w-5 h-5 text-accent" />
+                  Curriculum Vitae (CV)
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-end">
+                  <div>
+                    <label class="block text-sm font-medium text-gray-900 dark:text-gray-300 mb-2">
+                      Upload New CV (PDF, DOC, DOCX)
+                    </label>
+                    <div class="flex items-center gap-3">
+                      <input 
+                        type="file" 
+                        ref="cvFileInput" 
+                        accept=".pdf,.doc,.docx" 
+                        class="hidden" 
+                        @change="onCvFileChange"
+                      >
+                      <button 
+                        type="button"
+                        class="glass-input text-left text-gray-500 flex items-center justify-between group"
+                        @click="cvFileInput?.click()"
+                      >
+                        <span class="truncate">{{ selectedCvFile ? selectedCvFile.name : 'Select file...' }}</span>
+                        <Icon name="mdi:paperclip" class="w-4 h-4 group-hover:text-accent transition-colors" />
+                      </button>
+                    </div>
+                  </div>
+                  <div class="flex gap-2">
+                    <button
+                      type="button"
+                      class="bg-accent hover:bg-accent-dark text-white px-5 py-2.5 rounded-xl text-sm font-medium transition-colors shadow flex items-center gap-2 disabled:opacity-50"
+                      :disabled="!selectedCvFile || isUploadingCv"
+                      @click="handleCvUpload"
+                    >
+                      <Icon v-if="isUploadingCv" name="mdi:loading" class="w-4 h-4 animate-spin" />
+                      <Icon v-else name="mdi:cloud-upload" class="w-4 h-4" />
+                      Upload CV
+                    </button>
+                  </div>
+                </div>
+                <div v-if="siteSetting.cvUrl" class="mt-4 p-3 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-lg flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <Icon name="mdi:file-pdf-box" class="w-8 h-8 text-red-400" />
+                    <div>
+                      <p class="text-xs text-gray-400">Current CV</p>
+                      <p class="text-sm font-medium text-gray-900 dark:text-white truncate max-w-[200px]">{{ siteSetting.cvUrl.split('/').pop() }}</p>
+                    </div>
+                  </div>
+                  <a :href="`${API_BASE}${siteSetting.cvUrl}`" target="_blank" class="text-accent hover:text-accent-light text-xs font-medium flex items-center gap-1">
+                    <Icon name="mdi:open-in-new" class="w-3.5 h-3.5" /> View
+                  </a>
+                </div>
+              </div>
+
               <div class="flex justify-start pt-4 border-t border-gray-200 dark:border-gray-800">
                 <button
                   type="submit"
@@ -1087,20 +1142,25 @@ const siteSetting = ref({
   announcementActive: false,
   bannerColor: "#4f46e5",
   textColor: "#ffffff",
-  animationSpeed: 25
+  animationSpeed: 25,
+  cvUrl: ""
 });
 const isSavingSettings = ref(false);
 
 const saveSettings = async () => {
   isSavingSettings.value = true;
   try {
+    const payload = { ...siteSetting.value };
+    // Only send the fields needed for the PATCH /settings endpoint
+    // We don't want to accidentally overwrite cvUrl if it's not being updated here
+    // But since DTO handles optional fields, it's fine.
     await $fetch(`${API_BASE}/settings`, {
       method: 'PATCH',
       headers: {
         Authorization: `Bearer ${token.value}`,
         "Content-Type": "application/json",
       },
-      body: siteSetting.value,
+      body: payload,
     });
     alert('Settings saved successfully!');
   } catch (err: any) {
@@ -1108,6 +1168,47 @@ const saveSettings = async () => {
     alert('Failed to save settings on server.');
   } finally {
     isSavingSettings.value = false;
+  }
+};
+
+// ── CV Upload logic ──
+const cvFileInput = ref<HTMLInputElement | null>(null);
+const selectedCvFile = ref<File | null>(null);
+const isUploadingCv = ref(false);
+
+const onCvFileChange = (e: Event) => {
+  const input = e.target as HTMLInputElement;
+  if (input.files?.[0]) {
+    selectedCvFile.value = input.files[0];
+  }
+};
+
+const handleCvUpload = async () => {
+  if (!selectedCvFile.value) return;
+  isUploadingCv.value = true;
+  try {
+    const fd = new FormData();
+    fd.append('file', selectedCvFile.value);
+    
+    const res = await $fetch<any>(`${API_BASE}/settings/cv`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+      },
+      body: fd,
+    });
+    
+    if (res.cvUrl) {
+      siteSetting.value.cvUrl = res.cvUrl;
+      selectedCvFile.value = null;
+      if (cvFileInput.value) cvFileInput.value.value = '';
+      alert('CV uploaded successfully!');
+    }
+  } catch (err: any) {
+    console.error('Failed to upload CV:', err);
+    alert(err.data?.message || 'Failed to upload CV.');
+  } finally {
+    isUploadingCv.value = false;
   }
 };
 
@@ -1183,6 +1284,7 @@ const fetchAll = async () => {
     if (setting.value.bannerColor) siteSetting.value.bannerColor = setting.value.bannerColor;
     if (setting.value.textColor) siteSetting.value.textColor = setting.value.textColor;
     if (setting.value.animationSpeed) siteSetting.value.animationSpeed = setting.value.animationSpeed;
+    if (setting.value.cvUrl) siteSetting.value.cvUrl = setting.value.cvUrl;
   }
 };
 

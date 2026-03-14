@@ -1,7 +1,8 @@
 <template>
   <nav
-    class="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-dark/80 backdrop-blur-md border-b border-gray-200/50 dark:border-dark-border/50 transition-all duration-300"
+    class="fixed left-0 right-0 z-50 bg-white/80 dark:bg-dark/80 backdrop-blur-md border-b border-gray-200/50 dark:border-dark-border/50 transition-all duration-300"
     :class="{ 'bg-white/95 dark:bg-dark/95 shadow-lg shadow-gray-200/50 dark:shadow-dark/50': scrolled }"
+    :style="{ top: (isBannerVisible && !scrolled) ? '40px' : '0px' }"
   >
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
@@ -108,6 +109,7 @@
 <script setup lang="ts">
 import AnimatedThemeToggler from '~/components/ui/animated-theme-toggler.vue';
 
+const { isBannerVisible } = useAnnouncement();
 const isOpen = ref(false);
 const scrolled = ref(false);
 const activeSection = ref("hero");

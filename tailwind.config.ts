@@ -23,14 +23,14 @@ export default {
           border: 'rgb(var(--color-border) / <alpha-value>)',
         },
         accent: {
-          DEFAULT: '#6366f1',
-          light: '#818cf8',
-          dark: '#4f46e5',
+          DEFAULT: '#6366f1', // Indigo-500
+          light: '#818cf8',  // Indigo-400
+          dark: '#4f46e5',   // Indigo-600
           glow: 'rgba(99,102,241,0.15)',
         },
         violet: {
-          DEFAULT: '#8b5cf6',
-          light: '#a78bfa',
+          DEFAULT: '#8b5cf6', // Violet-500
+          light: '#a78bfa',  // Violet-400
         },
       },
       animation: {

@@ -32,7 +32,8 @@
   }
 
   ::selection {
-    @apply bg-accent/30 text-white;
+    background-color: theme('colors.accent.DEFAULT / 30%');
+    color: white;
   }
 
   /* Scrollbar */
@@ -40,31 +41,52 @@
     width: 6px;
   }
   ::-webkit-scrollbar-track {
-    @apply bg-dark;
+    background-color: rgb(var(--color-bg-base));
   }
   ::-webkit-scrollbar-thumb {
-    @apply bg-dark-border rounded-full;
+    background-color: rgb(var(--color-border));
+    border-radius: 9999px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-accent;
+    background-color: theme('colors.accent.DEFAULT');
   }
 }
 
 @layer components {
   .gradient-text {
-    @apply bg-gradient-to-r from-accent-light to-violet-light bg-clip-text text-transparent;
+    background: linear-gradient(to right, theme('colors.accent.light'), theme('colors.violet.light'));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 
   .glass-card {
-    @apply bg-dark-card/80 backdrop-blur-sm border border-dark-border rounded-xl transition-colors duration-300;
+    background-color: rgba(var(--color-bg-card), 0.8);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgb(var(--color-border));
+    border-radius: 0.75rem;
+    transition: all 0.3s ease;
   }
 
   .btn-primary {
-    @apply inline-flex items-center gap-2 px-6 py-3 bg-accent hover:bg-accent-dark text-white font-medium rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-accent/25;
+    @apply inline-flex items-center gap-2 px-6 py-3 text-white font-medium rounded-lg transition-all duration-300;
+    background-color: theme('colors.accent.DEFAULT');
+  }
+  .btn-primary:hover {
+    background-color: theme('colors.accent.dark');
+    box-shadow: 0 10px 15px -3px theme('colors.accent.DEFAULT / 25%');
+    transform: translateY(-1px);
   }
 
   .btn-outline {
-    @apply inline-flex items-center gap-2 px-6 py-3 border border-dark-border hover:border-accent text-gray-300 hover:text-white font-medium rounded-lg transition-all duration-300;
+    @apply inline-flex items-center gap-2 px-6 py-3 font-medium rounded-lg transition-all duration-300;
+    border: 1px solid rgb(var(--color-border));
+    color: theme('colors.slate.500');
+  }
+  .btn-outline:hover {
+    border-color: theme('colors.accent.DEFAULT');
+    color: theme('colors.accent.DEFAULT');
+    background-color: theme('colors.accent.DEFAULT / 5%');
   }
 }
 

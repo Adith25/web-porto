@@ -24,28 +24,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+const { settings, fetchSettings } = useAnnouncement();
 
-const config = useRuntimeConfig();
-const API_BASE = config.public.apiBase;
-
-interface SiteSetting {
-  announcementText: string;
-  announcementActive: boolean;
-  bannerColor: string;
-  textColor: string;
-  animationSpeed: number;
-}
-
-const settings = ref<SiteSetting | null>(null);
-
-onMounted(async () => {
-  try {
-    const res = await $fetch<any>(`${API_BASE}/settings`);
-    settings.value = res;
-  } catch (err) {
-    console.error('Failed to load site settings for banner:', err);
-  }
+onMounted(() => {
+  fetchSettings();
 });
 </script>
 

@@ -61,20 +61,21 @@
   }
 
   .glass-card {
-    background-color: rgba(var(--color-bg-card), 0.8);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgb(var(--color-border));
+    background-color: rgba(var(--color-bg-card), 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(var(--color-border), 0.5);
     border-radius: 0.75rem;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .btn-primary {
     @apply inline-flex items-center gap-2 px-6 py-3 text-white font-medium rounded-lg transition-all duration-300;
-    background-color: theme('colors.accent.DEFAULT');
+    background-color: theme('colors.accent');
   }
   .btn-primary:hover {
     background-color: theme('colors.accent.dark');
-    box-shadow: 0 10px 15px -3px theme('colors.accent.DEFAULT / 25%');
+    box-shadow: 0 10px 15px -3px theme('colors.accent / 25%');
     transform: translateY(-1px);
   }
 
@@ -84,9 +85,9 @@
     color: theme('colors.slate.500');
   }
   .btn-outline:hover {
-    border-color: theme('colors.accent.DEFAULT');
-    color: theme('colors.accent.DEFAULT');
-    background-color: theme('colors.accent.DEFAULT / 5%');
+    border-color: theme('colors.accent');
+    color: theme('colors.accent');
+    background-color: theme('colors.accent / 5%');
   }
 }
 

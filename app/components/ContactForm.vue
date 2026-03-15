@@ -1,50 +1,61 @@
 <template>
-  <form class="space-y-6" @submit.prevent="handleSubmit">
-    <div>
-      <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
-        >Name</label
-      >
+  <form class="space-y-4" @submit.prevent="handleSubmit">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="space-y-1.5">
+        <label for="name" class="block text-[13px] font-medium text-gray-500">Name</label>
+        <input
+          id="name"
+          v-model="form.name"
+          type="text"
+          required
+          placeholder="Your name"
+          class="w-full px-3.5 py-2 bg-[#0B0F19] border border-[#1F2937] rounded-[10px] text-[13px] text-white placeholder-gray-600 focus:outline-none focus:border-[#6366F1] transition-all duration-200"
+        />
+      </div>
+
+      <div class="space-y-1.5">
+        <label for="email" class="block text-[13px] font-medium text-gray-500">Email</label>
+        <input
+          id="email"
+          v-model="form.email"
+          type="email"
+          required
+          placeholder="your@email.com"
+          class="w-full px-3.5 py-2 bg-[#0B0F19] border border-[#1F2937] rounded-[10px] text-[13px] text-white placeholder-gray-600 focus:outline-none focus:border-[#6366F1] transition-all duration-200"
+        />
+      </div>
+    </div>
+
+    <div class="space-y-1.5">
+      <label for="subject" class="block text-[13px] font-medium text-gray-500">Subject</label>
       <input
-        id="name"
-        v-model="form.name"
+        id="subject"
+        v-model="form.subject"
         type="text"
         required
-        placeholder="Your name"
-        class="w-full px-4 py-3 bg-white dark:bg-dark-card border border-gray-200 dark:border-dark-border rounded-lg text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/50 transition-all duration-200"
+        placeholder="What is this about?"
+        class="w-full px-3.5 py-2 bg-[#0B0F19] border border-[#1F2937] rounded-[10px] text-[13px] text-white placeholder-gray-600 focus:outline-none focus:border-[#6366F1] transition-all duration-200"
       />
     </div>
 
-    <div>
-      <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
-        >Email</label
-      >
-      <input
-        id="email"
-        v-model="form.email"
-        type="email"
-        required
-        placeholder="your@email.com"
-        class="w-full px-4 py-3 bg-white dark:bg-dark-card border border-gray-200 dark:border-dark-border rounded-lg text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/50 transition-all duration-200"
-      />
-    </div>
-
-    <div>
-      <label for="message" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
-        >Message</label
-      >
+    <div class="space-y-1.5">
+      <label for="message" class="block text-[13px] font-medium text-gray-500">Message</label>
       <textarea
         id="message"
         v-model="form.message"
-        rows="5"
+        rows="3"
         required
-        placeholder="Tell me about your project or idea..."
-        class="w-full px-4 py-3 bg-white dark:bg-dark-card border border-gray-200 dark:border-dark-border rounded-lg text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/50 transition-all duration-200 resize-none"
+        placeholder="Your message..."
+        class="w-full px-3.5 py-2 bg-[#0B0F19] border border-[#1F2937] rounded-[10px] text-[13px] text-white placeholder-gray-600 focus:outline-none focus:border-[#6366F1] transition-all duration-200 resize-none"
       />
     </div>
 
-    <button type="submit" class="btn-primary w-full justify-center">
+    <button 
+      type="submit" 
+      class="w-full h-[44px] rounded-[10px] bg-[#E5E7EB] hover:bg-[#D1D5DB] text-[#111827] font-semibold text-[14px] flex items-center justify-center gap-2 transition-all duration-300"
+    >
       <Icon name="mdi:send" class="w-4 h-4" />
-      Send Message
+      <span>Send Message</span>
     </button>
   </form>
 </template>
@@ -53,15 +64,16 @@
 const form = reactive({
   name: "",
   email: "",
+  subject: "",
   message: "",
 });
 
 const handleSubmit = () => {
-  // Placeholder — replace with API call
   console.log("Form submitted:", { ...form });
-  alert("Message sent! (This is a placeholder)");
+  alert("Message sent! (Placeholder)");
   form.name = "";
   form.email = "";
+  form.subject = "";
   form.message = "";
 };
 </script>

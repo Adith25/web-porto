@@ -31,6 +31,10 @@
     @apply bg-[#f8fafc] text-slate-900 font-sans transition-all duration-300 dark:bg-[#0a0a0f] dark:text-slate-200;
   }
 
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Manrope', 'Inter', system-ui, sans-serif;
+  }
+
   ::selection {
     background-color: theme('colors.accent.DEFAULT / 30%');
     color: white;

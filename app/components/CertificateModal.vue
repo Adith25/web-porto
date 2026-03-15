@@ -22,27 +22,39 @@
 
           <!-- Certificate image -->
           <div class="modal-thumb">
-            <div v-if="isPdf" class="modal-pdf">
-              <Icon name="mdi:file-pdf-box" class="w-16 h-16 text-red-400" />
-              <p class="text-gray-400 text-sm mt-2">PDF Certificate</p>
-              <a
-                :href="cert.image"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="mt-3 btn-outline text-sm py-1.5 px-4"
-              >
-                Open PDF
-              </a>
-            </div>
+            <!-- Show image if it's a valid image (not a PDF itself) -->
             <img
-              v-else-if="cert.image"
+              v-if="cert.image && !cert.image.toLowerCase().endsWith('.pdf')"
               :src="cert.image"
               :alt="cert.title"
               class="modal-img"
             />
+            <!-- Fallback to PDF Icon if image is a PDF OR if it's a PDF cert without thumbnail -->
+            <div v-else-if="isPdf" class="modal-pdf">
+              <Icon name="mdi:file-certificate-outline" class="w-20 h-20 text-red-500/40" />
+              <p class="text-gray-400 text-sm mt-3 font-medium">PDF Certificate Document</p>
+            </div>
             <div v-else class="modal-pdf">
               <Icon name="mdi:certificate-outline" class="w-16 h-16 text-accent/40" />
             </div>
+
+            <!-- PDF overlay for modal -->
+            <div v-if="isPdf" class="absolute top-4 right-4 bg-red-500/90 text-white text-[10px] font-bold px-2 py-1 rounded shadow-lg">
+              PDF
+            </div>
+          </div>
+
+          <!-- PDF Button (If PDF available) -->
+          <div v-if="isPdf && cert.pdfUrl" class="px-6 pt-4">
+             <a
+                :href="cert.pdfUrl"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="w-full flex items-center justify-center gap-2 bg-red-600/20 hover:bg-red-600/30 text-red-400 border border-red-500/30 py-2.5 rounded-xl transition-all font-semibold text-sm"
+              >
+                <Icon name="mdi:file-pdf-box" class="w-5 h-5" />
+                View Full PDF Certificate
+              </a>
           </div>
 
           <!-- Details -->
@@ -81,15 +93,17 @@ const props = defineProps<{
     title: string;
     description?: string;
     image?: string;
+    pdfUrl?: string;
     credentialUrl?: string;
   } | null;
 }>();
 
 const emit = defineEmits<{ close: [] }>();
 
-const isPdf = computed(
-  () => !!props.cert?.image && props.cert.image.toLowerCase().endsWith('.pdf')
-);
+const isPdf = computed(() => {
+  if (props.cert?.pdfUrl) return true;
+  return !!props.cert?.image && props.cert.image.toLowerCase().endsWith('.pdf');
+});
 
 // Close on Escape key
 onMounted(() => {
@@ -157,8 +171,8 @@ onMounted(() => {
 /* ── Thumbnail ── */
 .modal-thumb {
   width: 100%;
-  aspect-ratio: 16 / 9;
-  background: rgba(255, 255, 255, 0.04);
+  aspect-ratio: 4 / 3;
+  background: #ffffff;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -167,7 +181,9 @@ onMounted(() => {
 .modal-img {
   width: 100%;
   height: 100%;
+  padding: 1rem;
   object-fit: contain;
+  filter: drop-shadow(0 8px 30px rgba(0, 0, 0, 0.3));
 }
 .modal-pdf {
   display: flex;

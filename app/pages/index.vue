@@ -1,70 +1,90 @@
 <template>
   <div>
     <!-- ==================== HERO ==================== -->
-    <section id="hero" class="relative min-h-screen flex items-center pt-16 overflow-hidden">
-
-
-
-      <!-- Dot-grid background -->
-      <div class="hero-grid" aria-hidden="true" />
-
-      <!-- Ambient orbs -->
-      <div class="hero-orb hero-orb-1" aria-hidden="true" />
-      <div class="hero-orb hero-orb-2" aria-hidden="true" />
-      <div class="hero-orb hero-orb-3" aria-hidden="true" />
-
-      <!-- Horizontal glow line -->
-      <div class="hero-glow-line" aria-hidden="true" />
-
-      <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full">
-        <div class="flex flex-col lg:flex-row items-center lg:items-start gap-12">
-
-          <!-- Left: Text content -->
-          <div class="max-w-2xl">
-
-            <!-- Greeting badge -->
-            <div class="hero-badge mb-6">
-              <span class="badge-dot" />
-              <span class="font-mono text-xs tracking-widest text-accent-light">Hello World!, I'm&nbsp;</span>
-              <span class="font-mono text-xs font-semibold text-gray-900 dark:text-white">Adith</span>
-            </div>
-
-            <!-- Name -->
-            <h1 class="hero-name mb-4">
-              <span class="block text-gray-900 dark:text-white">Muhammad Aditya</span>
-              <span class="block gradient-text">Yufnanda</span>
+    <section id="hero" class="relative min-h-[100vh] flex items-center justify-center pt-16 overflow-hidden bg-[#f8fafc] dark:bg-[#0a0a0f]">
+      
+      <!-- Subtle Grid -->
+      <div class="hero-grid opacity-[0.2] dark:opacity-[0.3]" />
+      
+      <!-- Ambient orbs (Subtle background) -->
+      <div class="hero-orb hero-orb-1 opacity-60" />
+      <div class="hero-orb hero-orb-2 opacity-40" />
+      
+      <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+        <div class="flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-20">
+          
+          <!-- Left side: Content (Split layout restored) -->
+          <div class="max-w-2xl text-center lg:text-left flex flex-col items-center lg:items-start">
+            
+            <!-- Headline: Stacked & Strong -->
+            <h1 class="text-6xl md:text-8xl font-black tracking-tighter mb-8 leading-[0.9] flex flex-col">
+              <span class="text-slate-900 dark:text-white">Muhammad</span>
+              <span class="text-slate-900 dark:text-white">Aditya</span>
+              <span class="bg-gradient-to-r from-accent to-violet-light bg-clip-text text-transparent">Yufnanda</span>
             </h1>
 
+            <!-- Separator -->
+            <div class="max-w-md w-full h-px bg-slate-200 dark:bg-slate-800/80 mb-6" />
 
-            <!-- Welcome message -->
-            <div class="hero-welcome mb-10">
-              <p class="welcome-text">Welcome to my personal website</p>
-              <div class="welcome-line" />
+            <!-- Subtitle: Minimalist, Elegant & Animated -->
+            <div class="text-xs md:text-sm text-slate-500/80 dark:text-slate-400/70 mb-10 max-w-md leading-relaxed font-mono tracking-wide h-[4.5rem] lg:h-auto">
+              <UiTypingEffect 
+                text="Software Engineer specializing in mobile application development and intelligent systems, focused on building scalable and impactful digital solutions"
+                :speed="30"
+                :delay="800"
+              />
             </div>
 
-            <!-- CTAs -->
-            <div class="flex flex-wrap gap-4 hero-cta">
-              <NuxtLink to="/resume" target="_blank" class="btn-primary">
-                <Icon name="mdi:eye-outline" class="w-5 h-5" />
-                View & Download CV
+            <!-- Buttons: Redesigned CTAs -->
+            <div class="flex flex-row flex-wrap justify-center lg:justify-start gap-4 items-center">
+              <NuxtLink :to="cvUrl || '/resume'" target="_blank">
+                <UiInteractiveHoverButton variant="outline" hoverText="Click to Download">
+                  <Icon name="mdi:download-outline" class="w-4 h-4" />
+                  <span>Download CV</span>
+                </UiInteractiveHoverButton>
               </NuxtLink>
-              <a href="#contact" class="btn-outline" @click.prevent="scrollTo('contact')">
-                <Icon name="mdi:email-outline" class="w-5 h-5" />
+              <a href="#contact" class="h-[42px] px-6 flex items-center justify-center gap-2 bg-slate-900 text-white rounded-full font-semibold text-sm shadow-lg shadow-black/20 hover:shadow-black/40 hover:-translate-y-0.5 transition-all" @click.prevent="scrollTo('contact')">
+                <Icon name="mdi:email-outline" class="w-4 h-4" />
                 Contact Me
-              </a>
-              <a href="#about" class="btn-ghost" @click.prevent="scrollTo('about')">
-                Learn More
-                <Icon name="mdi:arrow-right" class="w-4 h-4" />
               </a>
             </div>
           </div>
-        </div>
-      </div>
 
-      <!-- Scroll indicator -->
-      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-1 animate-bounce">
-        <span class="text-xs font-mono text-gray-400 dark:text-gray-600 tracking-widest">SCROLL</span>
-        <Icon name="mdi:chevron-double-down" class="w-5 h-5 text-gray-400 dark:text-gray-600" />
+          <!-- Right side: Profile Card -->
+          <div class="relative w-full max-w-xs group">
+            <!-- Floating animation wrapper -->
+            <div class="animate-float-slow will-change-transform">
+              <!-- Glow background effect - violet/purple on hover -->
+              <div class="absolute -inset-4 bg-gradient-to-br from-violet/20 to-violet-light/10 blur-3xl rounded-3xl opacity-0 group-hover:opacity-60 transition-opacity duration-700 pointer-events-none" />
+              
+              <div class="relative z-10">
+                <!-- Profile Card Container -->
+                <div class="overflow-hidden rounded-2xl lg:rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 group">
+                  <!-- Image wrapper with 2:3 aspect ratio -->
+                  <div class="relative overflow-hidden aspect-[2/3]">
+                    <!-- Profile image -->
+                    <img
+                      src="/hero.png"
+                      alt="Muhammad Aditya Yufnanda"
+                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                    
+                    <!-- Transparent top half with gradient separator -->
+                    <div class="absolute inset-0">
+                      <!-- Top half - transparent -->
+                      <div class="absolute top-0 left-0 right-0 h-1/2 bg-transparent" />
+                      
+                      <!-- Bottom half dark gradient + violet glow on hover -->
+                      <div class="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                      <div class="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-violet/0 via-transparent to-transparent opacity-0 group-hover:opacity-50 transition-opacity duration-700 pointer-events-none" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
     </section>
 
@@ -75,6 +95,8 @@
         title="About"
         highlight=" Me"
         subtitle="A bit about my journey and what drives me."
+        :centered="true"
+        :hideLine="true"
       >
         <div class="grid lg:grid-cols-3 gap-8">
 
@@ -154,6 +176,8 @@
         title="Tech"
         highlight=" Stack"
         subtitle="Technologies and tools I work with."
+        :centered="true"
+        :hideLine="true"
       >
         <div class="space-y-4">
           <ScrollReveal
@@ -172,10 +196,10 @@
               <div class="flex flex-wrap gap-2">
                 <span
                   v-for="tech in category.items"
-                  :key="tech.name"
+                  :key="tech"
                   class="text-xs px-3 py-1.5 rounded-full bg-gray-100 dark:bg-dark-lighter text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-800 hover:border-accent/40 dark:hover:border-accent/40 hover:text-gray-900 dark:hover:text-white hover:bg-accent/10 dark:hover:bg-accent/10 transition-all duration-200 shadow-sm"
                 >
-                  {{ tech.name }}
+                  {{ tech }}
                 </span>
               </div>
             </div>
@@ -195,6 +219,8 @@
         title="My"
         highlight=" Projects"
         subtitle="A selection of things I've built and researched."
+        :centered="true"
+        :hideLine="true"
       >
         <div class="grid gap-6 sm:grid-cols-2">
           <ScrollReveal
@@ -222,6 +248,8 @@
         title="My"
         highlight=" Experience"
         subtitle="Professional journey and technical contributions."
+        :centered="true"
+        :hideLine="true"
       >
         <div class="relative" ref="experienceSectionRef">
           <!-- Background vertical line -->
@@ -304,6 +332,8 @@
         title="My"
         highlight=" Certifications"
         subtitle="Continuous learning and professional development."
+        centered
+        hideLine
       >
         <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <ScrollReveal
@@ -315,6 +345,7 @@
               :title="cert.title"
               :description="cert.description"
               :image="cert.image"
+              :pdf-url="cert.pdfUrl"
               :credential-url="cert.credentialUrl"
               @select="selectedCert = cert"
             />
@@ -339,82 +370,61 @@
         title="Get In"
         highlight=" Touch"
         subtitle="Have a project in mind? Let's talk."
+        class="!pt-20 !pb-16"
+        centered
+        hideLine
       >
-        <div class="grid lg:grid-cols-2 gap-12">
+        <div class="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center w-full">
+          <!-- Left Side: Contact Info -->
           <ScrollReveal animation="fade-right">
-            <div class="glass-card p-6 sm:p-8">
-              <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-6">
-                Send a Message
-              </h3>
-              <ContactForm />
-            </div>
-          </ScrollReveal>
-
-          <div class="space-y-6">
-            <ScrollReveal animation="fade-left" :delay="100">
-              <div class="glass-card p-6 sm:p-8">
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-6">
-                  Contact Info
-                </h3>
-                <div class="space-y-4">
+            <div class="space-y-8">
+              <div>
+                <h3 class="text-lg font-semibold text-white mb-1">Contact Info</h3>
+                <p class="text-gray-500 text-[13px]">Find me across the digital landscape.</p>
+              </div>
+              
+              <div class="grid sm:grid-cols-2 gap-x-8 gap-y-6">
+                <div
+                  v-for="info in contactInfo"
+                  :key="info.label"
+                  class="space-y-1 group"
+                >
+                  <div class="flex items-center gap-1.5 text-gray-500 group-hover:text-[#6366F1] transition-colors">
+                    <Icon :name="info.icon" class="w-4 h-4" />
+                    <span class="text-[10px] uppercase tracking-widest font-bold">{{ info.label }}</span>
+                  </div>
                   <a
-                    v-for="info in contactInfo"
-                    :key="info.label"
                     :href="info.url"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-dark-lighter transition-colors duration-200 group"
+                    class="block text-gray-400 hover:text-white transition-colors text-[13px] truncate"
                   >
-                    <div
-                      class="p-2 rounded-lg bg-accent/10 group-hover:bg-accent/20 transition-colors"
-                    >
-                      <Icon
-                        :name="info.icon"
-                        class="w-5 h-5 text-accent-light"
-                      />
-                    </div>
-                    <div>
-                      <p class="text-xs text-gray-500 uppercase tracking-wider">
-                        {{ info.label }}
-                      </p>
-                      <p
-                        class="text-sm text-gray-600 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white transition-colors"
-                      >
-                        {{ info.value }}
-                      </p>
-                    </div>
+                    {{ info.value }}
                   </a>
                 </div>
               </div>
-            </ScrollReveal>
+            </div>
+          </ScrollReveal>
 
-            <ScrollReveal animation="fade-left" :delay="200">
-              <div class="glass-card p-6 sm:p-8">
-                <div class="flex items-center gap-3 mb-3">
-                  <span class="relative flex h-3 w-3">
-                    <span
-                      class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"
-                    />
-                    <span
-                      class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"
-                    />
-                  </span>
-                  <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-                    Available for Work
-                  </h3>
-                </div>
-                <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-                  I'm currently open to full-time positions, freelance projects,
-                  and collaboration opportunities. Feel free to reach out!
-                </p>
+          <!-- Right Side: Form -->
+          <ScrollReveal animation="fade-left" :delay="100">
+            <div class="space-y-6 text-center">
+              <div>
+                <h3 class="text-lg font-semibold text-white mb-1">Send a Message</h3>
+                <p class="text-gray-500 text-[13px]">Reach out directly via the form below.</p>
               </div>
-            </ScrollReveal>
-          </div>
+              <div class="border border-[#1F2937] rounded-xl p-[1px] text-left">
+                <div class="bg-transparent p-5 sm:p-7">
+                  <ContactForm />
+                </div>
+              </div>
+            </div>
+          </ScrollReveal>
         </div>
 
         <!-- GitHub Contribution Calendar -->
         <ScrollReveal animation="fade-up" :delay="300">
-          <div class="mt-16 max-w-4xl mx-auto overflow-hidden relative">
+          <div class="mt-16 w-full overflow-hidden relative">
             <GitHubCalendar 
               username="Adith25" 
               avatar-url="https://github.com/Adith25.png"
@@ -430,10 +440,8 @@
 </template>
 
 <script setup lang="ts">
-// GitHub data handled in GitHubCalendar component
-
 useHead({
-  title: "Adith — Computer Engineer & Machine Learning Enthusiast",
+  title: "Adith ΓÇö Computer Engineer & Machine Learning Enthusiast",
 });
 
 const scrollTo = (id: string) => {
@@ -447,7 +455,7 @@ onMounted(() => {
   }
 });
 
-// ── Experience timeline scroll progress ───────────────
+// ΓöÇΓöÇ Experience timeline scroll progress ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
 const experienceSectionRef = ref<HTMLElement | null>(null);
 const progressLineRef = ref<HTMLElement | null>(null);
 const experienceProgress = ref(0);
@@ -486,7 +494,7 @@ const selectedCert = ref<{
   credentialUrl?: string;
 } | null>(null);
 
-// ─── Data ───────────────────────────────────
+// ΓöÇΓöÇΓöÇ Data ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
 const techStack = ref<any[]>([]);
 
 const strengths = [
@@ -522,9 +530,7 @@ const interests = [
 ];
 
 const projects = ref<any[]>([]);
-
 const experiences = ref<any[]>([]);
-
 const aboutCards = ref<any[]>([]);
 const cvUrl = ref("");
 
@@ -567,51 +573,6 @@ const fetchSkills = async () => {
   try {
     const data = await $fetch<any[]>(`${API_BASE}/skills`);
     techStack.value = data.map(s => {
-        // Icon mapping for tech stack logos
-        const getBrandIcon = (techName: string) => {
-          const lower = techName.toLowerCase();
-          if (lower.includes('js') || lower === 'javascript') return 'logos:javascript';
-          if (lower.includes('ts') || lower === 'typescript') return 'logos:typescript-icon';
-          if (lower.includes('node') || lower === 'nodejs') return 'logos:nodejs-icon';
-          if (lower.includes('react')) return 'logos:react';
-          if (lower.includes('vue')) return 'logos:vue';
-          if (lower.includes('nuxt')) return 'logos:nuxt-icon';
-          if (lower.includes('next')) return 'logos:nextjs-icon';
-          if (lower.includes('tailwind')) return 'logos:tailwindcss-icon';
-          if (lower.includes('bootstrap')) return 'logos:bootstrap';
-          if (lower.includes('html')) return 'logos:html-5';
-          if (lower.includes('css')) return 'logos:css-3';
-          if (lower.includes('python')) return 'logos:python';
-          if (lower.includes('java') && !lower.includes('script')) return 'logos:java';
-          if (lower.includes('php')) return 'logos:php';
-          if (lower.includes('laravel')) return 'logos:laravel';
-          if (lower.includes('nest') || lower.includes('nestjs')) return 'logos:nestjs';
-          if (lower.includes('express')) return 'logos:express';
-          if (lower.includes('django')) return 'logos:django-icon';
-          if (lower.includes('postgres') || lower.includes('postgresql')) return 'logos:postgresql';
-          if (lower.includes('mongo') || lower.includes('mongodb')) return 'logos:mongodb-icon';
-          if (lower.includes('mysql')) return 'logos:mysql';
-          if (lower.includes('docker')) return 'logos:docker-icon';
-          if (lower.includes('kubernetes')) return 'logos:kubernetes';
-          if (lower.includes('aws')) return 'logos:aws';
-          if (lower.includes('git') && !lower.includes('github') && !lower.includes('gitlab')) return 'logos:git-icon';
-          if (lower.includes('github')) return 'mdi:github';
-          if (lower.includes('figma')) return 'logos:figma';
-          if (lower.includes('flutter')) return 'logos:flutter';
-          if (lower.includes('dart')) return 'logos:dart';
-          if (lower.includes('tensor') || lower.includes('tensorflow')) return 'logos:tensorflow';
-          if (lower.includes('pytorch')) return 'logos:pytorch-icon';
-          if (lower.includes('arduino')) return 'logos:arduino';
-          if (lower.includes('firebase')) return 'logos:firebase';
-          return 'mdi:code-tags'; // default fallback
-        };
-
-        const parsedItems = s.items ? s.items.split(',').map((t: string) => t.trim()).filter(Boolean) : [];
-        const techObjects = parsedItems.map((tech: string) => ({
-          name: tech,
-          icon: getBrandIcon(tech)
-        }));
-
         let bgClass = "bg-accent/10";
         let iconClass = "text-accent-light";
         
@@ -630,7 +591,7 @@ const fetchSkills = async () => {
             bgClass,
             iconClass,
             labelClass: iconClass,
-            items: techObjects
+            items: s.items ? s.items.split(',').map((t: string) => t.trim()).filter(Boolean) : []
         };
     });
   } catch (error) {
@@ -643,14 +604,15 @@ const fetchCertificates = async () => {
     const data = await $fetch<any[]>(`${API_BASE}/certificates`);
     certificates.value = data.map(c => ({
       ...c,
-      image: c.fileUrl && !c.isPdf ? `${API_BASE}${c.fileUrl}` : ''
+      image: c.fileUrl ? `${API_BASE}${c.fileUrl}` : '',
+      pdfUrl: c.pdfUrl ? `${API_BASE}${c.pdfUrl}` : ''
     }));
   } catch (error) {
     console.error('Failed to fetch certificates:', error);
   }
 };
 
-onMounted(async () => {
+onMounted(() => {
   fetchAboutCards();
   fetchExperiences();
   fetchProjects();
@@ -658,18 +620,14 @@ onMounted(async () => {
   fetchCertificates();
   
   // Fetch settings for CV
-  try {
-    const settings = await $fetch<any>(`${API_BASE}/settings`);
+  $fetch<any>(`${API_BASE}/settings`).then(settings => {
     if (settings.cvUrl) {
       cvUrl.value = `${API_BASE}${settings.cvUrl}`;
     }
-  } catch (error) {
-    console.error('Failed to fetch settings:', error);
-  }
+  }).catch(console.error);
 });
 
 const showAllCertificates = ref(false);
-
 const certificates = ref<any[]>([]);
 
 const displayedCertificates = computed(() => {
@@ -705,7 +663,7 @@ const contactInfo = [
 </script>
 
 <style scoped>
-/* ── Profile Card ── */
+/* ΓöÇΓöÇ Profile Card ΓöÇΓöÇ */
 .profile-card {
   display: flex;
   flex-direction: column;
@@ -713,7 +671,6 @@ const contactInfo = [
   overflow: hidden;
 }
 
-/* 3:4 Portrait photo area */
 .photo-wrapper {
   position: relative;
   width: 100%;
@@ -732,7 +689,6 @@ const contactInfo = [
 .profile-card:hover .photo-img {
   transform: scale(1.03);
 }
-/* Dark gradient from top for badge legibility */
 .photo-overlay {
   position: absolute;
   inset: 0;
@@ -741,7 +697,6 @@ const contactInfo = [
     linear-gradient(to top, rgba(5,5,15,0.88) 0%, rgba(5,5,15,0.4) 35%, transparent 60%);
   pointer-events: none;
 }
-/* Role badge pinned top-left */
 .photo-header {
   position: absolute;
   top: 14px;
@@ -750,7 +705,6 @@ const contactInfo = [
   display: flex;
   align-items: flex-start;
 }
-/* Meta info pinned bottom of photo */
 .photo-footer {
   position: absolute;
   bottom: 14px;
@@ -775,17 +729,6 @@ const contactInfo = [
   letter-spacing: 0.03em;
 }
 
-/* Card footer below photo */
-.card-footer {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 16px 18px 18px;
-  background: rgba(10, 10, 18, 0.95);
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-/* Meta lines inside photo overlay */
 .meta-line {
   display: flex;
   align-items: center;
@@ -802,23 +745,6 @@ const contactInfo = [
   flex-shrink: 0;
 }
 
-/* Name */
-.profile-name {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: #ffffff;
-  line-height: 1.3;
-  font-family: 'Inter', sans-serif;
-  letter-spacing: -0.01em;
-  text-shadow: 0 1px 6px rgba(0,0,0,0.7);
-}
-
-/* Status */
-.status-row {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-}
 .status-dot {
   width: 7px;
   height: 7px;
@@ -832,36 +758,20 @@ const contactInfo = [
   0%, 100% { box-shadow: 0 0 8px 2px rgba(52, 211, 153, 0.5); }
   50%       { box-shadow: 0 0 14px 4px rgba(52, 211, 153, 0.8); }
 }
-.status-text {
-  font-size: 0.75rem;
-  color: #6ee7b7;
-  font-weight: 500;
-}
 
-/* Divider */
-.profile-divider {
-  width: 100%;
-  height: 1px;
-  background: rgba(255,255,255,0.07);
-  border-radius: 1px;
-}
-
-
-/* ─────────────────────────────────────────
+/* ΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓöö
    HERO SECTION
-───────────────────────────────────────── */
+ΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓööΓöö */
 
-/* Dot grid */
 .hero-grid {
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(rgba(139, 92, 246, 0.12) 1px, transparent 1px);
-  background-size: 32px 32px;
+  background-image: radial-gradient(rgba(139, 92, 246, 0.1) 1px, transparent 1px);
+  background-size: 40px 40px;
   mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
   pointer-events: none;
 }
 
-/* Ambient orbs */
 .hero-orb {
   position: absolute;
   border-radius: 50%;
@@ -871,38 +781,21 @@ const contactInfo = [
 }
 .hero-orb-1 {
   width: 500px; height: 500px;
-  background: radial-gradient(circle, rgba(124, 58, 237, 0.18) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.15) 0%, transparent 70%);
   top: -8%; left: -6%;
   animation-delay: 0s;
 }
 .hero-orb-2 {
   width: 420px; height: 420px;
-  background: radial-gradient(circle, rgba(59, 130, 246, 0.14) 0%, transparent 70%);
-  bottom: 0; right: -5%;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, transparent 70%);
+  bottom: 10%; right: -5%;
   animation-delay: -4s;
-}
-.hero-orb-3 {
-  width: 300px; height: 300px;
-  background: radial-gradient(circle, rgba(236, 72, 153, 0.1) 0%, transparent 70%);
-  top: 55%; left: 40%;
-  animation-delay: -7s;
 }
 @keyframes heroFloat {
   from { transform: translate(0, 0) scale(1); }
   to   { transform: translate(24px, 18px) scale(1.06); }
 }
 
-/* Glow line */
-.hero-glow-line {
-  position: absolute;
-  top: 62%;
-  left: 0; right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(139,92,246,0.2) 40%, rgba(96,165,250,0.2) 60%, transparent);
-  pointer-events: none;
-}
-
-/* Badge */
 .hero-badge {
   display: inline-flex;
   align-items: center;
@@ -910,7 +803,7 @@ const contactInfo = [
   padding: 6px 14px;
   border-radius: 99px;
   background: rgba(139, 92, 246, 0.08);
-  border: 1px solid rgba(139, 92, 246, 0.25);
+  border: 1px solid rgba(139, 92, 246, 0.2);
   animation: fadeSlideDown 0.6s ease both;
 }
 .badge-dot {
@@ -925,175 +818,13 @@ const contactInfo = [
   50%      { opacity: 0.6; transform: scale(1.3); }
 }
 
-/* Name */
-.hero-name {
-  font-size: clamp(2.5rem, 6vw, 4.5rem);
-  font-weight: 800;
-  line-height: 1.1;
-  letter-spacing: -0.03em;
-  font-family: 'Inter', sans-serif;
-  animation: fadeSlideUp 0.7s 0.1s ease both;
-}
-
-/* Role typewriter */
-.hero-role {
-  font-size: clamp(1rem, 2.5vw, 1.4rem);
-  font-weight: 500;
-  color: #cbd5e1;
-  animation: fadeSlideUp 0.7s 0.25s ease both;
-}
-.role-prefix { color: #64748b; }
-.role-typed  { color: #a78bfa; font-weight: 600; }
-.cursor-blink {
-  color: #7c3aed;
-  animation: blink 0.75s step-end infinite;
-}
-@keyframes blink {
-  0%,100% { opacity: 1; }
-  50%      { opacity: 0; }
-}
-
-/* Description */
-.hero-desc { animation: fadeSlideUp 0.7s 0.35s ease both; }
-
-/* CTAs */
-.hero-cta { animation: fadeSlideUp 0.7s 0.5s ease both; }
-
-/* Ghost button */
-.btn-ghost {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 10px 18px;
-  border-radius: 10px;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #94a3b8;
-  transition: color 0.2s ease;
-}
-.btn-ghost:hover { color: #ffffff; }
-
-/* Shared entrance animations */
 @keyframes fadeSlideDown {
   from { opacity: 0; transform: translateY(-12px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-@keyframes fadeSlideUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
 
-/* ── Floating code card ── */
-.hero-card-wrap {
-  position: relative;
-  animation: fadeSlideUp 0.9s 0.4s ease both;
-}
-.hero-float-card {
-  background: rgba(12, 12, 22, 0.85);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(139, 92, 246, 0.2);
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0 24px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.04);
-  min-width: 300px;
-  animation: cardPulse 6s ease-in-out infinite alternate;
-}
-@keyframes cardPulse {
-  from { box-shadow: 0 24px 60px rgba(0,0,0,0.4), 0 0 30px rgba(124,58,237,0.06); }
-  to   { box-shadow: 0 30px 70px rgba(0,0,0,0.5), 0 0 50px rgba(124,58,237,0.14); }
-}
-
-.hfc-header {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 10px 16px;
-  background: rgba(255,255,255,0.04);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-}
-.hfc-dot {
-  width: 10px; height: 10px;
-  border-radius: 50%;
-}
-.hfc-dot-red    { background: #ff5f57; }
-.hfc-dot-yellow { background: #febc2e; }
-.hfc-dot-green  { background: #28c840; }
-.hfc-filename {
-  margin-left: 8px;
-  font-size: 0.72rem;
-  font-family: monospace;
-  color: #64748b;
-}
-
-.hfc-body { padding: 18px 20px; color: #cbd5e1; }
-.hfc-kw   { color: #c084fc; }  /* purple — keyword */
-.hfc-var  { color: #60a5fa; }  /* blue   — variable */
-.hfc-key  { color: #f9a8d4; }  /* pink   — key */
-.hfc-str  { color: #86efac; }  /* green  — string */
-.hfc-bool { color: #fbbf24; }  /* amber  — boolean */
-
-/* Status badge below card */
-.hfc-status-badge {
-  margin-top: 12px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 14px;
-  border-radius: 99px;
-  background: rgba(16, 185, 129, 0.08);
-  border: 1px solid rgba(16, 185, 129, 0.2);
-  font-size: 0.75rem;
-  color: #6ee7b7;
-  font-weight: 500;
-}
-.hfc-status-dot {
-  width: 7px; height: 7px;
-  border-radius: 50%;
-  background: #34d399;
-  box-shadow: 0 0 8px 2px rgba(52,211,153,0.5);
-  animation: pulse-green 2s ease-in-out infinite;
-}
-/* Welcome message */
-.hero-welcome {
-  animation: fadeSlideUp 0.7s 0.35s ease both;
-}
-.welcome-text {
-  font-size: clamp(0.95rem, 2vw, 1.15rem);
-  font-weight: 500;
-  background: linear-gradient(90deg, #94a3b8 0%, #c4b5fd 50%, #818cf8 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  letter-spacing: 0.01em;
-  margin-bottom: 12px;
-}
-.welcome-line {
-  height: 2px;
-  width: 48px;
-  border-radius: 99px;
-  background: linear-gradient(90deg, #7c3aed, #60a5fa);
-  position: relative;
-  overflow: hidden;
-}
-.welcome-line::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
-  animation: shimmer 2s ease-in-out infinite;
-}
-@keyframes shimmer {
-  0%   { transform: translateX(-100%); }
-  100% { transform: translateX(200%); }
-}
-/* Hide scrollbar for Chrome, Safari and Opera */
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
-
-/* Hide scrollbar for IE, Edge and Firefox */
-.scrollbar-hide {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+/* Floating animation for profile card */
+.animate-float-slow {
+  animation: floatSlow 8s ease-in-out infinite;
 }
 </style>

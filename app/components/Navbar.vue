@@ -24,8 +24,7 @@
         >
           <span class="text-xl font-bold gradient-text">Adith</span>
           <span class="text-xs font-mono text-gray-500 hidden sm:inline"
-            >/ engineer</span
-          >
+            ></span>
         </a>
 
         <!-- Desktop Nav -->

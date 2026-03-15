@@ -1,25 +1,26 @@
 <template>
-  <MagicCard
-    class="cert-card-container flex flex-col h-full group cursor-pointer !bg-white dark:!bg-[#0a081e]/45 !p-0"
+  <div
+    class="cert-card-container flex flex-col h-full group cursor-pointer bg-white dark:bg-[#0a081e]/45 p-0"
     @click="$emit('select')"
-    :title="title"
   >
     <!-- Image / Thumbnail -->
     <div class="cert-thumb">
-      <!-- PDF indicator overlay -->
-      <div v-if="isPdf" class="pdf-overlay">
-        <Icon name="mdi:file-pdf-box" class="w-12 h-12 text-red-400" />
-        <span class="text-xs text-gray-300 mt-1 font-mono">PDF</span>
-      </div>
+      <!-- Show image if it's a valid image (not a PDF itself) -->
       <img
-        v-else-if="image"
+        v-if="image && !image.toLowerCase().endsWith('.pdf')"
         :src="image"
         :alt="title"
         class="cert-img"
       />
+      <!-- Fallback to PDF Icon if image is a PDF OR if it's a PDF cert without thumbnail -->
+      <div v-else-if="isPdf" class="cert-pdf-main">
+        <Icon name="mdi:file-certificate-outline" class="w-16 h-16 text-red-500/40" />
+        <span class="text-[10px] text-gray-500 font-mono mt-1">PDF DOCUMENT</span>
+      </div>
       <div v-else class="cert-placeholder">
         <Icon name="mdi:certificate-outline" class="w-12 h-12 text-accent/40" />
       </div>
+
 
       <!-- Hover shine overlay -->
       <div class="cert-shine" />
@@ -45,23 +46,24 @@
         View Credential
       </a>
     </div>
-  </MagicCard>
+  </div>
 </template>
 
 <script setup lang="ts">
-import MagicCard from '~/components/MagicCard.vue';
 const props = defineProps<{
   title: string;
   description?: string;
   image?: string;
+  pdfUrl?: string;
   credentialUrl?: string;
 }>();
 
 defineEmits<{ select: [] }>();
 
-const isPdf = computed(
-  () => !!props.image && props.image.toLowerCase().endsWith('.pdf')
-);
+const isPdf = computed(() => {
+  if (props.pdfUrl) return true;
+  return !!props.image && props.image.toLowerCase().endsWith('.pdf');
+});
 </script>
 
 <style scoped>
@@ -81,21 +83,23 @@ const isPdf = computed(
 .cert-thumb {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 9;
-  background: #f8fafc;
+  aspect-ratio: 4 / 3;
+  background: #ffffff;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .dark .cert-thumb {
-  background: rgba(255, 255, 255, 0.04);
+  background: #ffffff;
 }
 
 .cert-img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  padding: 0.5rem;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
   transition: transform 0.4s ease;
 }
 .cert-card-container:hover .cert-img {
@@ -103,6 +107,7 @@ const isPdf = computed(
 }
 
 .pdf-overlay,
+.cert-pdf-main,
 .cert-placeholder {
   display: flex;
   flex-direction: column;

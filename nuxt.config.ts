@@ -24,6 +24,7 @@ export default defineNuxtConfig({
   googleFonts: {
     families: {
       Inter: [300, 400, 500, 600, 700],
+      Manrope: [400, 500, 600, 700, 800],
       'JetBrains Mono': [400, 500],
     },
     display: 'swap',

@@ -495,7 +495,7 @@
                   </div>
                   <div class="cert-thumb">
                     <img
-                      v-if="c.fileUrl && !c.isPdf"
+                      v-if="c.fileUrl && !c.fileUrl.toLowerCase().endsWith('.pdf')"
                       :src="`${API_BASE}${c.fileUrl}`"
                       alt=""
                       class="cert-img"
@@ -523,12 +523,20 @@
                       {{ c.description || "No description" }}
                     </p>
                   </div>
-                  <button
-                    class="icon-btn icon-btn--del mt-1"
-                    @click="deleteItem('certificate', c.id)"
-                  >
-                    <Icon name="mdi:trash-can-outline" class="w-3.5 h-3.5" />
-                  </button>
+                  <div class="flex gap-2 mt-1">
+                    <button
+                      class="icon-btn icon-btn--edit"
+                      @click="editItem('certificate', c)"
+                    >
+                      <Icon name="mdi:pencil-outline" class="w-3.5 h-3.5" />
+                    </button>
+                    <button
+                      class="icon-btn icon-btn--del"
+                      @click="deleteItem('certificate', c.id)"
+                    >
+                      <Icon name="mdi:trash-can-outline" class="w-3.5 h-3.5" />
+                    </button>
+                  </div>
                 </div>
               </template>
             </draggable>
@@ -940,58 +948,85 @@
 
             <!-- Certificate Form -->
             <template v-if="modal.type === 'certificate'">
+              <!-- Certificate Image Upload (Thumbnail for homepage/list) -->
               <div class="field-group">
-                <label class="field-label"
-                  >Certificate File (Image / PDF)</label
-                >
+                <label class="field-label">Certificate Preview Image * <span class="text-[10px] opacity-70">(Required for display)</span></label>
                 <div
                   class="upload-zone"
                   :class="{ 'upload-zone--active': isDragging }"
                   @dragover.prevent="isDragging = true"
                   @dragleave="isDragging = false"
-                  @drop.prevent="handleDrop"
+                  @drop.prevent="handleImageDrop"
                   @click="fileInput?.click()"
                 >
                   <input
                     ref="fileInput"
                     type="file"
-                    accept="image/*,.pdf"
+                    accept="image/jpeg,image/png"
                     class="hidden"
-                    @change="handleFileChange"
+                    @change="handleImageFileChange"
                   />
-                  <div v-if="certForm.previewUrl" class="upload-preview">
+                  <div v-if="certForm.imagePreview" class="upload-preview">
                     <img
-                      v-if="!certForm.isPdf"
-                      :src="certForm.previewUrl"
+                      :src="certForm.imagePreview"
                       alt="Preview"
                       class="upload-preview-img"
                     />
-                    <div v-else class="upload-pdf-preview">
-                      <Icon
-                        name="mdi:file-pdf-box"
-                        class="w-10 h-10 text-red-400"
-                      />
-                      <span class="text-sm text-gray-300 mt-1">{{
-                        certForm.fileName
-                      }}</span>
-                    </div>
                     <button
                       type="button"
                       class="upload-remove"
-                      @click.stop="clearFile"
+                      @click.stop="clearImageFile"
                     >
                       <Icon name="mdi:close" class="w-4 h-4" />
                     </button>
                   </div>
                   <div v-else class="upload-empty">
                     <Icon
-                      name="mdi:cloud-upload-outline"
+                      name="mdi:image-outline"
                       class="w-10 h-10 text-gray-500"
                     />
                     <p class="text-sm text-gray-400 mt-2">
-                      Click or drag & drop here
+                      Upload Thumbnail (JPG/PNG)
                     </p>
-                    <p class="text-xs text-gray-600">JPG, PNG, PDF accepted</p>
+                    <p class="text-xs text-gray-600">This image will appear on the homepage</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Certificate PDF Upload (Optional) -->
+              <div class="field-group">
+                <label class="field-label">Full Certificate PDF <span class="text-[10px] opacity-70">(Optional)</span></label>
+                <div class="upload-zone" @click="pdfFileInput?.click()">
+                  <input
+                    ref="pdfFileInput"
+                    type="file"
+                    accept=".pdf"
+                    class="hidden"
+                    @change="handlePdfFileChange"
+                  />
+                  <div v-if="certForm.pdfFile" class="upload-preview">
+                    <Icon
+                      name="mdi:file-pdf-box"
+                      class="w-10 h-10 text-red-400"
+                    />
+                    <span class="text-sm text-gray-300 mt-1">{{ certForm.pdfFileName }}</span>
+                    <button
+                      type="button"
+                      class="upload-remove"
+                      @click.stop="clearPdfFile"
+                    >
+                      <Icon name="mdi:close" class="w-4 h-4" />
+                    </button>
+                  </div>
+                  <div v-else class="upload-empty">
+                    <Icon
+                      name="mdi:file-certificate-outline"
+                      class="w-10 h-10 text-gray-500"
+                    />
+                    <p class="text-sm text-gray-400 mt-2">
+                      Upload Official PDF Document
+                    </p>
+                    <p class="text-xs text-gray-600">Downloadable document for proof</p>
                   </div>
                 </div>
               </div>
@@ -1417,10 +1452,10 @@ const openModal = (type: string) => {
       title: "",
       description: "",
       credentialUrl: "",
-      previewUrl: "",
-      fileName: "",
-      isPdf: false,
-      file: null,
+      imageFile: null,
+      imagePreview: "",
+      pdfFile: null,
+      pdfFileName: "",
     });
   } else if (type === "about-card") {
     Object.assign(form2, { textColor: "text-gray-600 dark:text-gray-400" });
@@ -1437,6 +1472,14 @@ const editItem = (type: string, item: any) => {
   
   if (type === "experience") {
     parsePeriodStrToForm(item.period, form2);
+  } else if (type === "certificate") {
+    // Reset file fields but keep preview if image exists
+    Object.assign(certForm, {
+      imageFile: null,
+      imagePreview: item.fileUrl ? `${API_BASE}${item.fileUrl}` : "",
+      pdfFile: null,
+      pdfFileName: item.pdfUrl ? "Existing PDF" : "",
+    });
   }
   
   modal.open = true;
@@ -1454,24 +1497,34 @@ const saveItem = async () => {
 
   try {
     if (modal.type === "certificate") {
-      if (!modal.editing) {
-        if (!form2.title?.trim() || !certForm.file) {
-          alert("Title and file are required!");
-          return;
-        }
-        const fd = new FormData();
-        fd.append("title", form2.title);
-        if (form2.description) fd.append("description", form2.description);
-        if (form2.credentialUrl)
-          fd.append("credentialUrl", form2.credentialUrl);
-        fd.append("isPdf", certForm.isPdf ? "true" : "false");
-        fd.append("file", certForm.file);
-        await $fetch(`${API_BASE}/certificates`, {
-          method: "POST",
-          headers,
-          body: fd,
-        });
+      const fd = new FormData();
+      fd.append("title", form2.title || "");
+      if (form2.description) fd.append("description", form2.description);
+      if (form2.credentialUrl) fd.append("credentialUrl", form2.credentialUrl);
+      
+      if (certForm.imageFile) {
+        fd.append("imageFile", certForm.imageFile);
       }
+      if (certForm.pdfFile) {
+        fd.append("pdfFile", certForm.pdfFile);
+      }
+
+      const url = isEdit
+        ? `${API_BASE}/certificates/${id}`
+        : `${API_BASE}/certificates`;
+      const method = isEdit ? "PATCH" : "POST";
+
+      if (!isEdit && !certForm.imageFile) {
+        alert("Certificate image is required for new entries!");
+        isSaving.value = false;
+        return;
+      }
+
+      await $fetch(url, {
+        method,
+        headers,
+        body: fd,
+      });
     } else {
       let payload = { ...form2 };
       
@@ -1554,49 +1607,66 @@ const onReorder = async (type: string) => {
 
 // ── Certificate file upload ──
 const fileInput = ref<HTMLInputElement | null>(null);
+const pdfFileInput = ref<HTMLInputElement | null>(null);
 const isDragging = ref(false);
 const certForm = reactive({
   title: "",
   description: "",
   credentialUrl: "",
-  previewUrl: "",
-  fileName: "",
-  isPdf: false,
-  file: null as File | null,
+  imageFile: null as File | null,
+  imagePreview: "",
+  pdfFile: null as File | null,
+  pdfFileName: "",
 });
 
-const clearFile = () => {
-  certForm.previewUrl = "";
-  certForm.fileName = "";
-  certForm.isPdf = false;
-  certForm.file = null;
+const clearImageFile = () => {
+  certForm.imageFile = null;
+  certForm.imagePreview = "";
   if (fileInput.value) fileInput.value.value = "";
 };
 
-const processFile = (file: File) => {
-  certForm.file = file;
-  certForm.fileName = file.name;
-  certForm.isPdf = file.type === "application/pdf";
-  if (!certForm.isPdf) {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      certForm.previewUrl = e.target?.result as string;
-    };
-    reader.readAsDataURL(file);
-  } else {
-    certForm.previewUrl = URL.createObjectURL(file);
+const clearPdfFile = () => {
+  certForm.pdfFile = null;
+  certForm.pdfFileName = "";
+  if (pdfFileInput.value) pdfFileInput.value.value = "";
+};
+
+const processImageFile = (file: File) => {
+  if (!file.type.startsWith('image/')) {
+    alert('Please select a valid image file (JPG, PNG)');
+    return;
   }
+  certForm.imageFile = file;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    certForm.imagePreview = e.target?.result as string;
+  };
+  reader.readAsDataURL(file);
 };
 
-const handleFileChange = (e: Event) => {
+const processPdfFile = (file: File) => {
+  if (file.type !== 'application/pdf') {
+    alert('Please select a valid PDF file');
+    return;
+  }
+  certForm.pdfFile = file;
+  certForm.pdfFileName = file.name;
+};
+
+const handleImageFileChange = (e: Event) => {
   const input = e.target as HTMLInputElement;
-  if (input.files?.[0]) processFile(input.files[0]);
+  if (input.files?.[0]) processImageFile(input.files[0]);
 };
 
-const handleDrop = (e: DragEvent) => {
+const handlePdfFileChange = (e: Event) => {
+  const input = e.target as HTMLInputElement;
+  if (input.files?.[0]) processPdfFile(input.files[0]);
+};
+
+const handleImageDrop = (e: DragEvent) => {
   isDragging.value = false;
   const file = e.dataTransfer?.files[0];
-  if (file) processFile(file);
+  if (file) processImageFile(file);
 };
 </script>
 
@@ -2113,12 +2183,12 @@ const handleDrop = (e: DragEvent) => {
   border-color: rgba(139, 92, 246, 0.25);
 }
 .cert-thumb {
-  width: 2.75rem;
-  height: 2.75rem;
+  width: 3.2rem;
+  aspect-ratio: 4 / 3;
   border-radius: 0.5rem;
   overflow: hidden;
   flex-shrink: 0;
-  background: rgba(255, 255, 255, 0.05);
+  background: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2126,7 +2196,8 @@ const handleDrop = (e: DragEvent) => {
 .cert-img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  padding: 0.1rem;
 }
 .cert-info {
   flex: 1;

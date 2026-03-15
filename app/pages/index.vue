@@ -411,6 +411,16 @@
             </ScrollReveal>
           </div>
         </div>
+
+        <!-- GitHub Contribution Calendar -->
+        <ScrollReveal animation="fade-up" :delay="300">
+          <div class="mt-16 max-w-4xl mx-auto overflow-hidden relative">
+            <GitHubCalendar 
+              username="Adith25" 
+              avatar-url="https://github.com/Adith25.png"
+            />
+          </div>
+        </ScrollReveal>
       </SectionWrapper>
     </section>
   </div>
@@ -420,6 +430,8 @@
 </template>
 
 <script setup lang="ts">
+// GitHub data handled in GitHubCalendar component
+
 useHead({
   title: "Adith — Computer Engineer & Machine Learning Enthusiast",
 });
@@ -1073,5 +1085,15 @@ const contactInfo = [
 @keyframes shimmer {
   0%   { transform: translateX(-100%); }
   100% { transform: translateX(200%); }
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 </style>

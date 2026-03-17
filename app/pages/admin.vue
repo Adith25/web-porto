@@ -143,10 +143,10 @@
         </nav>
 
         <div class="sidebar-footer">
-          <NuxtLink to="/" target="_blank" class="sidebar-action">
+          <NuxtLink to="/" target="_blank" class="sidebar-action sidebar-btn--view">
             <Icon name="mdi:open-in-new" class="w-3.5 h-3.5" /> View Site
           </NuxtLink>
-          <button class="sidebar-action sidebar-logout" @click="doLogout">
+          <button class="sidebar-action sidebar-btn--logout" @click="doLogout">
             <Icon name="mdi:logout" class="w-3.5 h-3.5" /> Logout
           </button>
         </div>
@@ -633,7 +633,7 @@
             </div>
           </div>
 
-          <div class="glass-card w-full p-6 sm:p-8 mt-6">
+          <div class="settings-card w-full p-6 sm:p-8 mt-6">
             <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-6">Announcement Banner</h3>
             <form @submit.prevent="saveSettings" class="space-y-6">
               
@@ -687,7 +687,7 @@
 
               <!-- Animation Speed -->
               <div>
-                <label class="block text-sm font-medium text-gray-900 dark:text-gray-300 mb-2 flex justify-between">
+                <label class="text-sm font-medium text-gray-900 dark:text-gray-300 mb-2 flex justify-between">
                   <span>Marquee Speed (Seconds per cycle)</span>
                   <span class="text-accent font-semibold">{{ siteSetting.animationSpeed }}s</span>
                 </label>
@@ -1704,8 +1704,8 @@ const handleImageDrop = (e: DragEvent) => {
 .blob {
   position: absolute;
   border-radius: 50%;
-  filter: blur(100px);
-  opacity: 0.45;
+  filter: blur(150px);
+  opacity: 0.12;
   top: 50%;
   left: 50%;
 }
@@ -1855,7 +1855,7 @@ const handleImageDrop = (e: DragEvent) => {
   overflow-y: auto;
 }
 .dark .sidebar {
-  background: rgba(7, 7, 24, 0.85);
+  background: rgba(7, 7, 24, 0.98);
   border-right: 1px solid rgba(255, 255, 255, 0.07);
 }
 
@@ -1924,9 +1924,24 @@ const handleImageDrop = (e: DragEvent) => {
   color: rgba(220, 220, 250, 0.9);
   border-color: rgba(139, 92, 246, 0.3);
 }
-.sidebar-logout:hover {
+.sidebar-btn--view {
+  color: rgba(147, 197, 253, 0.6); /* blue-300 soft */
+  border-color: rgba(147, 197, 253, 0.1);
+}
+.sidebar-btn--view:hover {
+  color: #93c5fd;
+  border-color: rgba(59, 130, 246, 0.4);
+  background: rgba(59, 130, 246, 0.05);
+}
+
+.sidebar-btn--logout {
+  color: rgba(252, 165, 165, 0.6); /* red-300 soft */
+  border-color: rgba(252, 165, 165, 0.1);
+}
+.sidebar-btn--logout:hover {
   color: #fca5a5;
-  border-color: rgba(239, 68, 68, 0.3);
+  border-color: rgba(239, 68, 68, 0.4);
+  background: rgba(239, 68, 68, 0.05);
 }
 
 /* ── Main content ── */
@@ -1984,7 +1999,7 @@ const handleImageDrop = (e: DragEvent) => {
   transition: all 0.25s;
 }
 .dark .stat-card {
-  background: rgba(10, 8, 30, 0.5);
+  background: rgba(10, 8, 30, 0.95);
   border-color: rgba(255, 255, 255, 0.09);
 }
 .stat-card:hover {
@@ -2024,6 +2039,13 @@ const handleImageDrop = (e: DragEvent) => {
   backdrop-filter: blur(32px);
 }
 
+.settings-card {
+  background: rgba(10, 8, 30, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 1.25rem;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+}
+
 /* ── List table ── */
 .list-table {
   background: rgba(255, 255, 255, 0.7);
@@ -2033,7 +2055,7 @@ const handleImageDrop = (e: DragEvent) => {
   overflow: hidden;
 }
 .dark .list-table {
-  background: rgba(10, 8, 30, 0.5);
+  background: rgba(10, 8, 30, 0.95);
   border-color: rgba(255, 255, 255, 0.09);
 }
 .list-head {
@@ -2172,7 +2194,7 @@ const handleImageDrop = (e: DragEvent) => {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  background: rgba(10, 8, 30, 0.5);
+  background: rgba(10, 8, 30, 0.95);
   backdrop-filter: blur(32px);
   border: 1px solid rgba(255, 255, 255, 0.09);
   border-radius: 0.75rem;

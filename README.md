@@ -49,8 +49,9 @@ This project follows the standard Nuxt 4 directory structure, primarily located 
 ## 3. Key Features
 
 - **Dynamic Portfolio Interface (`index.vue`):** The public-facing page to view the profile summary, skills (`TechBadge`), career journey, projects, certificates, and a contact feature (`ContactForm`).
+- **Premium Branding & UI:** Custom signature typography ("Bastliga One"), modern glassmorphism elements, and a coordinated splash-screen loading experience.
 - **Admin Dashboard (`admin.vue`):** A secluded page designed to manage the content data displayed on the main portfolio directly.
-- **Micro-Interactions & Animations:** A *magic card* effect tied to the user's cursor position (spotlight effect), smooth scroll transitions, and an interactive particle background.
+- **Micro-Interactions & Animations:** A *magic card* effect tied to the user's cursor position (spotlight effect), smooth scroll transitions, bouncy visual indicators, and an interactive particle background.
 - **Dark Mode Support:** Supports seamless real-time switching between light and dark themes.
 - **Fully Responsive:** Beautifully tailored UI optimized for smartphones, tablets, and desktop displays using Tailwind CSS utility classes.
 

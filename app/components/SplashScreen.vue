@@ -4,7 +4,7 @@
     leave-active-class="splash-leave-active"
     leave-to-class="splash-leave-to"
   >
-    <div v-if="visible" class="splash-overlay" aria-live="polite" aria-label="Loading">
+    <div v-if="isLoading" class="splash-overlay" aria-live="polite" aria-label="Loading">
       <!-- Animated background orbs -->
       <div class="orb orb-1" />
       <div class="orb orb-2" />
@@ -17,20 +17,10 @@
       <div class="splash-content">
         <!-- Logo / Name -->
         <div class="logo-wrapper">
-          <span class="logo-bracket">&lt;</span>
           <span class="logo-name">Adith</span>
-          <span class="logo-bracket">/&gt;</span>
         </div>
 
-        <!-- Tagline -->
-        <p class="tagline">
-          <span
-            v-for="(char, i) in taglineChars"
-            :key="i"
-            class="tagline-char"
-            :style="{ animationDelay: `${0.6 + i * 0.04}s` }"
-          >{{ char === ' ' ? '\u00a0' : char }}</span>
-        </p>
+
 
         <!-- Progress bar area -->
         <div class="progress-area">
@@ -54,11 +44,13 @@
 </template>
 
 <script setup lang="ts">
-const visible = ref(true);
+import { ref, onMounted } from 'vue';
+import { useLoading } from '~/composables/useLoading';
+
+const { isLoading, finishLoading } = useLoading();
 const progress = ref(0);
 
-const tagline = 'Software Engineer';
-const taglineChars = tagline.split('');
+
 
 onMounted(() => {
   // Animate progress in two phases: fast to 80%, then slow until resources load
@@ -91,8 +83,8 @@ onMounted(() => {
     progress.value = 100;
     // Short delay so user sees 100%
     setTimeout(() => {
-      visible.value = false;
-    }, 2500);
+      finishLoading();
+    }, 600);
   };
 
   if (document.readyState === 'complete') {
@@ -121,8 +113,8 @@ onMounted(() => {
 
 /* ── Transition ── */
 .splash-enter-active { transition: opacity 0.3s ease; }
-.splash-leave-active  { transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
-.splash-leave-to      { opacity: 0; transform: scale(1.04); }
+.splash-leave-active  { transition: opacity 0.8s ease, transform 1s cubic-bezier(0.4, 0, 0.2, 1); }
+.splash-leave-to      { opacity: 0; transform: scale(1.015); }
 
 /* ── Background orbs ── */
 .orb {
@@ -182,46 +174,25 @@ onMounted(() => {
   animation: popIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 .logo-bracket {
-  font-size: 2.2rem;
-  font-family: 'Fira Code', 'JetBrains Mono', monospace;
-  font-weight: 700;
-  color: #7c3aed;
-  opacity: 0.85;
+  display: none;
 }
 .logo-name {
-  font-size: 3rem;
-  font-weight: 800;
-  font-family: 'Inter', 'Outfit', sans-serif;
+  font-size: 5.5rem;
+  font-weight: 500;
+  font-family: 'Bastliga One', cursive;
   background: linear-gradient(135deg, #a78bfa 0%, #60a5fa 50%, #f0abfc 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  letter-spacing: -0.03em;
+  line-height: 1.4;
+  padding: 10px 0;
 }
 @keyframes popIn {
   from { opacity: 0; transform: scale(0.7) translateY(12px); }
   to   { opacity: 1; transform: scale(1) translateY(0); }
 }
 
-/* ── Tagline ── */
-.tagline {
-  font-size: 0.875rem;
-  color: #94a3b8;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  font-family: 'Inter', sans-serif;
-  margin: 0;
-  display: flex;
-}
-.tagline-char {
-  display: inline-block;
-  opacity: 0;
-  transform: translateY(8px);
-  animation: charIn 0.35s ease forwards;
-}
-@keyframes charIn {
-  to { opacity: 1; transform: translateY(0); }
-}
+
 
 /* ── Progress ── */
 .progress-area {

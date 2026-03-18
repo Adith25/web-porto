@@ -11,7 +11,7 @@
     <!-- ── LOGGED OUT: Login Card ── -->
     <MagicCard
       v-if="!isLoggedIn"
-      class="relative z-10 w-full max-w-md px-8 py-10 !bg-white/90 dark:!bg-[#0f0f19]/75 backdrop-blur-2xl shadow-2xl"
+      class="relative z-10 w-full max-w-[400px] px-8 py-10 !bg-white/90 dark:!bg-[#0f0f19]/75 backdrop-blur-2xl shadow-2xl"
       v-motion
       :initial="{ opacity: 0, scale: 0.95, y: 40 }"
       :enter="{
@@ -22,18 +22,13 @@
       }"
     >
       <div
-        class="text-center mb-8"
+        class="text-center mb-10"
         v-motion
         :initial="{ opacity: 0, y: 20 }"
         :enter="{ opacity: 1, y: 0, transition: { delay: 100 } }"
       >
-        <NuxtLink to="/" class="inline-block group">
-          <span
-            class="logo-text group-hover:tracking-widest transition-all duration-300"
-            >Adith</span
-          >
-        </NuxtLink>
-        <p class="subtitle">Welcome Back Admin 🤩</p>
+        <h1 class="text-3xl font-extrabold text-white tracking-tight mb-2">Admin Login</h1>
+        <p class="text-gray-400 text-sm">Sign in to access the admin dashboard</p>
       </div>
 
       <form class="space-y-5" @submit.prevent="handleLogin">
@@ -43,7 +38,7 @@
           :initial="{ opacity: 0, x: -20 }"
           :enter="{ opacity: 1, x: 0, transition: { delay: 200 } }"
         >
-          <label for="admin-email" class="field-label">Email</label>
+          <label for="admin-email" class="login-label">Email</label>
           <input
             id="admin-email"
             v-model="form.email"
@@ -61,7 +56,7 @@
           :initial="{ opacity: 0, x: -20 }"
           :enter="{ opacity: 1, x: 0, transition: { delay: 300 } }"
         >
-          <label for="admin-password" class="field-label">Password</label>
+          <label for="admin-password" class="login-label">Password</label>
           <div class="relative">
             <input
               id="admin-password"
@@ -95,7 +90,7 @@
 
         <button
           type="submit"
-          class="submit-btn"
+          class="login-submit-btn"
           :disabled="isLoading"
           v-motion
           :initial="{ opacity: 0, y: 20 }"
@@ -473,6 +468,18 @@
             </div>
           </div>
 
+          <!-- Global Feature Toggle for PDF View -->
+          <div class="bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl p-4 flex items-center justify-between mt-2 mb-2">
+            <div>
+              <h3 class="text-sm font-semibold text-gray-900 dark:text-white">Enable PDF View (Global)</h3>
+              <p class="text-xs text-gray-500 mt-1">Allow public visitors to view the full PDF certificates.</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" v-model="siteSetting.enablePdfView" @change="saveSettings" class="sr-only peer">
+              <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-emerald-500"></div>
+            </label>
+          </div>
+
           <div class="cert-grid w-full">
             <p v-if="certificates.length === 0" class="empty-state">
               No certificates yet.
@@ -495,20 +502,15 @@
                   </div>
                   <div class="cert-thumb">
                     <img
-                      v-if="c.fileUrl && !c.fileUrl.toLowerCase().endsWith('.pdf')"
+                      v-if="c.fileUrl"
                       :src="`${API_BASE}${c.fileUrl}`"
                       alt=""
                       class="cert-img"
                     />
                     <Icon
-                      v-else-if="c.isPdf"
-                      name="mdi:file-pdf-box"
-                      class="w-8 h-8 text-red-400"
-                    />
-                    <Icon
                       v-else
                       name="mdi:certificate-outline"
-                      class="w-8 h-8 text-accent/40"
+                      class="w-6 h-6 text-accent/20"
                     />
                   </div>
                   <div class="cert-info">
@@ -948,47 +950,30 @@
 
             <!-- Certificate Form -->
             <template v-if="modal.type === 'certificate'">
-              <!-- Certificate Image Upload (Thumbnail for homepage/list) -->
+              <!-- Certificate Image Preview (Auto-generated) -->
               <div class="field-group">
-                <label class="field-label">Certificate Preview Image * <span class="text-[10px] opacity-70">(Required for display)</span></label>
+                <label class="field-label">Auto-generated Image Preview</label>
                 <div
-                  class="upload-zone"
-                  :class="{ 'upload-zone--active': isDragging }"
-                  @dragover.prevent="isDragging = true"
-                  @dragleave="isDragging = false"
-                  @drop.prevent="handleImageDrop"
-                  @click="fileInput?.click()"
+                  class="upload-zone cursor-default opacity-80"
                 >
-                  <input
-                    ref="fileInput"
-                    type="file"
-                    accept="image/jpeg,image/png"
-                    class="hidden"
-                    @change="handleImageFileChange"
-                  />
                   <div v-if="certForm.imagePreview" class="upload-preview">
                     <img
                       :src="certForm.imagePreview"
                       alt="Preview"
                       class="upload-preview-img"
                     />
-                    <button
-                      type="button"
-                      class="upload-remove"
-                      @click.stop="clearImageFile"
-                    >
-                      <Icon name="mdi:close" class="w-4 h-4" />
-                    </button>
                   </div>
                   <div v-else class="upload-empty">
                     <Icon
-                      name="mdi:image-outline"
-                      class="w-10 h-10 text-gray-500"
+                      name="mdi:image-search-outline"
+                      class="w-10 h-10 text-gray-600"
                     />
-                    <p class="text-sm text-gray-400 mt-2">
-                      Upload Thumbnail (JPG/PNG)
+                    <p class="text-sm text-gray-500 mt-2">
+                      Waiting for PDF upload...
                     </p>
-                    <p class="text-xs text-gray-600">This image will appear on the homepage</p>
+                    <p class="text-xs text-emerald-500/40 font-medium italic mt-1">
+                      ✨ Will be generated from page 1 of PDF
+                    </p>
                   </div>
                 </div>
               </div>
@@ -1120,6 +1105,9 @@ definePageMeta({ layout: "admin" });
 useHead({
   title: "Admin — Adith",
   meta: [{ name: "robots", content: "noindex, nofollow" }],
+  script: [
+    { src: 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js', defer: true }
+  ]
 });
 
 const config = useRuntimeConfig();
@@ -1175,6 +1163,7 @@ const aboutCards = ref<any[]>([]);
 const siteSetting = ref({ 
   announcementText: "", 
   announcementActive: false,
+  enablePdfView: false,
   bannerColor: "#4f46e5",
   textColor: "#ffffff",
   animationSpeed: 25,
@@ -1316,6 +1305,7 @@ const fetchAll = async () => {
   if (setting.status === "fulfilled" && setting.value) {
     siteSetting.value.announcementText = setting.value.announcementText || "";
     siteSetting.value.announcementActive = setting.value.announcementActive || false;
+    siteSetting.value.enablePdfView = setting.value.enablePdfView || false;
     if (setting.value.bannerColor) siteSetting.value.bannerColor = setting.value.bannerColor;
     if (setting.value.textColor) siteSetting.value.textColor = setting.value.textColor;
     if (setting.value.animationSpeed) siteSetting.value.animationSpeed = setting.value.animationSpeed;
@@ -1644,13 +1634,48 @@ const processImageFile = (file: File) => {
   reader.readAsDataURL(file);
 };
 
-const processPdfFile = (file: File) => {
+const processPdfFile = async (file: File) => {
   if (file.type !== 'application/pdf') {
     alert('Please select a valid PDF file');
     return;
   }
   certForm.pdfFile = file;
   certForm.pdfFileName = file.name;
+
+  // Auto-generate thumbnail using pdf.js
+  try {
+    // @ts-ignore
+    const pdfjsLib = window['pdfjs-dist/build/pdf'];
+    if (!pdfjsLib) {
+      console.warn('pdf.js not loaded yet. Waiting...');
+      return;
+    }
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+    const arrayBuffer = await file.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+    const page = await pdf.getPage(1);
+    
+    const viewport = page.getViewport({ scale: 1.5 });
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    canvas.height = viewport.height;
+    canvas.width = viewport.width;
+
+    if (context) {
+      await page.render({ canvasContext: context, viewport }).promise;
+      
+      canvas.toBlob((blob) => {
+        if (blob) {
+          const thumbnailFile = new File([blob], file.name.replace('.pdf', '.jpg'), { type: 'image/jpeg' });
+          certForm.imageFile = thumbnailFile;
+          certForm.imagePreview = URL.createObjectURL(blob);
+        }
+      }, 'image/jpeg', 0.9);
+    }
+  } catch (err) {
+    console.error('Failed to auto-generate thumbnail from PDF:', err);
+  }
 };
 
 const handleImageFileChange = (e: Event) => {
@@ -1827,6 +1852,47 @@ const handleImageDrop = (e: DragEvent) => {
   -webkit-backdrop-filter: blur(64px) saturate(1.4) brightness(0.9);
   border-color: rgba(255, 255, 255, 0.12);
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1) inset;
+}
+
+.login-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 0.4rem;
+  display: block;
+}
+
+.login-submit-btn {
+  width: 100%;
+  max-width: 200px;
+  margin: 1.5rem auto 0;
+  height: 2.75rem;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border-radius: 0.625rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.login-submit-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.2);
+}
+.login-submit-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+.login-submit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 /* ── Dashboard layout ── */
@@ -2193,33 +2259,33 @@ const handleImageDrop = (e: DragEvent) => {
 .cert-card {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 1rem;
   background: rgba(10, 8, 30, 0.95);
-  backdrop-filter: blur(32px);
   border: 1px solid rgba(255, 255, 255, 0.09);
-  border-radius: 0.75rem;
+  border-radius: 1rem;
   padding: 0.75rem 1rem;
-  transition: border-color 0.2s;
+  transition: all 0.2s;
 }
 .cert-card:hover {
   border-color: rgba(139, 92, 246, 0.25);
+  background: rgba(15, 12, 45, 0.98);
 }
 .cert-thumb {
-  width: 3.2rem;
-  aspect-ratio: 4 / 3;
+  width: 3.5rem;
+  height: 2.6rem;
   border-radius: 0.5rem;
   overflow: hidden;
   flex-shrink: 0;
-  background: #ffffff;
+  background: #000;
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 .cert-img {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  padding: 0.1rem;
 }
 .cert-info {
   flex: 1;

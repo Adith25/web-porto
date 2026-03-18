@@ -35,9 +35,7 @@
     </div>
 
     <!-- Content -->
-    <h3
-      class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-accent-dark dark:group-hover:text-accent-light transition-colors"
-    >
+    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-accent-dark dark:group-hover:text-accent-light transition-colors">
       {{ title }}
     </h3>
     <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-4">{{ description }}</p>

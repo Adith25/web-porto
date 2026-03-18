@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- ==================== HERO ==================== -->
-    <section id="hero" class="relative min-h-[100vh] flex items-center justify-center pt-16 overflow-hidden bg-[#f8fafc] dark:bg-[#0a0a0f]">
+    <section id="hero" class="relative min-h-[100vh] flex items-center justify-center pt-0 overflow-hidden bg-[#f8fafc] dark:bg-[#0a0a0f]">
       
       <!-- Subtle Grid -->
       <div class="hero-grid opacity-[0.2] dark:opacity-[0.3]" />
@@ -10,14 +10,14 @@
       <div class="hero-orb hero-orb-1 opacity-60" />
       <div class="hero-orb hero-orb-2 opacity-40" />
       
-      <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
-        <div class="flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-20">
+      <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full mt-[1rem] md:mt-[-1rem]">
+        <div class="flex flex-col lg:flex-row items-center justify-center gap-10 lg:gap-16">
           
           <!-- Left side: Content (Split layout restored) -->
           <div class="max-w-2xl text-center lg:text-left flex flex-col items-center lg:items-start">
             
             <!-- Headline: Stacked & Strong -->
-            <h1 class="text-6xl md:text-8xl font-black tracking-tighter mb-8 leading-[0.9] flex flex-col">
+            <h1 class="text-6xl md:text-8xl font-black tracking-tighter mb-6 leading-[0.9] flex flex-col">
               <span class="text-slate-900 dark:text-white">Muhammad</span>
               <span class="text-slate-900 dark:text-white">Aditya</span>
               <span class="bg-gradient-to-r from-accent to-violet-light bg-clip-text text-transparent">Yufnanda</span>
@@ -29,7 +29,7 @@
             <!-- Subtitle: Minimalist, Elegant & Animated -->
             <div class="text-xs md:text-sm text-slate-500/80 dark:text-slate-400/70 mb-10 max-w-md leading-relaxed font-mono tracking-wide h-[4.5rem] lg:h-auto">
               <UiTypingEffect 
-                text="Software Engineer specializing in mobile application development and intelligent systems, focused on building scalable and impactful digital solutions"
+                text="Welcome to my personal website. Here, I document my journey, share my experiences, and showcase the things I’ve built and achieved along the way"
                 :speed="30"
                 :delay="800"
               />
@@ -85,6 +85,12 @@
           </div>
 
         </div>
+      </div>
+
+      <!-- Scroll Down Indicator -->
+      <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-400/60 dark:text-slate-500/50 animate-bounce-slow pointer-events-none">
+        <span class="text-[10px] uppercase tracking-[0.2em] font-medium">Scroll down to get to know me better</span>
+        <Icon name="mdi:chevron-down" class="w-5 h-5" />
       </div>
     </section>
 
@@ -171,46 +177,57 @@
     </section>
 
     <!-- ==================== TECH STACK ==================== -->
-    <section id="techstack">
-      <SectionWrapper
-        title="Tech"
-        highlight=" Stack"
-        subtitle="Technologies and tools I work with."
-        :centered="true"
-        :hideLine="true"
-      >
-        <div class="space-y-4">
-          <ScrollReveal
-            v-for="(category, i) in techStack"
-            :key="category.name"
-            animation="fade-up"
-            :delay="i * 60"
-          >
-            <div class="flex items-start sm:items-center gap-4 py-2 group">
-              <!-- Category label -->
-              <div class="flex items-center w-28 shrink-0">
-                <span class="text-xs font-semibold uppercase tracking-widest" :class="category.labelClass">{{ category.name }}</span>
-              </div>
+    <section id="techstack" class="py-12 sm:py-16">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Section Header -->
+        <div class="flex flex-col items-center text-center mb-8">
+          <span class="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-1.5">Tech Stack</span>
+          <h2 class="text-3xl sm:text-4xl font-bold text-white mb-2">Tools I work with</h2>
+          <p class="text-sm text-gray-400 max-w-2xl">
+            A carefully selected list of tools, languages, and frameworks I use to bring ideas to life.
+          </p>
+        </div>
 
-              <!-- Tech pills row -->
-              <div class="flex flex-wrap gap-2">
-                <span
-                  v-for="tech in category.items"
-                  :key="tech"
-                  class="text-xs px-3 py-1.5 rounded-full bg-gray-100 dark:bg-dark-lighter text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-800 hover:border-accent/40 dark:hover:border-accent/40 hover:text-gray-900 dark:hover:text-white hover:bg-accent/10 dark:hover:bg-accent/10 transition-all duration-200 shadow-sm"
+        <!-- Category Groups -->
+        <div class="space-y-6 sm:space-y-8">
+          
+          <ScrollReveal
+            v-for="(group, i) in hardcodedTechStack"
+            :key="group.category"
+            animation="fade-up"
+            :delay="i * 100"
+          >
+            <div class="flex flex-col">
+              <!-- Category Title -->
+              <h3 class="text-xs font-semibold uppercase tracking-wide text-gray-400 mb-2.5 ml-1">
+                {{ group.category }}
+              </h3>
+              
+              <!-- Badges Container -->
+              <div class="flex flex-wrap gap-2 sm:gap-2.5">
+                <div
+                  v-for="tech in group.items"
+                  :key="tech.name"
+                  class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.06] hover:border-white/[0.15] hover:scale-[1.03] transition-all duration-200 cursor-default shadow-sm group/badge"
+                  :title="tech.tooltip"
                 >
-                  {{ tech }}
-                </span>
+                  <Icon v-if="tech.icon" :name="tech.icon" class="w-4 h-4 opacity-90 group-hover/badge:opacity-100 transition-opacity" />
+                  <span class="text-[13px] text-gray-300 font-medium tracking-wide group-hover/badge:text-white transition-colors">
+                    {{ tech.name }}
+                  </span>
+                </div>
               </div>
             </div>
           </ScrollReveal>
+          
         </div>
 
         <!-- Scroll velocity logo strip -->
-        <div class="mt-8">
+        <div class="mt-12 border-t border-white/5 pt-8">
           <ScrollVelocity />
         </div>
-      </SectionWrapper>
+      </div>
     </section>
 
     <!-- ==================== PROJECTS ==================== -->
@@ -271,8 +288,8 @@
               <div class="relative flex items-center gap-4 group">
                 <!-- Date label (left side) -->
                 <div class="w-32 shrink-0 text-right pr-4">
-                  <span class="text-xs text-gray-500 dark:text-gray-400 font-mono leading-tight block">{{ (exp.period.split(' · ')[0] ?? '').split(' - ')[0] ?? '' }}</span>
-                  <span class="text-[11px] text-gray-400 dark:text-gray-600 font-mono">{{ (exp.period.split(' · ')[0] ?? '').split(' - ')[1] ?? '' }}</span>
+                  <span class="text-sm text-gray-500 dark:text-gray-400 font-semibold leading-tight block">{{ (exp.period.split(' · ')[0] ?? '').split(' - ')[0] ?? '' }}</span>
+                  <span class="text-xs text-gray-400 dark:text-gray-600 font-mono mt-0.5 inline-block">{{ (exp.period.split(' · ')[0] ?? '').split(' - ')[1] ?? '' }}</span>
                 </div>
 
                 <!-- Animated dot on timeline -->
@@ -292,7 +309,7 @@
                 <!-- Content row via MagicCard -->
                 <div class="flex-1">
                   <MagicCard :showBorder="false" class="!bg-transparent border border-transparent hover:border-accent/15 hover:bg-gray-50 dark:hover:bg-white/[0.025] transition-all duration-300">
-                    <div class="flex items-center gap-4 pl-10 py-3 rounded-xl">
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 pl-8 py-2.5 rounded-xl">
                       <!-- Logo -->
                       <div class="shrink-0 w-10 h-10 flex items-center justify-center">
                         <img
@@ -307,12 +324,12 @@
                       <!-- Text -->
                       <div class="flex-1 min-w-0">
                         <div class="flex flex-col gap-0.5">
-                          <span class="font-semibold text-gray-900 dark:text-white text-base leading-tight">{{ exp.role }}</span>
-                          <span class="text-accent-dark/80 dark:text-accent-light/70 text-sm font-medium">
+                          <span class="font-bold text-gray-900 dark:text-white text-lg leading-tight">{{ exp.role }}</span>
+                          <span class="text-accent-dark/80 dark:text-accent-light/70 text-base font-medium mt-0.5">
                             {{ exp.company }}<template v-if="exp.position"> &middot; {{ exp.position }}</template>
                           </span>
                         </div>
-                        <div v-if="exp.description" class="mt-2 text-sm text-gray-600 dark:text-gray-400 leading-relaxed whitespace-pre-line">
+                        <div v-if="exp.description" class="mt-2.5 text-sm text-gray-600 dark:text-gray-400 leading-relaxed whitespace-pre-line">
                           {{ exp.description }}
                         </div>
                       </div>
@@ -355,10 +372,10 @@
         <div v-if="certificates.length > 6" class="mt-8 text-center" v-motion :initial="{ opacity: 0 }" :visible-once="{ opacity: 1 }">
           <button 
             @click="showAllCertificates = !showAllCertificates"
-            class="btn-outline inline-flex items-center gap-2"
+            class="inline-flex items-center gap-2 px-4 py-1.5 text-xs font-semibold rounded-full border border-white/10 bg-white/5 backdrop-blur-md hover:bg-white/15 hover:border-white/20 transition-all text-gray-400 hover:text-white shadow-xl"
           >
             {{ showAllCertificates ? 'Show Less' : `Show All (${certificates.length})` }}
-            <Icon :name="showAllCertificates ? 'mdi:chevron-up' : 'mdi:chevron-down'" class="w-5 h-5" />
+            <Icon :name="showAllCertificates ? 'mdi:chevron-up' : 'mdi:chevron-down'" class="w-4 h-4" />
           </button>
         </div>
       </SectionWrapper>
@@ -367,10 +384,10 @@
     <!-- ==================== CONTACT ==================== -->
     <section id="contact">
       <SectionWrapper
-        title="Get In"
-        highlight=" Touch"
+        title="Get"
+        highlight=" In Touch"
         subtitle="Have a project in mind? Let's talk."
-        class="!pt-20 !pb-16"
+        class="!pt-12 !pb-12"
         centered
         hideLine
       >
@@ -380,7 +397,7 @@
             <div class="space-y-8">
               <div>
                 <h3 class="text-lg font-semibold text-white mb-1">Contact Info</h3>
-                <p class="text-gray-500 text-[13px]">Find me across the digital landscape.</p>
+                <p class="text-gray-500 text-sm">Find me across the digital landscape.</p>
               </div>
               
               <div class="grid sm:grid-cols-2 gap-x-8 gap-y-6">
@@ -391,13 +408,13 @@
                 >
                   <div class="flex items-center gap-1.5 text-gray-500 group-hover:text-[#6366F1] transition-colors">
                     <Icon :name="info.icon" class="w-4 h-4" />
-                    <span class="text-[10px] uppercase tracking-widest font-bold">{{ info.label }}</span>
+                    <span class="text-xs uppercase tracking-widest font-bold">{{ info.label }}</span>
                   </div>
                   <a
                     :href="info.url"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="block text-gray-400 hover:text-white transition-colors text-[13px] truncate"
+                    class="block text-gray-400 hover:text-white transition-colors text-sm truncate"
                   >
                     {{ info.value }}
                   </a>
@@ -411,7 +428,7 @@
             <div class="space-y-6 text-center">
               <div>
                 <h3 class="text-lg font-semibold text-white mb-1">Send a Message</h3>
-                <p class="text-gray-500 text-[13px]">Reach out directly via the form below.</p>
+                <p class="text-gray-500 text-sm">Reach out directly via the form below.</p>
               </div>
               <div class="border border-[#1F2937] rounded-xl p-[1px] text-left">
                 <div class="bg-transparent p-5 sm:p-7">
@@ -436,7 +453,7 @@
   </div>
 
   <!-- Certificate Modal -->
-  <CertificateModal :cert="selectedCert" @close="selectedCert = null" />
+  <CertificateModal :cert="selectedCert" :is-pdf-enabled="isPdfEnabledGlobal" @close="selectedCert = null" />
 </template>
 
 <script setup lang="ts">
@@ -570,6 +587,7 @@ const fetchProjects = async () => {
 };
 
 const fetchSkills = async () => {
+  // Maintaining API support for older clients, but relying on hardcoded reference data for the UI.
   try {
     const data = await $fetch<any[]>(`${API_BASE}/skills`);
     techStack.value = data.map(s => {
@@ -599,6 +617,44 @@ const fetchSkills = async () => {
   }
 };
 
+const hardcodedTechStack = [
+  {
+    category: "LANGUAGES & FRAMEWORKS",
+    items: [
+      { name: "JavaScript", icon: "logos:javascript", tooltip: "Core language" },
+      { name: "TypeScript", icon: "logos:typescript-icon", tooltip: "Typed JavaScript" },
+      { name: "React", icon: "logos:react", tooltip: "Frontend Library" },
+      { name: "Nuxt.js", icon: "logos:nuxt-icon", tooltip: "Vue Framework" },
+      { name: "Flutter", icon: "logos:flutter", tooltip: "Mobile UI framework" },
+      { name: "Tailwind CSS", icon: "logos:tailwindcss-icon", tooltip: "Utility-first CSS" },
+      { name: "Bootstrap", icon: "logos:bootstrap", tooltip: "UI framework" },
+      { name: "NestJS", icon: "logos:nestjs", tooltip: "Node.js framework" },
+    ]
+  },
+  {
+    category: "TOOLS & PLATFORMS",
+    items: [
+      { name: "Node.js", icon: "logos:nodejs-icon", tooltip: "JavaScript runtime" },
+      { name: "MySQL", icon: "logos:mysql", tooltip: "Relational Database" },
+      { name: "PostgreSQL", icon: "logos:postgresql", tooltip: "Relational Database" },
+      { name: "Docker", icon: "logos:docker-icon", tooltip: "Containerization" },
+      { name: "Git", icon: "logos:git-icon", tooltip: "Version Control" },
+      { name: "GitHub", icon: "mdi:github", tooltip: "Code hosting" },
+      { name: "Firebase", icon: "logos:firebase", tooltip: "App development platform" },
+      { name: "Vercel", icon: "logos:vercel-icon", tooltip: "Deployment platform" },
+    ]
+  },
+  {
+    category: "AI & PRODUCTIVITY",
+    items: [
+      { name: "ChatGPT", icon: "logos:openai-icon", tooltip: "Conversational AI" },
+      { name: "Claude", icon: "simple-icons:anthropic", tooltip: "AI Assistant" },
+      { name: "Postman", icon: "logos:postman-icon", tooltip: "API Platform" },
+      { name: "OpenAI", icon: "logos:openai-icon", tooltip: "AI Models" },
+    ]
+  }
+];
+
 const fetchCertificates = async () => {
   try {
     const data = await $fetch<any[]>(`${API_BASE}/certificates`);
@@ -624,11 +680,15 @@ onMounted(() => {
     if (settings.cvUrl) {
       cvUrl.value = `${API_BASE}${settings.cvUrl}`;
     }
+    if (settings.enablePdfView) {
+      isPdfEnabledGlobal.value = settings.enablePdfView;
+    }
   }).catch(console.error);
 });
 
 const showAllCertificates = ref(false);
 const certificates = ref<any[]>([]);
+const isPdfEnabledGlobal = ref(false);
 
 const displayedCertificates = computed(() => {
   return showAllCertificates.value ? certificates.value : certificates.value.slice(0, 6);
@@ -724,7 +784,7 @@ const contactInfo = [
   backdrop-filter: blur(8px);
   border: 1px solid rgba(139, 92, 246, 0.4);
   color: #a78bfa;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 500;
   letter-spacing: 0.03em;
 }

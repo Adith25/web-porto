@@ -3,7 +3,7 @@
     class="fixed z-50 transition-all duration-[1200ms] [transition-timing-function:cubic-bezier(0.6,0.01,0.05,0.95)] shadow-indigo-500/5 mx-auto left-0 right-0"
     :class="[
       scrolled 
-        ? 'mt-4 max-w-5xl rounded-2xl bg-white/40 dark:bg-dark/40 backdrop-blur-xl shadow-2xl px-2' 
+        ? 'mt-4 max-w-5xl rounded-full bg-white/40 dark:bg-dark/40 backdrop-blur-xl shadow-2xl px-2' 
         : 'max-w-full rounded-none bg-white/50 dark:bg-dark/50 backdrop-blur-md px-0',
     ]"
     :style="{ 
@@ -22,7 +22,12 @@
           class="flex items-center gap-2 group"
           @click.prevent="scrollToSection('hero')"
         >
-          <span class="text-xl font-bold gradient-text">Adith</span>
+          <span 
+            class="text-4xl sm:text-4xl font-medium gradient-text py-1" 
+            style="font-family: 'Bastliga One', cursive; line-height: 1.2;"
+          >
+            Adith
+          </span>
           <span class="text-xs font-mono text-gray-500 hidden sm:inline"
             ></span>
         </a>
@@ -158,7 +163,7 @@ onMounted(() => {
   };
 
   const observer = new IntersectionObserver(observerCallback, {
-    rootMargin: "-20% 0px -70% 0px",
+    rootMargin: "-80px 0px -70% 0px",
   });
 
   sectionIds.forEach((id) => {

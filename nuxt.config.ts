@@ -26,6 +26,7 @@ export default defineNuxtConfig({
       Inter: [300, 400, 500, 600, 700],
       Manrope: [400, 500, 600, 700, 800],
       'JetBrains Mono': [400, 500],
+      Caveat: [400, 500, 600, 700],
     },
     display: 'swap',
   },

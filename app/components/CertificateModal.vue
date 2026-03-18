@@ -17,49 +17,36 @@
         >
           <!-- Close -->
           <button class="modal-close" @click="$emit('close')" aria-label="Close">
-            <Icon name="mdi:close" class="w-5 h-5" />
+            <Icon name="mdi:close" class="w-6 h-6" />
           </button>
 
           <!-- Certificate image -->
           <div class="modal-thumb">
-            <!-- Show image if it's a valid image (not a PDF itself) -->
             <img
-              v-if="cert.image && !cert.image.toLowerCase().endsWith('.pdf')"
+              v-if="cert.image"
               :src="cert.image"
               :alt="cert.title"
               class="modal-img"
             />
-            <!-- Fallback to PDF Icon if image is a PDF OR if it's a PDF cert without thumbnail -->
-            <div v-else-if="isPdf" class="modal-pdf">
-              <Icon name="mdi:file-certificate-outline" class="w-20 h-20 text-red-500/40" />
-              <p class="text-gray-400 text-sm mt-3 font-medium">PDF Certificate Document</p>
-            </div>
             <div v-else class="modal-pdf">
               <Icon name="mdi:certificate-outline" class="w-16 h-16 text-accent/40" />
             </div>
-
-            <!-- PDF overlay for modal -->
-            <div v-if="isPdf" class="absolute top-4 right-4 bg-red-500/90 text-white text-[10px] font-bold px-2 py-1 rounded shadow-lg">
-              PDF
-            </div>
-          </div>
-
-          <!-- PDF Button (If PDF available) -->
-          <div v-if="isPdf && cert.pdfUrl" class="px-6 pt-4">
-             <a
-                :href="cert.pdfUrl"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="w-full flex items-center justify-center gap-2 bg-red-600/20 hover:bg-red-600/30 text-red-400 border border-red-500/30 py-2.5 rounded-xl transition-all font-semibold text-sm"
-              >
-                <Icon name="mdi:file-pdf-box" class="w-5 h-5" />
-                View Full PDF Certificate
-              </a>
           </div>
 
           <!-- Details -->
           <div class="modal-body">
-            <span class="cert-tag">certification</span>
+            <!-- PDF Button -->
+            <div v-if="cert.pdfUrl && isPdfEnabled" class="pb-2 border-b border-white/10 mb-2">
+              <a
+                :href="cert.pdfUrl"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl transition-all font-semibold text-sm border bg-red-600/20 hover:bg-red-600/30 text-red-400 border-red-500/30"
+              >
+                <Icon name="mdi:file-pdf-box" class="w-5 h-5" />
+                View Full PDF Certificate
+              </a>
+            </div>
 
             <h2 class="modal-title">{{ cert.title }}</h2>
 
@@ -96,6 +83,7 @@ const props = defineProps<{
     pdfUrl?: string;
     credentialUrl?: string;
   } | null;
+  isPdfEnabled?: boolean;
 }>();
 
 const emit = defineEmits<{ close: [] }>();
@@ -105,13 +93,29 @@ const isPdf = computed(() => {
   return !!props.cert?.image && props.cert.image.toLowerCase().endsWith('.pdf');
 });
 
+// Prevent background scroll when modal is open
+watch(() => props.cert, (newVal) => {
+  if (typeof document !== 'undefined') {
+    if (newVal) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  }
+});
+
 // Close on Escape key
 onMounted(() => {
   const handleKey = (e: KeyboardEvent) => {
     if (e.key === 'Escape') emit('close');
   };
   window.addEventListener('keydown', handleKey);
-  onUnmounted(() => window.removeEventListener('keydown', handleKey));
+});
+
+onUnmounted(() => {
+  if (typeof document !== 'undefined') {
+    document.body.style.overflow = '';
+  }
 });
 </script>
 
@@ -133,19 +137,16 @@ onMounted(() => {
 .modal-panel {
   position: relative;
   width: 100%;
-  max-width: 520px;
-  max-height: 90vh;
+  max-width: 800px;
+  max-height: 95vh;
+  margin: auto;
   overflow-y: auto;
-  background: rgba(10, 8, 30, 0.72);
-  backdrop-filter: blur(48px) saturate(1.4);
-  -webkit-backdrop-filter: blur(48px) saturate(1.4);
-  border: 1px solid rgba(255, 255, 255, 0.11);
-  border-radius: 1.25rem;
-  box-shadow:
-    0 0 0 1px rgba(139, 92, 246, 0.12),
-    0 32px 80px rgba(0, 0, 0, 0.6);
+  background: #020617;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1.5rem;
+  box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.8);
   scrollbar-width: thin;
-  scrollbar-color: rgba(139, 92, 246, 0.3) transparent;
+  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
 }
 
 /* ── Close button ── */
@@ -154,36 +155,37 @@ onMounted(() => {
   top: 0.75rem;
   float: right;
   margin: 0.75rem 0.75rem 0 0;
-  padding: 0.4rem;
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 0.5rem;
-  color: rgba(200, 200, 230, 0.7);
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  color: #fff;
   transition: all 0.2s;
   z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .modal-close:hover {
-  background: rgba(239, 68, 68, 0.15);
-  border-color: rgba(239, 68, 68, 0.3);
-  color: #fca5a5;
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
 }
 
 /* ── Thumbnail ── */
 .modal-thumb {
   width: 100%;
-  aspect-ratio: 4 / 3;
-  background: #ffffff;
-  overflow: hidden;
+  background: #080717;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0;
 }
 .modal-img {
   width: 100%;
-  height: 100%;
-  padding: 1rem;
+  height: auto;
+  max-height: 70vh;
   object-fit: contain;
-  filter: drop-shadow(0 8px 30px rgba(0, 0, 0, 0.3));
 }
 .modal-pdf {
   display: flex;

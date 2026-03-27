@@ -1,5 +1,5 @@
 <template>
-  <form class="space-y-4" @submit.prevent="handleSubmit">
+  <form class="space-y-3" @submit.prevent="handleSubmit">
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
       <div class="space-y-1.5">
         <label for="name" class="block text-[13px] font-medium text-gray-500">Name</label>
@@ -9,7 +9,7 @@
           type="text"
           required
           placeholder="Your name"
-          class="w-full px-3.5 py-2 bg-[#0B0F19] border border-[#1F2937] rounded-[10px] text-[13px] text-white placeholder-gray-600 focus:outline-none focus:border-[#6366F1] transition-all duration-200"
+          class="w-full px-3 py-1.5 bg-[#0B0F19] border border-[#1F2937] rounded-[10px] text-[13px] text-white placeholder-gray-600 focus:outline-none focus:border-[#6366F1] transition-all duration-200"
         />
       </div>
 
@@ -21,7 +21,7 @@
           type="email"
           required
           placeholder="your@email.com"
-          class="w-full px-3.5 py-2 bg-[#0B0F19] border border-[#1F2937] rounded-[10px] text-[13px] text-white placeholder-gray-600 focus:outline-none focus:border-[#6366F1] transition-all duration-200"
+          class="w-full px-3 py-1.5 bg-[#0B0F19] border border-[#1F2937] rounded-[10px] text-[13px] text-white placeholder-gray-600 focus:outline-none focus:border-[#6366F1] transition-all duration-200"
         />
       </div>
     </div>
@@ -52,7 +52,7 @@
 
     <button 
       type="submit" 
-      class="w-full h-[44px] rounded-[10px] bg-[#E5E7EB] hover:bg-[#D1D5DB] text-[#111827] font-semibold text-[14px] flex items-center justify-center gap-2 transition-all duration-300"
+      class="w-full h-[40px] rounded-[10px] bg-[#E5E7EB] hover:bg-[#D1D5DB] text-[#111827] font-semibold text-[13px] flex items-center justify-center gap-2 transition-all duration-300"
     >
       <Icon name="mdi:send" class="w-4 h-4" />
       <span>Send Message</span>

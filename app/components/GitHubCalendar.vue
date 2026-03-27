@@ -1,7 +1,7 @@
 <template>
-  <div class="github-calendar-container font-sans flex flex-col items-center relative w-full px-4">
+  <div class="github-calendar-container font-sans flex flex-col items-center relative w-full px-0">
     <!-- Centered Card Wrapper -->
-    <div class="w-fit mx-auto border border-[#30363D] rounded-md p-4 flex flex-col bg-transparent relative">
+    <div class="w-fit mx-auto flex flex-col bg-transparent relative">
       <!-- Header: Avatar, Username, and View Profile Link -->
       <div class="flex items-center justify-between mb-4">
         <div class="flex items-center gap-3">
@@ -78,7 +78,7 @@
             <!-- Footer: Stats and Legend (Inside w-max grid container to match width) -->
             <div class="flex items-center justify-between mt-3 text-[11px] text-[#8B949E] w-full">
               <div class="text-left">
-                {{ totalContributions }} contributions in the last year
+                {{ totalContributions }} contributions in the last 10 months
               </div>
               <div class="flex items-center shrink-0">
                 <span class="mr-[6px]">Less</span>
@@ -248,11 +248,22 @@ onMounted(async () => {
     const response = await fetch(`https://github-contributions-api.deno.dev/${props.username}.json`)
     const data = await response.json()
     
-    // The API might return more than 1 year or different format.
-    // We want the last 365 days approximately.
+    // We want the last ~10 months (about 304 days), ensuring we start on a Sunday.
     const contributions = data.contributions.flat()
     
-    rawData.value = contributions.map((day: any) => ({
+    let startIndex = contributions.length - 304
+    if (startIndex < 0) startIndex = 0
+    
+    // Find the first Sunday in that window
+    while (startIndex < contributions.length) {
+      const day = new Date(contributions[startIndex].date)
+      if (day.getDay() === 0) break
+      startIndex++
+    }
+    
+    const recentContributions = contributions.slice(startIndex)
+    
+    rawData.value = recentContributions.map((day: any) => ({
       date: day.date,
       count: day.contributionCount,
       dayOfWeek: new Date(day.date).getDay()

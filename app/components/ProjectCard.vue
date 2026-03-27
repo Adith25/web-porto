@@ -1,13 +1,13 @@
 <template>
   <MagicCard
-    class="flex flex-col h-full !bg-white dark:!bg-[#0f0f19]/75 p-6 group transition-all duration-300 hover:-translate-y-1"
+    class="flex flex-col h-full !bg-white dark:!bg-[#0f0f19]/75 p-4 group transition-all duration-300 hover:-translate-y-1"
   >
     <!-- Header -->
-    <div class="flex items-start justify-between mb-4">
-      <div class="p-2 rounded-lg bg-accent/10">
+    <div class="flex items-start justify-between mb-3">
+      <div class="p-1.5 rounded-lg bg-accent/10">
         <Icon
           :name="icon || 'mdi:code-braces'"
-          class="w-6 h-6 text-accent-light"
+          class="w-5 h-5 text-accent-light"
         />
       </div>
       <div class="flex gap-2">
@@ -19,29 +19,29 @@
           class="p-2 text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"
           aria-label="GitHub repository"
         >
-          <Icon name="mdi:github" class="w-5 h-5" />
+          <Icon name="mdi:github" class="w-4 h-4" />
         </a>
         <a
           v-if="demo"
           :href="demo"
           target="_blank"
           rel="noopener noreferrer"
-          class="p-2 text-gray-500 hover:text-accent transition-colors"
+          class="p-1.5 text-gray-500 hover:text-accent transition-colors"
           aria-label="Live demo"
         >
-          <Icon name="mdi:open-in-new" class="w-5 h-5" />
+          <Icon name="mdi:open-in-new" class="w-4 h-4" />
         </a>
       </div>
     </div>
 
     <!-- Content -->
-    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-accent-dark dark:group-hover:text-accent-light transition-colors">
+    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1.5 group-hover:text-accent-dark dark:group-hover:text-accent-light transition-colors">
       {{ title }}
     </h3>
-    <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-4">{{ description }}</p>
+    <p class="text-xs text-gray-600 dark:text-gray-400 leading-relaxed mb-3">{{ description }}</p>
 
     <!-- Tags -->
-    <div class="flex flex-wrap gap-2">
+    <div class="flex flex-wrap gap-1.5">
       <TechBadge v-for="tag in tags" :key="tag" variant="default">
         {{ tag }}
       </TechBadge>

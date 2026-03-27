@@ -47,30 +47,28 @@
 
 <script setup lang="ts">
 const ROW1 = [
-  { label: 'Python',       icon: 'logos:python' },
-  { label: 'TensorFlow',   icon: 'logos:tensorflow' },
-  { label: 'PyTorch',      icon: 'logos:pytorch-icon' },
-  { label: 'OpenCV',       icon: 'logos:opencv' },
-  { label: 'NestJS',       icon: 'logos:nestjs' },
+  { label: 'JavaScript',   icon: 'logos:javascript' },
   { label: 'TypeScript',   icon: 'logos:typescript-icon' },
-  { label: 'MySQL',        icon: 'logos:mysql-icon' },
+  { label: 'React',        icon: 'logos:react' },
   { label: 'Nuxt.js',      icon: 'logos:nuxt-icon' },
   { label: 'Flutter',      icon: 'logos:flutter' },
-  { label: 'Dart',         icon: 'logos:dart' },
+  { label: 'Tailwind CSS', icon: 'logos:tailwindcss-icon' },
+  { label: 'Bootstrap',    icon: 'logos:bootstrap' },
+  { label: 'NestJS',       icon: 'logos:nestjs' },
+  { label: 'Node.js',      icon: 'logos:nodejs-icon' },
+  { label: 'MySQL',        icon: 'logos:mysql' },
 ]
 
 const ROW2 = [
-  { label: 'Node.js',      icon: 'logos:nodejs-icon' },
+  { label: 'PostgreSQL',   icon: 'logos:postgresql' },
   { label: 'Docker',       icon: 'logos:docker-icon' },
-  { label: 'Git',          icon: 'logos:git' },
-  { label: 'GitHub',       icon: 'logos:github-icon' },
-  { label: 'Linux',        icon: 'logos:linux-tux' },
-  { label: 'Arduino',      icon: 'logos:arduino' },
-  { label: 'Google Cloud', icon: 'logos:google-cloud' },
-  { label: 'AWS',          icon: 'logos:aws' },
+  { label: 'Git',          icon: 'logos:git-icon' },
+  { label: 'GitHub',       icon: 'mdi:github' },
   { label: 'Firebase',     icon: 'logos:firebase' },
-  { label: 'JavaScript',   icon: 'logos:javascript' },
-  { label: 'Tailwind',     icon: 'logos:tailwindcss-icon' },
+  { label: 'Vercel',       icon: 'logos:vercel-icon' },
+  { label: 'ChatGPT',      icon: 'logos:openai-icon' },
+  { label: 'Claude',       icon: 'simple-icons:anthropic' },
+  { label: 'Postman',      icon: 'logos:postman-icon' },
 ]
 
 const track1Ref = ref<HTMLElement | null>(null)
@@ -148,8 +146,8 @@ onMounted(() => {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  padding: 1.5rem 0;
+  gap: 0.75rem;
+  padding: 1rem 0;
   mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
   -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
 }
@@ -173,7 +171,7 @@ onMounted(() => {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0 2rem;
+  padding: 0 1.5rem;
   opacity: 0.8;
   transition: opacity 0.2s;
   flex-shrink: 0;
@@ -181,8 +179,8 @@ onMounted(() => {
 .sv-item:hover { opacity: 1; }
 
 .sv-icon {
-  width: 2.8rem;
-  height: 2.8rem;
+  width: 2rem;
+  height: 2rem;
   flex-shrink: 0;
 }
 </style>

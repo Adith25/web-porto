@@ -104,8 +104,8 @@ defineEmits<{ select: [] }>();
 .cert-body {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  padding: 1rem 1.1rem 1.1rem;
+  gap: 0.35rem;
+  padding: 0.75rem 0.9rem 0.9rem;
 }
 
 .cert-tag {
@@ -123,7 +123,7 @@ defineEmits<{ select: [] }>();
 }
 
 .cert-title {
-  font-size: 1rem; /* text-base */
+  font-size: 0.875rem; /* text-sm */
   font-weight: 700;
   color: #0f172a;
   line-height: 1.35;
@@ -142,7 +142,7 @@ defineEmits<{ select: [] }>();
 }
 
 .cert-desc {
-  font-size: 0.875rem; /* text-sm */
+  font-size: 0.8rem;
   color: #64748b;
   line-height: 1.5;
   display: -webkit-box;

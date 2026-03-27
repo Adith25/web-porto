@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- ==================== HERO ==================== -->
-    <section id="hero" class="relative min-h-[100vh] flex items-center justify-center pt-0 overflow-hidden bg-[#f8fafc] dark:bg-[#0a0a0f]">
+    <section id="hero" class="relative min-h-[100vh] flex items-center justify-center pt-0 overflow-hidden bg-[#f8fafc] dark:bg-black">
       
       <!-- Subtle Grid -->
       <div class="hero-grid opacity-[0.2] dark:opacity-[0.3]" />
@@ -100,97 +100,94 @@
       <SectionWrapper
         title="About"
         highlight=" Me"
-        subtitle="A bit about my journey and what drives me."
+        subtitle="Get to know the person behind the code and the mindset I bring to my work"
         :centered="true"
         :hideLine="true"
       >
-        <div class="grid lg:grid-cols-3 gap-8">
+        <div class="grid lg:grid-cols-3 gap-6 relative z-10">
 
-          <!-- ── Profile MagicCard (left column on large screens) ── -->
-          <ScrollReveal animation="fade-right" class="lg:col-span-1 lg:self-start">
-            <MagicCard>
-              <div class="profile-card">
-                <!-- 3:4 Portrait Photo -->
-                <div class="photo-wrapper">
-                  <img
-                    src="/profile.png"
-                    alt="Muhammad Aditya Yufnanda"
-                    class="photo-img"
-                  />
-                  <!-- Gradient overlay for text readability -->
-                  <div class="photo-overlay" />
-
-                  <!-- Role badge top-left -->
-                  <div class="photo-header">
-                    <span class="role-badge">
-                      <Icon name="mdi:code-braces" class="w-3.5 h-3.5" />
-                      Software Engineer
-                    </span>
-                  </div>
-
-                  <!-- Meta info bottom overlay -->
-                  <div class="photo-footer">
-                    <div class="meta-line">
-                      <Icon name="mdi:map-marker-outline" class="meta-icon" />
-                      <span>Tangerang, Indonesia</span>
-                    </div>
-                    <div class="meta-line">
-                      <Icon name="mdi:email-outline" class="meta-icon" />
-                      <span>adityayufnanda25@gmail.com</span>
-                    </div>
-                  </div>
+          <!-- ── Row 1: Profile (Left) & Bio (Right) ── -->
+          <ScrollReveal animation="fade-up" :delay="0" class="lg:col-span-1 lg:self-stretch">
+            <div class="profile-card group h-full relative overflow-hidden rounded-2xl border border-white/5 bg-[#111111]/80 backdrop-blur-sm transition-all duration-300 hover:border-accent/20 hover:shadow-[0_0_30px_rgba(99,102,241,0.1)]">
+              <!-- Portrait Photo Only with Home Page Effects & Darkened Tone -->
+              <div class="photo-wrapper relative h-full min-h-[400px] overflow-hidden">
+                <img
+                  src="/profile.png"
+                  alt="Muhammad Aditya Yufnanda"
+                  class="absolute inset-0 w-full h-full object-cover brightness-75 contrast-[1.05] group-hover:scale-105 transition-transform duration-700 ease-out"
+                />
+                
+                <!-- Overlay effects matching home page -->
+                <div class="absolute inset-0 pointer-events-none">
+                  <!-- Bottom half dark gradient -->
+                  <div class="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                  
+                  <!-- Violet glow on hover -->
+                  <div class="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-violet/0 via-transparent to-transparent opacity-0 group-hover:opacity-50 transition-opacity duration-700" />
                 </div>
               </div>
-            </MagicCard>
+            </div>
           </ScrollReveal>
 
-          <!-- ── Right column: dynamic About Cards ── -->
-          <div class="lg:col-span-2 space-y-6">
-            <template v-if="aboutCards.length > 0">
-              <ScrollReveal
-                v-for="(card, i) in aboutCards"
-                :key="card.id"
-                animation="fade-left"
-                :delay="i * 50"
-              >
-                <div class="glass-card p-6 sm:p-8">
-                  <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                    <Icon v-if="card.icon" :name="card.icon" class="w-5 h-5 text-accent" />
-                    {{ card.title }}
-                  </h3>
-                  <div class="space-y-4 leading-relaxed whitespace-pre-line" :class="card.textColor">
-                    <span v-html="card.content"></span>
+          <div class="lg:col-span-2 flex flex-col justify-start">
+            <!-- Main Bio & Tags -->
+            <ScrollReveal animation="fade-up" :delay="150" class="h-full">
+              <div class="glass-card h-full p-5 sm:p-7 transition-all duration-300 hover:border-white/10 relative overflow-hidden group flex flex-col justify-center">
+                <!-- Optional background glow -->
+                <div class="absolute -top-32 -right-32 w-64 h-64 bg-accent/10 rounded-full blur-[60px] group-hover:bg-accent/20 transition-colors duration-700 pointer-events-none"></div>
+
+                <template v-if="aboutCards.length > 0">
+                  <div v-for="card in aboutCards" :key="card.id" class="relative z-10">
+                    <div class="text-base space-y-3 leading-relaxed whitespace-pre-line text-gray-300" v-html="card.content"></div>
                   </div>
+                </template>
+                <template v-else>
+                  <p class="text-gray-500 italic relative z-10">About Me information is empty.</p>
+                </template>
+
+                <!-- Personal Touch Line -->
+                <div class="mt-6 border-l-2 border-accent/50 pl-4 py-1 relative z-10">
+                  <p class="text-[13px] sm:text-sm font-medium italic text-gray-400 leading-snug">
+                    "everything is possible in your life when u believe in it"
+                  </p>
                 </div>
-              </ScrollReveal>
-            </template>
-            <template v-else>
-              <ScrollReveal animation="fade-left">
-                <div class="glass-card p-6 sm:p-8">
-                  <p class="text-gray-500 italic">About Me information is empty.</p>
-                </div>
-              </ScrollReveal>
-            </template>
+              </div>
+            </ScrollReveal>
           </div>
+
+          <!-- ── Row 2: GitHub Calendar (Left) & Socials (Right) ── -->
+          <ScrollReveal animation="fade-up" :delay="200" class="lg:col-span-2 flex items-center justify-start overflow-hidden w-full">
+            <GitHubCalendar 
+              username="Adith25" 
+              avatar-url="https://github.com/Adith25.png"
+              class="w-full justify-start max-w-full overflow-x-auto mt-2"
+            />
+          </ScrollReveal>
+
+          <ScrollReveal animation="fade-up" :delay="300" class="lg:col-span-1 flex items-center justify-center lg:justify-end w-full">
+            <SocialAnimatedList />
+          </ScrollReveal>
         </div>
       </SectionWrapper>
     </section>
 
     <!-- ==================== TECH STACK ==================== -->
-    <section id="techstack" class="py-12 sm:py-16">
+    <section id="techstack" class="py-8 sm:py-12">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <!-- Section Header -->
-        <div class="flex flex-col items-center text-center mb-8">
-          <span class="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-1.5">Tech Stack</span>
-          <h2 class="text-3xl sm:text-4xl font-bold text-white mb-2">Tools I work with</h2>
-          <p class="text-sm text-gray-400 max-w-2xl">
+        <div class="mb-4 sm:mb-6 flex flex-col w-full items-center text-center">
+          <span class="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-1">Tech Stack</span>
+          <h2 class="text-3xl sm:text-4xl font-bold text-white w-full text-center">
+            Tools I work with
+          </h2>
+          <p class="mt-1.5 text-gray-400 text-sm max-w-2xl font-sans mx-auto">
             A carefully selected list of tools, languages, and frameworks I use to bring ideas to life.
           </p>
         </div>
 
         <!-- Category Groups -->
-        <div class="space-y-6 sm:space-y-8">
+        <div class="space-y-4 sm:space-y-6">
           
           <ScrollReveal
             v-for="(group, i) in hardcodedTechStack"
@@ -200,20 +197,20 @@
           >
             <div class="flex flex-col">
               <!-- Category Title -->
-              <h3 class="text-xs font-semibold uppercase tracking-wide text-gray-400 mb-2.5 ml-1">
+              <h3 class="text-xs font-semibold uppercase tracking-wide text-gray-400 mb-2 ml-1">
                 {{ group.category }}
               </h3>
               
               <!-- Badges Container -->
-              <div class="flex flex-wrap gap-2 sm:gap-2.5">
+              <div class="flex flex-wrap gap-1.5 sm:gap-2">
                 <div
                   v-for="tech in group.items"
                   :key="tech.name"
-                  class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.06] hover:border-white/[0.15] hover:scale-[1.03] transition-all duration-200 cursor-default shadow-sm group/badge"
+                  class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full border border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.06] hover:border-white/[0.15] hover:scale-[1.03] transition-all duration-200 cursor-default shadow-sm group/badge"
                   :title="tech.tooltip"
                 >
-                  <Icon v-if="tech.icon" :name="tech.icon" class="w-4 h-4 opacity-90 group-hover/badge:opacity-100 transition-opacity" />
-                  <span class="text-[13px] text-gray-300 font-medium tracking-wide group-hover/badge:text-white transition-colors">
+                  <Icon v-if="tech.icon" :name="tech.icon" class="w-3.5 h-3.5 opacity-90 group-hover/badge:opacity-100 transition-opacity" />
+                  <span class="text-[12px] text-gray-300 font-medium tracking-wide group-hover/badge:text-white transition-colors">
                     {{ tech.name }}
                   </span>
                 </div>
@@ -224,7 +221,7 @@
         </div>
 
         <!-- Scroll velocity logo strip -->
-        <div class="mt-12 border-t border-white/5 pt-8">
+        <div class="mt-8 border-t border-white/5 pt-6">
           <ScrollVelocity />
         </div>
       </div>
@@ -270,33 +267,33 @@
       >
         <div class="relative" ref="experienceSectionRef">
           <!-- Background vertical line -->
-          <div class="absolute left-32 top-0 bottom-0 w-px bg-gray-200 dark:bg-white/5" />
+          <div class="absolute left-28 top-0 bottom-0 w-px bg-gray-200 dark:bg-white/5" />
           <!-- Animated progress line -->
           <div
             ref="progressLineRef"
-            class="absolute left-32 top-0 w-px bg-accent/60 origin-top transition-[height] duration-100 ease-linear"
+            class="absolute left-28 top-0 w-px bg-accent/60 origin-top transition-[height] duration-100 ease-linear"
             :style="{ height: `${experienceProgress * 100}%` }"
           />
 
-          <div class="space-y-2">
+          <div class="space-y-1">
             <ScrollReveal
               v-for="(exp, index) in experiences"
               :key="index"
               animation="fade-up"
               :delay="index * 60"
             >
-              <div class="relative flex items-center gap-4 group">
+              <div class="relative flex items-center gap-3 group">
                 <!-- Date label (left side) -->
-                <div class="w-32 shrink-0 text-right pr-4">
-                  <span class="text-sm text-gray-500 dark:text-gray-400 font-semibold leading-tight block">{{ (exp.period.split(' · ')[0] ?? '').split(' - ')[0] ?? '' }}</span>
-                  <span class="text-xs text-gray-400 dark:text-gray-600 font-mono mt-0.5 inline-block">{{ (exp.period.split(' · ')[0] ?? '').split(' - ')[1] ?? '' }}</span>
+                <div class="w-28 shrink-0 text-right pr-3">
+                  <span class="text-xs text-gray-500 dark:text-gray-400 font-semibold leading-tight block">{{ (exp.period.split(' · ')[0] ?? '').split(' - ')[0] ?? '' }}</span>
+                  <span class="text-[11px] text-gray-400 dark:text-gray-600 font-mono mt-0.5 inline-block">{{ (exp.period.split(' · ')[0] ?? '').split(' - ')[1] ?? '' }}</span>
                 </div>
 
                 <!-- Animated dot on timeline -->
-                <div class="absolute left-[8rem] -translate-x-1/2 z-10 flex">
+                <div class="absolute left-[7rem] -translate-x-1/2 z-10 flex">
                   <div
-                    class="w-5 h-5 rounded-full bg-white/90 dark:bg-dark/90 border border-accent/40 flex items-center justify-center experience-dot transition-all duration-400"
-                    :class="{ 'border-accent shadow-[0_0_10px_rgba(124,58,237,0.5)]': activeDots.includes(index) }"
+                    class="w-4 h-4 rounded-full bg-white/90 dark:bg-dark/90 border border-accent/40 flex items-center justify-center experience-dot transition-all duration-400"
+                    :class="{ 'border-accent shadow-[0_0_8px_rgba(124,58,237,0.5)]': activeDots.includes(index) }"
                   >
                     <div
                       class="w-[55%] h-[55%] rounded-full bg-gradient-to-tr from-accent to-accent-light"
@@ -309,27 +306,27 @@
                 <!-- Content row via MagicCard -->
                 <div class="flex-1">
                   <MagicCard :showBorder="false" class="!bg-transparent border border-transparent hover:border-accent/15 hover:bg-gray-50 dark:hover:bg-white/[0.025] transition-all duration-300">
-                    <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 pl-8 py-2.5 rounded-xl">
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 pl-6 py-2 rounded-xl">
                       <!-- Logo -->
-                      <div class="shrink-0 w-10 h-10 flex items-center justify-center">
+                      <div class="shrink-0 w-8 h-8 flex items-center justify-center">
                         <img
                           v-if="exp.logo"
                           :src="exp.logo"
                           :alt="exp.company"
                           class="w-full h-full object-contain"
                         />
-                        <Icon v-else name="mdi:office-building-outline" class="w-6 h-6 text-gray-500" />
+                        <Icon v-else name="mdi:office-building-outline" class="w-5 h-5 text-gray-500" />
                       </div>
 
                       <!-- Text -->
                       <div class="flex-1 min-w-0">
                         <div class="flex flex-col gap-0.5">
-                          <span class="font-bold text-gray-900 dark:text-white text-lg leading-tight">{{ exp.role }}</span>
-                          <span class="text-accent-dark/80 dark:text-accent-light/70 text-base font-medium mt-0.5">
+                          <span class="font-bold text-gray-900 dark:text-white text-base leading-tight">{{ exp.role }}</span>
+                          <span class="text-accent-dark/80 dark:text-accent-light/70 text-sm font-medium mt-0.5">
                             {{ exp.company }}<template v-if="exp.position"> &middot; {{ exp.position }}</template>
                           </span>
                         </div>
-                        <div v-if="exp.description" class="mt-2.5 text-sm text-gray-600 dark:text-gray-400 leading-relaxed whitespace-pre-line">
+                        <div v-if="exp.description" class="mt-1.5 text-xs text-gray-600 dark:text-gray-400 leading-relaxed whitespace-pre-line">
                           {{ exp.description }}
                         </div>
                       </div>
@@ -391,30 +388,30 @@
         centered
         hideLine
       >
-        <div class="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center w-full">
+        <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center w-full">
           <!-- Left Side: Contact Info -->
           <ScrollReveal animation="fade-right">
-            <div class="space-y-8">
+            <div class="space-y-6">
               <div>
-                <h3 class="text-lg font-semibold text-white mb-1">Contact Info</h3>
-                <p class="text-gray-500 text-sm">Find me across the digital landscape.</p>
+                <h3 class="text-sm font-semibold text-white mb-1">Contact Info</h3>
+                <p class="text-gray-500 text-xs">Find me across the digital landscape.</p>
               </div>
               
-              <div class="grid sm:grid-cols-2 gap-x-8 gap-y-6">
+              <div class="grid sm:grid-cols-2 gap-x-6 gap-y-4">
                 <div
                   v-for="info in contactInfo"
                   :key="info.label"
                   class="space-y-1 group"
                 >
                   <div class="flex items-center gap-1.5 text-gray-500 group-hover:text-[#6366F1] transition-colors">
-                    <Icon :name="info.icon" class="w-4 h-4" />
+                    <Icon :name="info.icon" class="w-3.5 h-3.5" />
                     <span class="text-xs uppercase tracking-widest font-bold">{{ info.label }}</span>
                   </div>
                   <a
                     :href="info.url"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="block text-gray-400 hover:text-white transition-colors text-sm truncate"
+                    class="block text-gray-400 hover:text-white transition-colors text-xs truncate"
                   >
                     {{ info.value }}
                   </a>
@@ -425,29 +422,19 @@
 
           <!-- Right Side: Form -->
           <ScrollReveal animation="fade-left" :delay="100">
-            <div class="space-y-6 text-center">
+            <div class="space-y-4 text-center">
               <div>
-                <h3 class="text-lg font-semibold text-white mb-1">Send a Message</h3>
-                <p class="text-gray-500 text-sm">Reach out directly via the form below.</p>
+                <h3 class="text-base font-semibold text-white mb-1">Send a Message</h3>
+                <p class="text-gray-500 text-xs">Reach out directly via the form below.</p>
               </div>
               <div class="border border-[#1F2937] rounded-xl p-[1px] text-left">
-                <div class="bg-transparent p-5 sm:p-7">
+                <div class="bg-transparent p-4 sm:p-5">
                   <ContactForm />
                 </div>
               </div>
             </div>
           </ScrollReveal>
         </div>
-
-        <!-- GitHub Contribution Calendar -->
-        <ScrollReveal animation="fade-up" :delay="300">
-          <div class="mt-16 w-full overflow-hidden relative">
-            <GitHubCalendar 
-              username="Adith25" 
-              avatar-url="https://github.com/Adith25.png"
-            />
-          </div>
-        </ScrollReveal>
       </SectionWrapper>
     </section>
   </div>

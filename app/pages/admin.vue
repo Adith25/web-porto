@@ -624,6 +624,70 @@
           </div>
         </section>
 
+        <!-- ── MESSAGES ── -->
+        <section v-if="activeTab === 'messages'" class="tab-section">
+          <div class="tab-header">
+            <div>
+              <h1 class="tab-title">Messages</h1>
+              <p class="tab-subtitle">
+                {{ messages.length }} message(s) received from contact form
+              </p>
+            </div>
+          </div>
+
+          <div class="list-table w-full">
+            <div class="list-head list-head--msg">
+              <span>From</span>
+              <span>Subject</span>
+              <span>Date</span>
+              <span>Actions</span>
+            </div>
+            <p v-if="messages.length === 0" class="empty-state">
+              No messages received yet.
+            </p>
+            <div v-else class="space-y-4">
+              <div 
+                v-for="msg in messages" 
+                :key="msg.id" 
+                class="bg-white/5 border border-white/10 rounded-xl overflow-hidden transition-all duration-300 hover:border-accent/30"
+                :class="{ 'opacity-70': msg.isRead }"
+              >
+                <div class="p-4 flex items-start justify-between">
+                  <div class="flex-1 min-w-0">
+                    <div class="flex items-center gap-2 mb-1">
+                      <span class="font-bold text-gray-900 dark:text-white">{{ msg.name }}</span>
+                      <span class="text-xs text-gray-500 font-mono">{{ msg.email }}</span>
+                      <span v-if="!msg.isRead" class="px-1.5 py-0.5 rounded-full bg-accent/20 text-accent text-[10px] uppercase font-bold tracking-wider">New</span>
+                    </div>
+                    <h3 class="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2">{{ msg.subject }}</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 whitespace-pre-wrap">{{ msg.message }}</p>
+                    <div class="mt-3 text-[11px] text-gray-500 font-mono">
+                      Received on {{ new Date(msg.createdAt).toLocaleString() }}
+                    </div>
+                  </div>
+                  <div class="flex gap-2 ml-4">
+                    <button 
+                      v-if="!msg.isRead"
+                      class="icon-btn icon-btn--edit" 
+                      title="Mark as Read"
+                      @click="markMessageAsRead(msg.id)"
+                    >
+                      <Icon name="mdi:check-circle-outline" class="w-4 h-4" />
+                    </button>
+                    <button 
+                      class="icon-btn icon-btn--del" 
+                      title="Delete Message"
+                      @click="deleteItem('message', msg.id)"
+                    >
+                      <Icon name="mdi:trash-can-outline" class="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <!-- ── SETTINGS ── -->
         <section v-if="activeTab === 'settings'" class="tab-section">
           <div class="tab-header">
@@ -1111,7 +1175,7 @@ useHead({
 });
 
 const config = useRuntimeConfig();
-const API_BASE = config.public.apiBase;
+const API_BASE = 'http://localhost:3001';
 
 // ── Auth ──
 const token = useCookie("admin_token");
@@ -1129,6 +1193,7 @@ type TabName =
   | "skills"
   | "certificates"
   | "about"
+  | "messages"
   | "settings";
 const activeTab = ref<TabName>("dashboard");
 
@@ -1148,6 +1213,11 @@ const navItems = [
     label: "About Me",
   },
   {
+    tab: "messages",
+    icon: "mdi:email-outline",
+    label: "Messages",
+  },
+  {
     tab: "settings",
     icon: "mdi:cog-outline",
     label: "Global Settings",
@@ -1160,6 +1230,7 @@ const experiences = ref<any[]>([]);
 const skills = ref<any[]>([]);
 const certificates = ref<any[]>([]);
 const aboutCards = ref<any[]>([]);
+const messages = ref<any[]>([]);
 const siteSetting = ref({ 
   announcementText: "", 
   announcementActive: false,
@@ -1277,6 +1348,14 @@ const stats = computed(() => [
     bg: "rgba(59,130,246,0.12)",
     color: "#3b82f6",
   },
+  {
+    label: "Messages",
+    count: messages.value.length,
+    icon: "mdi:email-outline",
+    tab: "messages" as TabName,
+    bg: "rgba(239,68,68,0.12)",
+    color: "#f87171",
+  },
 ]);
 
 const splitItems = (str: string) =>
@@ -1289,13 +1368,14 @@ const splitItems = (str: string) =>
 
 const fetchAll = async () => {
   const headers = { Authorization: `Bearer ${token.value}` };
-  const [p, e, s, c, a, setting] = await Promise.allSettled([
+  const [p, e, s, c, a, setting, m] = await Promise.allSettled([
     $fetch<any[]>(`${API_BASE}/projects`),
     $fetch<any[]>(`${API_BASE}/experiences`),
     $fetch<any[]>(`${API_BASE}/skills`),
     $fetch<any[]>(`${API_BASE}/certificates`),
     $fetch<any[]>(`${API_BASE}/about-cards`),
     $fetch<any>(`${API_BASE}/settings`),
+    $fetch<any[]>(`${API_BASE}/messages`, { headers }),
   ]);
   if (p.status === "fulfilled") projects.value = p.value || [];
   if (e.status === "fulfilled") experiences.value = e.value || [];
@@ -1311,6 +1391,7 @@ const fetchAll = async () => {
     if (setting.value.animationSpeed) siteSetting.value.animationSpeed = setting.value.animationSpeed;
     if (setting.value.cvUrl) siteSetting.value.cvUrl = setting.value.cvUrl;
   }
+  if (m.status === "fulfilled") messages.value = m.value || [];
 };
 
 onMounted(() => {
@@ -1555,6 +1636,18 @@ const deleteItem = async (type: string, id: number) => {
   try {
     await $fetch(`${API_BASE}/${type}s/${id}`, {
       method: "DELETE",
+      headers: { Authorization: `Bearer ${token.value}` },
+    });
+    await fetchAll();
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+const markMessageAsRead = async (id: number) => {
+  try {
+    await $fetch(`${API_BASE}/messages/${id}/read`, {
+      method: "PATCH",
       headers: { Authorization: `Bearer ${token.value}` },
     });
     await fetchAll();

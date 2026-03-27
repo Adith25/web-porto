@@ -98,11 +98,11 @@
       </div>
     </div>
 
-    <!-- Tooltip (Absolute relative to main container) -->
+    <!-- Tooltip (Positioned relative to the card wrapper) -->
     <div 
-      v-if="tooltip.show"
-      class="absolute z-50 pointer-events-none bg-[#6E7681] text-white text-[12px] px-3 py-1.5 rounded-md shadow-lg transform -translate-x-1/2 -translate-y-full mb-2"
-      :style="{ left: `${tooltip.x}px`, top: `${tooltip.y}px` }"
+      v-show="tooltip.show"
+      class="absolute z-50 pointer-events-none bg-[#6E7681] text-white text-[12px] px-3 py-1.5 rounded-md shadow-lg transform -translate-x-1/2 -translate-y-full mb-2 transition-opacity duration-150"
+      :style="{ left: `${tooltip.x}px`, top: `${tooltip.y}px`, opacity: tooltip.show ? 1 : 0 }"
     >
       <div class="relative whitespace-nowrap">
         <span class="font-semibold">{{ tooltip.count }} contributions</span> on {{ tooltip.date }}
@@ -222,7 +222,7 @@ const showTooltip = (event: MouseEvent, day: Day) => {
   if (!container) return
   
   const containerRect = container.getBoundingClientRect()
-  const cellRect = (event.target as HTMLElement).getBoundingClientRect()
+  const cellRect = (event.currentTarget as HTMLElement).getBoundingClientRect()
   
   tooltip.value = {
     show: true,
@@ -284,11 +284,5 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
+/* Scoped styles removed in favor of global .scrollbar-hide in main.css */
 </style>

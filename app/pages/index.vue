@@ -108,22 +108,22 @@
 
           <!-- ── Row 1: Profile (Left) & Bio (Right) ── -->
           <ScrollReveal animation="fade-up" :delay="0" class="lg:col-span-1 lg:self-stretch">
-            <div class="profile-card group h-full relative overflow-hidden rounded-2xl border border-white/5 bg-[#111111]/80 backdrop-blur-sm transition-all duration-300 hover:border-accent/20 hover:shadow-[0_0_30px_rgba(99,102,241,0.1)]">
+            <div class="group h-full relative overflow-hidden rounded-2xl border border-white/5 bg-[#111111]/80 backdrop-blur-sm transition-all duration-300 hover:border-accent/20 hover:shadow-[0_0_30px_rgba(99,102,241,0.1)]">
               <!-- Portrait Photo Only with Home Page Effects & Darkened Tone -->
-              <div class="photo-wrapper relative h-full min-h-[400px] overflow-hidden">
+              <div class="relative h-full min-h-[400px] w-full overflow-hidden">
                 <img
                   src="/profile.png"
                   alt="Muhammad Aditya Yufnanda"
-                  class="absolute inset-0 w-full h-full object-cover brightness-75 contrast-[1.05] group-hover:scale-105 transition-transform duration-700 ease-out"
+                  class="absolute inset-0 w-full h-full object-cover brightness-90 contrast-[1.05] group-hover:scale-110 transition-transform duration-700 ease-out z-0"
                 />
                 
                 <!-- Overlay effects matching home page -->
-                <div class="absolute inset-0 pointer-events-none">
+                <div class="absolute inset-0 pointer-events-none z-10">
                   <!-- Bottom half dark gradient -->
-                  <div class="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                  <div class="absolute bottom-0 left-0 right-0 h-2/3 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                   
                   <!-- Violet glow on hover -->
-                  <div class="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-violet/0 via-transparent to-transparent opacity-0 group-hover:opacity-50 transition-opacity duration-700" />
+                  <div class="absolute inset-0 bg-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                 </div>
               </div>
             </div>
@@ -156,11 +156,11 @@
           </div>
 
           <!-- ── Row 2: GitHub Calendar (Left) & Socials (Right) ── -->
-          <ScrollReveal animation="fade-up" :delay="200" class="lg:col-span-2 flex items-center justify-start overflow-hidden w-full">
+          <ScrollReveal animation="fade-up" :delay="200" class="lg:col-span-2 flex items-center justify-start w-full relative z-20">
             <GitHubCalendar 
               username="Adith25" 
               avatar-url="https://github.com/Adith25.png"
-              class="w-full justify-start max-w-full overflow-x-auto mt-2"
+              class="w-full justify-start max-w-full mt-2"
             />
           </ScrollReveal>
 
@@ -637,7 +637,6 @@ const hardcodedTechStack = [
       { name: "ChatGPT", icon: "logos:openai-icon", tooltip: "Conversational AI" },
       { name: "Claude", icon: "simple-icons:anthropic", tooltip: "AI Assistant" },
       { name: "Postman", icon: "logos:postman-icon", tooltip: "API Platform" },
-      { name: "OpenAI", icon: "logos:openai-icon", tooltip: "AI Models" },
     ]
   }
 ];
@@ -711,20 +710,6 @@ const contactInfo = [
 
 <style scoped>
 /* ΓöÇΓöÇ Profile Card ΓöÇΓöÇ */
-.profile-card {
-  display: flex;
-  flex-direction: column;
-  border-radius: 16px;
-  overflow: hidden;
-}
-
-.photo-wrapper {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 3 / 4;
-  overflow: hidden;
-  flex-shrink: 0;
-}
 .photo-img {
   width: 100%;
   height: 100%;

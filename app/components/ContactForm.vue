@@ -52,15 +52,20 @@
 
     <button 
       type="submit" 
-      class="w-full h-[40px] rounded-[10px] bg-[#E5E7EB] hover:bg-[#D1D5DB] text-[#111827] font-semibold text-[13px] flex items-center justify-center gap-2 transition-all duration-300"
+      :disabled="isSubmitting"
+      class="w-full h-[40px] rounded-[10px] bg-[#E5E7EB] hover:bg-[#D1D5DB] text-[#111827] font-semibold text-[13px] flex items-center justify-center gap-2 transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed"
     >
-      <Icon name="mdi:send" class="w-4 h-4" />
-      <span>Send Message</span>
+      <Icon v-if="!isSubmitting" name="mdi:send" class="w-4 h-4" />
+      <Icon v-else name="mdi:loading" class="w-4 h-4 animate-spin" />
+      <span>{{ isSubmitting ? 'Sending...' : 'Send Message' }}</span>
     </button>
   </form>
 </template>
 
 <script setup lang="ts">
+const config = useRuntimeConfig();
+const API_BASE = config.public.apiBase;
+
 const form = reactive({
   name: "",
   email: "",
@@ -68,12 +73,28 @@ const form = reactive({
   message: "",
 });
 
-const handleSubmit = () => {
-  console.log("Form submitted:", { ...form });
-  alert("Message sent! (Placeholder)");
-  form.name = "";
-  form.email = "";
-  form.subject = "";
-  form.message = "";
+const isSubmitting = ref(false);
+
+const handleSubmit = async () => {
+  isSubmitting.value = true;
+  // Determine endpoint: prioritize local dev port 3001 to resolve env reload issues
+  const endpoint = 'http://localhost:3001/messages';
+  
+  try {
+    await $fetch(endpoint, {
+      method: "POST",
+      body: { ...form },
+    });
+    alert("Message sent successfully!");
+    form.name = "";
+    form.email = "";
+    form.subject = "";
+    form.message = "";
+  } catch (error) {
+    console.error("Failed to send message:", error);
+    alert("Failed to send message. Please try again later.");
+  } finally {
+    isSubmitting.value = false;
+  }
 };
 </script>

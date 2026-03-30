@@ -1808,7 +1808,7 @@ const handleImageDrop = (e: DragEvent) => {
   position: fixed;
   inset: 0;
   z-index: 0;
-  background: #07071a;
+  background: #000000;
   animation: bgRotate 60s linear infinite;
   transform-origin: center center;
 }
@@ -2044,7 +2044,7 @@ const handleImageDrop = (e: DragEvent) => {
   border-radius: 0.6rem;
   font-size: 0.82rem;
   font-weight: 500;
-  color: rgba(180, 180, 220, 0.55);
+  color: rgba(191, 191, 220, 0.9);
   transition: all 0.2s;
   text-align: left;
   width: 100%;
@@ -2078,7 +2078,7 @@ const handleImageDrop = (e: DragEvent) => {
   padding: 0.4rem 0.75rem;
   border-radius: 0.5rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  color: rgba(180, 180, 220, 0.5);
+  color: rgba(191, 191, 220, 0.85);
   transition: all 0.2s;
 }
 .sidebar-action:hover {
@@ -2152,7 +2152,7 @@ const handleImageDrop = (e: DragEvent) => {
 }
 .tab-subtitle {
   font-size: 0.78rem;
-  color: rgba(180, 180, 220, 0.5);
+  color: rgba(191, 191, 220, 0.85);
   margin-top: 0.2rem;
   font-family: monospace;
 }
@@ -2251,7 +2251,7 @@ const handleImageDrop = (e: DragEvent) => {
 .dark .list-head {
   background: rgba(255, 255, 255, 0.03);
   border-color: rgba(255, 255, 255, 0.07);
-  color: rgba(180, 180, 220, 0.4);
+  color: rgba(191, 191, 220, 0.75);
 }
 .list-head--exp {
   grid-template-columns: 2fr 2fr 1.5fr 0.7fr;
@@ -2283,7 +2283,7 @@ const handleImageDrop = (e: DragEvent) => {
 }
 
 .empty-state {
-  color: rgba(180, 180, 220, 0.35);
+  color: rgba(191, 191, 220, 0.7);
   font-size: 0.85rem;
   text-align: center;
   padding: 2.5rem 1rem;
@@ -2327,7 +2327,7 @@ const handleImageDrop = (e: DragEvent) => {
   transition: all 0.2s;
 }
 .icon-btn--edit {
-  color: rgba(180, 180, 220, 0.4);
+  color: rgba(191, 191, 220, 0.75);
 }
 .icon-btn--edit:hover {
   color: #93c5fd;
@@ -2551,7 +2551,7 @@ const handleImageDrop = (e: DragEvent) => {
 .field-label {
   font-size: 0.68rem;
   font-weight: 600;
-  color: rgba(180, 180, 220, 0.6);
+  color: rgba(191, 191, 220, 0.95);
   text-transform: uppercase;
   letter-spacing: 0.1em;
 }

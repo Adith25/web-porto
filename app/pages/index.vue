@@ -615,6 +615,7 @@ const hardcodedTechStack = [
       { name: "Tailwind CSS", icon: "logos:tailwindcss-icon", tooltip: "Utility-first CSS" },
       { name: "Bootstrap", icon: "logos:bootstrap", tooltip: "UI framework" },
       { name: "NestJS", icon: "logos:nestjs", tooltip: "Node.js framework" },
+      { name: "Python", icon: "logos:python", tooltip: "General purpose language" },
     ]
   },
   {
@@ -628,6 +629,7 @@ const hardcodedTechStack = [
       { name: "GitHub", icon: "mdi:github", tooltip: "Code hosting" },
       { name: "Firebase", icon: "logos:firebase", tooltip: "App development platform" },
       { name: "Vercel", icon: "logos:vercel-icon", tooltip: "Deployment platform" },
+      { name: "Railway", icon: "simple-icons:railway", tooltip: "Deployment platform" },
     ]
   },
   {
@@ -635,6 +637,7 @@ const hardcodedTechStack = [
     items: [
       { name: "ChatGPT", icon: "logos:openai-icon", tooltip: "Conversational AI" },
       { name: "Claude", icon: "simple-icons:anthropic", tooltip: "AI Assistant" },
+      { name: "Gemini AI", icon: "logos:google-gemini", tooltip: "AI Assistant" },
       { name: "Postman", icon: "logos:postman-icon", tooltip: "API Platform" },
     ]
   }

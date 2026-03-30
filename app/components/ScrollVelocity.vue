@@ -57,6 +57,7 @@ const ROW1 = [
   { label: 'NestJS',       icon: 'logos:nestjs' },
   { label: 'Node.js',      icon: 'logos:nodejs-icon' },
   { label: 'MySQL',        icon: 'logos:mysql' },
+  { label: 'Python',       icon: 'logos:python' },
 ]
 
 const ROW2 = [
@@ -69,6 +70,9 @@ const ROW2 = [
   { label: 'ChatGPT',      icon: 'logos:openai-icon' },
   { label: 'Claude',       icon: 'simple-icons:anthropic' },
   { label: 'Postman',      icon: 'logos:postman-icon' },
+  { label: 'Railway',      icon: 'simple-icons:railway' },
+  { label: 'Gemini AI',    icon: 'logos:google-gemini' },
+  { label: 'Trello',       icon: 'logos:trello' },
 ]
 
 const track1Ref = ref<HTMLElement | null>(null)

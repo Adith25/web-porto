@@ -639,6 +639,7 @@ const hardcodedTechStack = [
       { name: "Claude", icon: "simple-icons:anthropic", tooltip: "AI Assistant" },
       { name: "Gemini AI", icon: "logos:google-gemini", tooltip: "AI Assistant" },
       { name: "Postman", icon: "logos:postman-icon", tooltip: "API Platform" },
+      { name: "Trello", icon: "logos:trello", tooltip: "Project Management" },
     ]
   }
 ];

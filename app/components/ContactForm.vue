@@ -2,7 +2,7 @@
   <form class="space-y-3" @submit.prevent="handleSubmit">
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
       <div class="space-y-1.5">
-        <label for="name" class="block text-[13px] font-medium text-gray-500">Name</label>
+        <label for="name" class="block text-xs uppercase tracking-widest font-semibold text-gray-400">Name</label>
         <input
           id="name"
           v-model="form.name"
@@ -14,7 +14,7 @@
       </div>
 
       <div class="space-y-1.5">
-        <label for="email" class="block text-[13px] font-medium text-gray-500">Email</label>
+        <label for="email" class="block text-xs uppercase tracking-widest font-semibold text-gray-400">Email</label>
         <input
           id="email"
           v-model="form.email"
@@ -27,7 +27,7 @@
     </div>
 
     <div class="space-y-1.5">
-      <label for="subject" class="block text-[13px] font-medium text-gray-500">Subject</label>
+      <label for="subject" class="block text-xs uppercase tracking-widest font-semibold text-gray-400">Subject</label>
       <input
         id="subject"
         v-model="form.subject"
@@ -39,7 +39,7 @@
     </div>
 
     <div class="space-y-1.5">
-      <label for="message" class="block text-[13px] font-medium text-gray-500">Message</label>
+      <label for="message" class="block text-xs uppercase tracking-widest font-semibold text-gray-400">Message</label>
       <textarea
         id="message"
         v-model="form.message"

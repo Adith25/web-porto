@@ -366,7 +366,7 @@
           </ScrollReveal>
         </div>
 
-        <div v-if="certificates.length > 6" class="mt-8 text-center" v-motion :initial="{ opacity: 0 }" :visible-once="{ opacity: 1 }">
+        <div v-if="certificates.length > 8" class="mt-8 text-center" v-motion :initial="{ opacity: 0 }" :visible-once="{ opacity: 1 }">
           <button 
             @click="showAllCertificates = !showAllCertificates"
             class="inline-flex items-center gap-2 px-4 py-1.5 text-xs font-semibold rounded-full border border-white/10 bg-white/5 backdrop-blur-md hover:bg-white/15 hover:border-white/20 transition-all text-gray-400 hover:text-white shadow-xl"
@@ -676,7 +676,7 @@ const certificates = ref<any[]>([]);
 const isPdfEnabledGlobal = ref(false);
 
 const displayedCertificates = computed(() => {
-  return showAllCertificates.value ? certificates.value : certificates.value.slice(0, 6);
+  return showAllCertificates.value ? certificates.value : certificates.value.slice(0, 8);
 });
 
 const contactInfo = [

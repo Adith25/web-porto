@@ -148,7 +148,7 @@
       </aside>
 
       <!-- Main Content -->
-      <main class="dashboard-main">
+      <main class="dashboard-main" data-lenis-prevent>
         <!-- ── DASHBOARD ── -->
         <section v-if="activeTab === 'dashboard'" class="tab-section">
           <div class="tab-header">
@@ -2109,8 +2109,25 @@ const handleImageDrop = (e: DragEvent) => {
 .dashboard-main {
   flex: 1;
   padding: 2rem;
-  overflow-y: auto;
+  overflow-y: auto !important;
   max-height: 100vh;
+  /* Ensure scrollbar visibility in admin panel */
+  scrollbar-width: auto !important;
+  -ms-overflow-style: auto !important;
+}
+
+.dashboard-main::-webkit-scrollbar {
+  display: block !important;
+  width: 8px !important;
+}
+
+.dashboard-main::-webkit-scrollbar-thumb {
+  background: rgba(147, 197, 253, 0.2) !important;
+  border-radius: 4px !important;
+}
+
+.dashboard-main::-webkit-scrollbar-thumb:hover {
+  background: rgba(147, 197, 253, 0.4) !important;
 }
 
 .tab-section {

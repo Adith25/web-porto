@@ -66,8 +66,8 @@ const ROW2 = [
   { label: 'Git',          icon: 'logos:git-icon' },
   { label: 'GitHub',       icon: 'mdi:github' },
   { label: 'Firebase',     icon: 'logos:firebase' },
-  { label: 'Vercel',       icon: 'logos:vercel-icon' },
-  { label: 'ChatGPT',      icon: 'logos:openai-icon' },
+  { label: 'Vercel',       icon: 'simple-icons:vercel' },
+  { label: 'ChatGPT',      icon: 'simple-icons:openai' },
   { label: 'Claude',       icon: 'simple-icons:anthropic' },
   { label: 'Postman',      icon: 'logos:postman-icon' },
   { label: 'Railway',      icon: 'simple-icons:railway' },
@@ -186,5 +186,6 @@ onMounted(() => {
   width: 2rem;
   height: 2rem;
   flex-shrink: 0;
+  color: #f8fafc;
 }
 </style>

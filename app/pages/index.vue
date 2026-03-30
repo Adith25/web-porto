@@ -628,14 +628,14 @@ const hardcodedTechStack = [
       { name: "Git", icon: "logos:git-icon", tooltip: "Version Control" },
       { name: "GitHub", icon: "mdi:github", tooltip: "Code hosting" },
       { name: "Firebase", icon: "logos:firebase", tooltip: "App development platform" },
-      { name: "Vercel", icon: "logos:vercel-icon", tooltip: "Deployment platform" },
+      { name: "Vercel", icon: "simple-icons:vercel", tooltip: "Deployment platform" },
       { name: "Railway", icon: "simple-icons:railway", tooltip: "Deployment platform" },
     ]
   },
   {
     category: "AI & PRODUCTIVITY",
     items: [
-      { name: "ChatGPT", icon: "logos:openai-icon", tooltip: "Conversational AI" },
+      { name: "ChatGPT", icon: "simple-icons:openai", tooltip: "Conversational AI" },
       { name: "Claude", icon: "simple-icons:anthropic", tooltip: "AI Assistant" },
       { name: "Gemini AI", icon: "logos:google-gemini", tooltip: "AI Assistant" },
       { name: "Postman", icon: "logos:postman-icon", tooltip: "API Platform" },

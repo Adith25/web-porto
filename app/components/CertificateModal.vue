@@ -11,6 +11,7 @@
       <div v-if="cert" class="modal-backdrop" @click.self="$emit('close')">
         <div
           class="modal-panel"
+          data-lenis-prevent
           v-motion
           :initial="{ opacity: 0, scale: 0.92, y: 30 }"
           :enter="{ opacity: 1, scale: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 28 } }"
@@ -88,6 +89,9 @@ const props = defineProps<{
 
 const emit = defineEmits<{ close: [] }>();
 
+const nuxtApp = useNuxtApp();
+const lenis = nuxtApp.$lenis;
+
 const isPdf = computed(() => {
   if (props.cert?.pdfUrl) return true;
   return !!props.cert?.image && props.cert.image.toLowerCase().endsWith('.pdf');
@@ -98,8 +102,10 @@ watch(() => props.cert, (newVal) => {
   if (typeof document !== 'undefined') {
     if (newVal) {
       document.body.style.overflow = 'hidden';
+      if (lenis) (lenis as any).stop();
     } else {
       document.body.style.overflow = '';
+      if (lenis) (lenis as any).start();
     }
   }
 });
@@ -116,6 +122,7 @@ onUnmounted(() => {
   if (typeof document !== 'undefined') {
     document.body.style.overflow = '';
   }
+  if (lenis) (lenis as any).start();
 });
 </script>
 
@@ -147,6 +154,14 @@ onUnmounted(() => {
   box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.8);
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+}
+.modal-panel::-webkit-scrollbar {
+  display: block !important;
+  width: 6px !important;
+}
+.modal-panel::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.3) !important;
+  border-radius: 4px !important;
 }
 
 /* ── Close button ── */

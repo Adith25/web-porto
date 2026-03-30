@@ -863,7 +863,7 @@
     <!-- ── Modal ── -->
     <Transition name="modal">
       <div v-if="modal.open" class="modal-backdrop" @click.self="closeModal">
-        <div class="modal-box">
+        <div class="modal-box" data-lenis-prevent>
           <div class="modal-header">
             <h3 class="modal-title">
               {{ modal.editing ? "Edit" : "Add" }} {{ modalTitle }}
@@ -2443,11 +2443,21 @@ const handleImageDrop = (e: DragEvent) => {
   width: 100%;
   max-width: 480px;
   max-height: 90vh;
-  overflow-y: auto;
+  overflow-y: auto !important;
   background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(64px);
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 1.25rem;
+  scrollbar-width: auto !important;
+  -ms-overflow-style: auto !important;
+}
+.modal-box::-webkit-scrollbar {
+  display: block !important;
+  width: 6px !important;
+}
+.modal-box::-webkit-scrollbar-thumb {
+  background: rgba(147, 197, 253, 0.3) !important;
+  border-radius: 4px !important;
 }
 .dark .modal-box {
   background: rgba(10, 8, 30, 0.95);

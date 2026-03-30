@@ -66,7 +66,7 @@
                     <img
                       src="/hero.png"
                       alt="Muhammad Aditya Yufnanda"
-                      class="w-full h-full object-cover brightness-90 group-hover:brightness-110 group-hover:scale-105 transition-all duration-700"
+                      class="w-full h-full object-cover brightness-90 group-hover:brightness-125 group-hover:scale-105 transition-all duration-700"
                     />
                     
                     <!-- Transparent top half with gradient separator -->

@@ -468,6 +468,17 @@
             </div>
           </div>
 
+          <!-- Upload Info Alert -->
+          <div class="bg-amber-500/10 border border-amber-500/20 rounded-xl p-4 flex gap-3 mt-4 mb-2">
+            <Icon name="mdi:information-outline" class="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
+            <div>
+              <h3 class="text-sm font-semibold text-amber-500">Important Upload Workflow</h3>
+              <p class="text-xs text-amber-500/80 mt-1 leading-relaxed">
+                Karena server Vercel bersifat <i>Read-Only</i>, setiap penambahan/perubahan sertifikat foto harus dilakukan melalui admin panel <b>localhost</b>. Setelah selesai, lakukan <code class="bg-amber-500/20 px-1 py-0.5 rounded">git add .</code>, lalu <code class="bg-amber-500/20 px-1 py-0.5 rounded">git commit</code>, dan <code class="bg-amber-500/20 px-1 py-0.5 rounded">git push</code> melalui terminal agar gambar terbawa ke production.
+              </p>
+            </div>
+          </div>
+
           <!-- Global Feature Toggle for PDF View -->
           <div class="bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl p-4 flex items-center justify-between mt-2 mb-2">
             <div>
@@ -770,6 +781,18 @@
                   <Icon name="mdi:file-document-outline" class="w-5 h-5 text-accent" />
                   Curriculum Vitae (CV)
                 </h3>
+
+                <!-- Upload Info Alert -->
+                <div class="bg-amber-500/10 border border-amber-500/20 rounded-xl p-4 flex gap-3 mb-6">
+                  <Icon name="mdi:information-outline" class="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
+                  <div>
+                    <h3 class="text-sm font-semibold text-amber-500">Important Upload Workflow</h3>
+                    <p class="text-xs text-amber-500/80 mt-1 leading-relaxed">
+                      Sama seperti sertifikat, karena server Vercel bersifat <i>Read-Only</i>, mengganti CV harus dilakukan melalui admin panel <b>localhost</b>. Setelah selesai, lakukan <code class="bg-amber-500/20 px-1 py-0.5 rounded">git add .</code>, lalu <code class="bg-amber-500/20 px-1 py-0.5 rounded">git commit</code>, dan <code class="bg-amber-500/20 px-1 py-0.5 rounded">git push</code> melalui terminal agar file terbawa ke production.
+                    </p>
+                  </div>
+                </div>
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-end">
                   <div>
                     <label class="block text-sm font-medium text-gray-900 dark:text-gray-300 mb-2">

@@ -4,7 +4,7 @@
     leave-active-class="splash-leave-active"
     leave-to-class="splash-leave-to"
   >
-    <div v-if="isLoading" class="splash-overlay" aria-live="polite" aria-label="Loading">
+    <div v-if="isLoading" class="splash-overlay" style="position: fixed; inset: 0; z-index: 9999; background: #0a0a0f;" aria-live="polite" aria-label="Loading">
       <!-- Animated background orbs -->
       <div class="orb orb-1" />
       <div class="orb orb-2" />

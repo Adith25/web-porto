@@ -148,7 +148,7 @@
                 <!-- Personal Touch Line -->
                 <div class="mt-6 border-l-2 border-accent/50 pl-4 py-1 relative z-10">
                   <p class="text-[13px] sm:text-sm font-medium italic text-gray-400 leading-snug">
-                    "everything is possible in your life when u believe in it"
+                    "don't crack under pressure"
                   </p>
                 </div>
               </div>
@@ -437,10 +437,9 @@
         </div>
       </SectionWrapper>
     </section>
+    <!-- Certificate Modal -->
+    <CertificateModal :cert="selectedCert" :is-pdf-enabled="isPdfEnabledGlobal" @close="selectedCert = null" />
   </div>
-
-  <!-- Certificate Modal -->
-  <CertificateModal :cert="selectedCert" :is-pdf-enabled="isPdfEnabledGlobal" @close="selectedCert = null" />
 </template>
 
 <script setup lang="ts">

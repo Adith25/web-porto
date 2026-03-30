@@ -65,6 +65,7 @@
 <script setup lang="ts">
 const config = useRuntimeConfig();
 const API_BASE = config.public.apiBase;
+const toast = useToast();
 
 const form = reactive({
   name: "",
@@ -85,14 +86,14 @@ const handleSubmit = async () => {
       method: "POST",
       body: { ...form },
     });
-    alert("Message sent successfully!");
+    toast.success("Message Sent 🚀", "Thanks for reaching out! I'll get back to you soon.");
     form.name = "";
     form.email = "";
     form.subject = "";
     form.message = "";
-  } catch (error) {
+  } catch (error: any) {
     console.error("Failed to send message:", error);
-    alert("Failed to send message. Please try again later.");
+    toast.error("Send Failed ❌", error.data?.message || "Please try again later.");
   } finally {
     isSubmitting.value = false;
   }

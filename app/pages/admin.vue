@@ -1176,6 +1176,7 @@ useHead({
 
 const config = useRuntimeConfig();
 const API_BASE = 'http://localhost:3001';
+const toast = useToast();
 
 // ── Auth ──
 const token = useCookie("admin_token");
@@ -1257,10 +1258,10 @@ const saveSettings = async () => {
       },
       body: payload,
     });
-    alert('Settings saved successfully!');
+    toast.success('Settings Saved', 'Global settings have been updated successfully.');
   } catch (err: any) {
     console.error('Failed to save settings:', err);
-    alert('Failed to save settings on server.');
+    toast.error('Save Error', 'Failed to save settings on server.');
   } finally {
     isSavingSettings.value = false;
   }
@@ -1297,11 +1298,11 @@ const handleCvUpload = async () => {
       siteSetting.value.cvUrl = res.cvUrl;
       selectedCvFile.value = null;
       if (cvFileInput.value) cvFileInput.value.value = '';
-      alert('CV uploaded successfully!');
+      toast.success('CV Uploaded', 'Your curriculum vitae has been updated.');
     }
   } catch (err: any) {
     console.error('Failed to upload CV:', err);
-    alert(err.data?.message || 'Failed to upload CV.');
+    toast.error('Upload Failed', err.data?.message || 'Failed to upload CV.');
   } finally {
     isUploadingCv.value = false;
   }
@@ -1586,7 +1587,7 @@ const saveItem = async () => {
       const method = isEdit ? "PATCH" : "POST";
 
       if (!isEdit && !certForm.imageFile) {
-        alert("Certificate image is required for new entries!");
+        toast.error("Image Required", "A certificate image is required for new entries.");
         isSaving.value = false;
         return;
       }
@@ -1601,7 +1602,7 @@ const saveItem = async () => {
       
       if (modal.type === "experience") {
         if (!form2.startDate) {
-          alert("Start Date is required!");
+          toast.error("Field Required", "Start Date is required for experience entries.");
           isSaving.value = false;
           return;
         }
@@ -1622,9 +1623,10 @@ const saveItem = async () => {
       });
     }
     closeModal();
+    toast.success("Changes Saved", `The ${modal.type} has been successfully ${isEdit ? 'updated' : 'added'}.`);
     await fetchAll();
   } catch (err: any) {
-    alert(err.data?.message || "Save failed. Check console.");
+    toast.error("Save Failed", err.data?.message || "An error occurred while saving.");
     console.error(err);
   } finally {
     isSaving.value = false;
@@ -1678,10 +1680,10 @@ const onReorder = async (type: string) => {
       },
       body: payload,
     });
-    alert("New changes saved successfully!");
+    toast.success("Order Updated", "The display order has been updated successfully.");
   } catch (err: any) {
     console.error("Reorder failed:", err);
-    alert("Failed to save changes on server.");
+    toast.error("Process Failed", "Failed to save the new order on the server.");
     await fetchAll(); // revert locally if failed
   } finally {
     savingOrderFor.value = null;
@@ -1716,7 +1718,7 @@ const clearPdfFile = () => {
 
 const processImageFile = (file: File) => {
   if (!file.type.startsWith('image/')) {
-    alert('Please select a valid image file (JPG, PNG)');
+    toast.error('Invalid File', 'Please select a valid image file (JPG, PNG).');
     return;
   }
   certForm.imageFile = file;
@@ -1729,7 +1731,7 @@ const processImageFile = (file: File) => {
 
 const processPdfFile = async (file: File) => {
   if (file.type !== 'application/pdf') {
-    alert('Please select a valid PDF file');
+    toast.error('Invalid File', 'Please select a valid PDF file.');
     return;
   }
   certForm.pdfFile = file;

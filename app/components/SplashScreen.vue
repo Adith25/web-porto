@@ -1,7 +1,7 @@
 <template>
   <Transition leave-active-class="splash-leave" leave-to-class="splash-leave-to">
     <div v-if="isLoading" class="splash-overlay" aria-live="polite" aria-label="Loading">
-      <div class="flex flex-col items-center gap-1.5">
+      <div class="flex flex-col items-center gap-32">
         <div ref="lottieContainer" class="lottie-wrap" />
         <!-- Dynamic Loading Message -->
         <p class="loading-message text-gray-400 tracking-widest">
@@ -90,8 +90,8 @@ onUnmounted(() => {
 .splash-leave-to { opacity: 0; }
 
 .lottie-wrap {
-  width: 400px;
-  height: 400px;
+  width: 300px;
+  height: 300px;
   filter: invert(56%) sepia(30%) saturate(1200%) hue-rotate(210deg) brightness(105%);
 }
 

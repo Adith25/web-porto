@@ -1,13 +1,13 @@
 <template>
   <Transition leave-active-class="splash-leave" leave-to-class="splash-leave-to">
     <div v-if="isLoading" class="splash-overlay" aria-live="polite" aria-label="Loading">
-      <div class="flex flex-col items-center gap-32">
-        <div ref="lottieContainer" class="lottie-wrap" />
-        <!-- Dynamic Loading Message -->
-        <p class="loading-message text-gray-400 tracking-widest">
-          {{ currentMessage }}
-        </p>
-      </div>
+      <!-- Lottie exactly in the center -->
+      <div ref="lottieContainer" class="lottie-wrap" />
+
+      <!-- Loading Message pinned to the bottom -->
+      <p class="loading-message text-gray-400 tracking-widest">
+        {{ currentMessage }}
+      </p>
     </div>
   </Transition>
 </template>
@@ -96,8 +96,11 @@ onUnmounted(() => {
 }
 
 .loading-message {
+  position: absolute;
+  bottom: 2.5rem;
   font-size: 0.75rem;
   font-family: 'Inter', sans-serif;
   font-weight: 400;
+  text-align: center;
 }
 </style>

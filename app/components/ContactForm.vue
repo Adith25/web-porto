@@ -2,7 +2,7 @@
   <form class="space-y-3" @submit.prevent="handleSubmit">
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
       <div class="space-y-1.5">
-        <label for="name" class="block text-xs uppercase tracking-widest font-semibold text-gray-400">Name</label>
+        <label for="name" class="block text-xs tracking-widest font-semibold text-gray-400">Name</label>
         <input
           id="name"
           v-model="form.name"
@@ -14,7 +14,7 @@
       </div>
 
       <div class="space-y-1.5">
-        <label for="email" class="block text-xs uppercase tracking-widest font-semibold text-gray-400">Email</label>
+        <label for="email" class="block text-xs tracking-widest font-semibold text-gray-400">Email</label>
         <input
           id="email"
           v-model="form.email"
@@ -27,7 +27,7 @@
     </div>
 
     <div class="space-y-1.5">
-      <label for="subject" class="block text-xs uppercase tracking-widest font-semibold text-gray-400">Subject</label>
+      <label for="subject" class="block text-xs tracking-widest font-semibold text-gray-400">Subject</label>
       <input
         id="subject"
         v-model="form.subject"
@@ -39,7 +39,7 @@
     </div>
 
     <div class="space-y-1.5">
-      <label for="message" class="block text-xs uppercase tracking-widest font-semibold text-gray-400">Message</label>
+      <label for="message" class="block text-xs tracking-widest font-semibold text-gray-400">Message</label>
       <textarea
         id="message"
         v-model="form.message"
@@ -53,9 +53,9 @@
     <button 
       type="submit" 
       :disabled="isSubmitting"
-      class="w-full h-[40px] rounded-[10px] bg-[#E5E7EB] hover:bg-[#D1D5DB] text-[#111827] font-semibold text-[13px] flex items-center justify-center gap-2 transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed"
+      class="group w-full h-[40px] rounded-[10px] bg-[#E5E7EB] hover:bg-[#D1D5DB] text-[#111827] font-semibold text-[13px] flex items-center justify-center gap-2 transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed"
     >
-      <Icon v-if="!isSubmitting" name="mdi:send" class="w-4 h-4" />
+      <Icon v-if="!isSubmitting" name="mdi:send" class="w-4 h-4 -translate-x-1 transition-all duration-500 ease-out group-hover:translate-x-1" />
       <Icon v-else name="mdi:loading" class="w-4 h-4 animate-spin" />
       <span>{{ isSubmitting ? 'Sending...' : 'Send Message' }}</span>
     </button>
@@ -99,3 +99,17 @@ const handleSubmit = async () => {
   }
 };
 </script>
+
+<style scoped>
+/* Fix autofill background turning white */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus {
+  -webkit-text-fill-color: white !important;
+  -webkit-box-shadow: 0 0 0px 1000px #0B0F19 inset !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+</style>

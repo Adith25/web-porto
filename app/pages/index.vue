@@ -138,7 +138,10 @@
 
                 <template v-if="aboutCards.length > 0">
                   <div v-for="card in aboutCards" :key="card.id" class="relative z-10">
-                    <div class="text-base space-y-3 leading-relaxed whitespace-pre-line text-gray-300" v-html="card.content"></div>
+                    <div 
+                      class="about-text text-[15px] sm:text-[17px] leading-[1.7] text-slate-300/90 font-light tracking-wide space-y-6" 
+                      v-html="card.content"
+                    ></div>
                   </div>
                 </template>
                 <template v-else>
@@ -802,5 +805,21 @@ const contactInfo = [
 /* Floating animation for profile card */
 .animate-float-slow {
   animation: floatSlow 8s ease-in-out infinite;
+}/* ── About Content Styling ── */
+.about-text {
+  text-rendering: optimizeLegibility;
+}
+.about-text :deep(p) {
+  margin-bottom: 1.5rem;
+  color: theme('colors.slate.300 / 0.85');
+}
+.about-text :deep(p:last-child) {
+  margin-bottom: 0;
+}
+.about-text :deep(strong) {
+  @apply text-white font-semibold;
+  background: linear-gradient(120deg, theme('colors.accent.DEFAULT / 15%') 0%, theme('colors.accent.DEFAULT / 5%') 100%);
+  padding: 0 4px;
+  border-radius: 4px;
 }
 </style>

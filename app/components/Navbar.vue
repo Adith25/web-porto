@@ -50,7 +50,7 @@
             <span
               class="absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5 bg-accent rounded-full transition-all duration-300"
               :class="
-                activeSection === link.id ? 'w-4/5' : 'w-0 group-hover:w-4/5'
+                activeSection === link.id ? 'w-4/5' : 'w-0'
               "
             />
           </a>

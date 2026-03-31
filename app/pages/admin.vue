@@ -2079,8 +2079,9 @@ const handleImageDrop = (e: DragEvent) => {
 }
 .nav-item--active {
   color: #a78bfa;
-  background: rgba(139, 92, 246, 0.12);
-  border-color: rgba(139, 92, 246, 0.2);
+  background: rgba(139, 92, 246, 0.15);
+  border-color: rgba(139, 92, 246, 0.3);
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.1);
 }
 
 .sidebar-footer {
@@ -2109,23 +2110,23 @@ const handleImageDrop = (e: DragEvent) => {
   border-color: rgba(139, 92, 246, 0.3);
 }
 .sidebar-btn--view {
-  color: rgba(147, 197, 253, 0.6); /* blue-300 soft */
-  border-color: rgba(147, 197, 253, 0.1);
+  background: #3b82f6;
+  color: #fff;
+  border-color: #3b82f6;
 }
 .sidebar-btn--view:hover {
-  color: #93c5fd;
-  border-color: rgba(59, 130, 246, 0.4);
-  background: rgba(59, 130, 246, 0.05);
+  filter: brightness(1.1);
+  transform: translateY(-1px);
 }
 
 .sidebar-btn--logout {
-  color: rgba(252, 165, 165, 0.6); /* red-300 soft */
-  border-color: rgba(252, 165, 165, 0.1);
+  background: #ef4444;
+  color: #fff;
+  border-color: #ef4444;
 }
 .sidebar-btn--logout:hover {
-  color: #fca5a5;
-  border-color: rgba(239, 68, 68, 0.4);
-  background: rgba(239, 68, 68, 0.05);
+  filter: brightness(1.1);
+  transform: translateY(-1px);
 }
 
 /* ── Main content ── */
@@ -2204,8 +2205,10 @@ const handleImageDrop = (e: DragEvent) => {
   border-color: rgba(255, 255, 255, 0.09);
 }
 .stat-card:hover {
-  border-color: rgba(139, 92, 246, 0.3);
-  transform: translateY(-2px);
+  border-color: rgba(139, 92, 246, 0.4);
+  transform: translateY(-3px);
+  background: rgba(15, 12, 45, 0.98);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
 }
 
 .stat-icon-wrap {
@@ -2265,11 +2268,10 @@ const handleImageDrop = (e: DragEvent) => {
   padding: 0.65rem 1.25rem;
   background: rgba(0, 0, 0, 0.03);
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  font-size: 0.65rem;
-  font-weight: 600;
+  font-size: 0.68rem;
+  font-weight: 700;
   color: rgba(15, 23, 42, 0.6);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.05em;
 }
 .dark .list-head {
   background: rgba(255, 255, 255, 0.03);
@@ -2582,30 +2584,50 @@ const handleImageDrop = (e: DragEvent) => {
   gap: 0.375rem;
 }
 .field-label {
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   font-weight: 600;
   color: rgba(191, 191, 220, 0.95);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.02em;
 }
 .glass-input {
   width: 100%;
-  padding: 0.6rem 0.9rem;
+  padding: 0.65rem 1rem;
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 0.65rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0.75rem;
   color: #fff;
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   outline: none;
-  transition: all 0.2s;
+  transition: all 0.25s ease;
+  color-scheme: dark;
 }
 .glass-input::placeholder {
   color: rgba(200, 200, 230, 0.25);
 }
 .glass-input:focus {
-  border-color: rgba(139, 92, 246, 0.6);
-  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.12);
+  border-color: rgba(139, 92, 246, 0.7);
+  box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15);
   background: rgba(255, 255, 255, 0.08);
+}
+
+/* Fix autofill background turning white */
+.glass-input:-webkit-autofill,
+.glass-input:-webkit-autofill:hover,
+.glass-input:-webkit-autofill:focus {
+  -webkit-text-fill-color: white !important;
+  -webkit-box-shadow: 0 0 0px 1000px #0e0e1a inset !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Fix Calendar/Date picker visibility */
+.glass-input::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+.glass-input::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
 }
 
 .logo-text {

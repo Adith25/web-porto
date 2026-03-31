@@ -1,7 +1,13 @@
 <template>
   <Transition leave-active-class="splash-leave" leave-to-class="splash-leave-to">
     <div v-if="isLoading" class="splash-overlay" aria-live="polite" aria-label="Loading">
-      <div ref="lottieContainer" class="lottie-wrap" />
+      <div class="flex flex-col items-center gap-1.5">
+        <div ref="lottieContainer" class="lottie-wrap" />
+        <!-- Dynamic Loading Message -->
+        <p class="loading-message text-gray-400 tracking-widest">
+          {{ currentMessage }}
+        </p>
+      </div>
     </div>
   </Transition>
 </template>
@@ -15,9 +21,37 @@ const { isLoading, finishLoading } = useLoading();
 const { fetchAll, isDataReady }    = usePortfolioData();
 const lottieContainer = ref<HTMLElement | null>(null);
 
-const finish = () => setTimeout(() => finishLoading(), 400);
+const messages = [
+  "Initializing system...",
+  "Powering up modules...",
+  "Fetching portfolio data...",
+  "Synchronizing assets...",
+  "Loading premium experience...",
+  "Almost there...",
+  "Finalizing things..."
+];
+const currentMessage = ref(messages[0]);
+let messageInterval: any = null;
+
+const startMessageCycle = () => {
+  let index = 0;
+  messageInterval = setInterval(() => {
+    if (index < messages.length - 1) {
+      index++;
+      currentMessage.value = messages[index];
+    }
+  }, 1200);
+};
+
+const finish = () => {
+  if (messageInterval) clearInterval(messageInterval);
+  currentMessage.value = "Welcome!";
+  setTimeout(() => finishLoading(), 400);
+};
 
 onMounted(async () => {
+  startMessageCycle();
+  
   if (lottieContainer.value) {
     const lottie = (await import('lottie-web')).default;
     lottie.loadAnimation({
@@ -36,7 +70,9 @@ onMounted(async () => {
 });
 
 watch(isDataReady, (ready) => { if (ready) finish(); });
-onUnmounted(() => {});
+onUnmounted(() => {
+  if (messageInterval) clearInterval(messageInterval);
+});
 </script>
 
 <style scoped>
@@ -53,17 +89,15 @@ onUnmounted(() => {});
 .splash-leave    { transition: opacity 0.5s ease; }
 .splash-leave-to { opacity: 0; }
 
-/* 
-  CSS filter to convert white SVG → indigo-400 (#818cf8)
-  Tahapan: 
-  1. brightness(0) → hitam
-  2. invert(1)      → putih  (reset)  
-  3. sepia+saturate → warna warni
-  4. hue-rotate     → geser ke ungu/indigo
-*/
 .lottie-wrap {
-  width: 220px;
-  height: 220px;
-  filter: invert(56%) sepia(60%) saturate(1200%) hue-rotate(210deg) brightness(105%);
+  width: 400px;
+  height: 400px;
+  filter: invert(56%) sepia(30%) saturate(1200%) hue-rotate(210deg) brightness(105%);
+}
+
+.loading-message {
+  font-size: 0.75rem;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
 }
 </style>

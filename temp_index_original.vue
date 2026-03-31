@@ -444,7 +444,7 @@
 
 <script setup lang="ts">
 useHead({
-  title: "Adith — Computer Engineer & Machine Learning Enthusiast",
+  title: "Adith ΓÇö Computer Engineer & Machine Learning Enthusiast",
 });
 
 const scrollTo = (id: string) => {
@@ -497,15 +497,8 @@ const selectedCert = ref<{
   credentialUrl?: string;
 } | null>(null);
 
-// ─── Shared data — pre-fetched during loading by SplashScreen ───
-const {
-  projects,
-  experiences,
-  aboutCards,
-  certificates,
-  cvUrl,
-  isPdfEnabled: isPdfEnabledGlobal,
-} = usePortfolioData();
+// ΓöÇΓöÇΓöÇ Data ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+const techStack = ref<any[]>([]);
 
 const strengths = [
   {
@@ -539,11 +532,48 @@ const interests = [
   "Open Source",
 ];
 
-const techStack = ref<any[]>([]);
+const projects = ref<any[]>([]);
+const experiences = ref<any[]>([]);
+const aboutCards = ref<any[]>([]);
+const cvUrl = ref("");
+
+const config = useRuntimeConfig();
+const API_BASE = config.public.apiBase;
+
+const fetchExperiences = async () => {
+  try {
+    const data = await $fetch<any[]>(`${API_BASE}/experiences`);
+    experiences.value = data;
+  } catch (error) {
+    console.error('Failed to fetch experiences:', error);
+  }
+};
+
+const fetchAboutCards = async () => {
+  try {
+    const data = await $fetch<any[]>(`${API_BASE}/about-cards`);
+    aboutCards.value = data;
+  } catch (error) {
+    console.error('Failed to fetch about cards:', error);
+  }
+};
+
+const fetchProjects = async () => {
+  try {
+    const data = await $fetch<any[]>(`${API_BASE}/projects`);
+    projects.value = data.map(p => ({
+      ...p,
+      tags: p.techStack ? p.techStack.split(',').map((t: string) => t.trim()).filter(Boolean) : [],
+      github: p.githubUrl,
+      demo: p.demoUrl
+    }));
+  } catch (error) {
+    console.error('Failed to fetch projects:', error);
+  }
+};
 
 const fetchSkills = async () => {
-  const config = useRuntimeConfig();
-  const API_BASE = config.public.apiBase;
+  // Maintaining API support for older clients, but relying on hardcoded reference data for the UI.
   try {
     const data = await $fetch<any[]>(`${API_BASE}/skills`);
     techStack.value = data.map(s => {
@@ -614,11 +644,40 @@ const hardcodedTechStack = [
   }
 ];
 
+const fetchCertificates = async () => {
+  try {
+    const data = await $fetch<any[]>(`${API_BASE}/certificates`);
+    certificates.value = data.map(c => ({
+      ...c,
+      image: c.fileUrl ? `${API_BASE}${c.fileUrl}` : '',
+      pdfUrl: c.pdfUrl ? `${API_BASE}${c.pdfUrl}` : ''
+    }));
+  } catch (error) {
+    console.error('Failed to fetch certificates:', error);
+  }
+};
+
 onMounted(() => {
+  fetchAboutCards();
+  fetchExperiences();
+  fetchProjects();
   fetchSkills();
+  fetchCertificates();
+  
+  // Fetch settings for CV
+  $fetch<any>(`${API_BASE}/settings`).then(settings => {
+    if (settings.cvUrl) {
+      cvUrl.value = `${API_BASE}${settings.cvUrl}`;
+    }
+    if (settings.enablePdfView) {
+      isPdfEnabledGlobal.value = settings.enablePdfView;
+    }
+  }).catch(console.error);
 });
 
 const showAllCertificates = ref(false);
+const certificates = ref<any[]>([]);
+const isPdfEnabledGlobal = ref(false);
 
 const displayedCertificates = computed(() => {
   return showAllCertificates.value ? certificates.value : certificates.value.slice(0, 8);

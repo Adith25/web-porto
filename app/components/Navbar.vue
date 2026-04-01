@@ -3,7 +3,7 @@
     class="fixed z-50 transition-all duration-[1200ms] [transition-timing-function:cubic-bezier(0.6,0.01,0.05,0.95)] shadow-indigo-500/5 mx-auto left-0 right-0"
     :class="[
       scrolled 
-        ? 'mt-4 max-w-4xl rounded-full bg-white/40 dark:bg-dark/40 backdrop-blur-xl shadow-2xl px-2' 
+        ? 'mt-2 max-w-4xl rounded-full bg-white/40 dark:bg-dark/40 backdrop-blur-xl shadow-2xl px-2' 
         : 'max-w-full rounded-none bg-white/50 dark:bg-dark/50 backdrop-blur-md px-0',
     ]"
     :style="{ 
@@ -15,7 +15,7 @@
     }"
   >
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16">
+      <div class="flex items-center justify-between transition-all duration-700" :class="scrolled ? 'h-14' : 'h-16'">
         <!-- Logo -->
         <a
           href="#hero"

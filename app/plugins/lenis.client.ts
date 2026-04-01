@@ -2,10 +2,10 @@ import Lenis from 'lenis';
 
 export default defineNuxtPlugin((nuxtApp) => {
   const lenis = new Lenis({
-    duration: 1.5, // Increased duration for a "heavy" feel
-    easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
-    wheelMultiplier: 1,
-    touchMultiplier: 2,
+    duration: 2.2,
+    lerp: 0.07,
+    wheelMultiplier: 0.5,
+    touchMultiplier: 1.5,
     infinite: false,
   });
 

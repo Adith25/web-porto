@@ -120,11 +120,10 @@
       <!-- Sidebar -->
       <aside class="sidebar" :class="{ 'sidebar--collapsed': isSidebarCollapsed }">
         <div class="sidebar-brand">
-          <button class="sidebar-toggle-mini" @click="toggleSidebar">
+          <button class="sidebar-toggle-btn" @click="toggleSidebar">
             <Icon name="mdi:menu" class="w-5 h-5" />
           </button>
-          <span v-if="!isSidebarCollapsed" class="logo-text text-lg tracking-tighter ml-2">ADMIN</span>
-          <Icon v-else name="mdi:shield-account" class="w-5 h-5 text-accent ml-2" />
+          <span v-if="!isSidebarCollapsed" class="logo-text text-lg tracking-tighter ml-3">ADMIN</span>
         </div>
 
         <nav class="sidebar-nav">
@@ -134,21 +133,24 @@
             class="nav-item"
             :class="{ 'nav-item--active': activeTab === item.tab }"
             @click="activeTab = item.tab"
-            :title="isSidebarCollapsed ? item.label : ''"
+            :data-tooltip="item.label"
           >
-            <Icon :name="item.icon" class="w-4 h-4 shrink-0" />
-            <span v-if="!isSidebarCollapsed" class="nav-label">{{ item.label }}</span>
+            <div class="active-indicator"></div>
+            <Icon :name="item.icon" class="nav-icon" />
+            <span class="nav-label">{{ item.label }}</span>
           </button>
         </nav>
 
+        <div class="sidebar-divider"></div>
+
         <div class="sidebar-footer">
-          <NuxtLink to="/" target="_blank" class="sidebar-action sidebar-btn--view">
-            <Icon name="mdi:open-in-new" class="w-3.5 h-3.5" /> 
-            <span v-if="!isSidebarCollapsed">View Site</span>
+          <NuxtLink to="/" target="_blank" class="sidebar-action sidebar-btn--view" data-tooltip="View Site">
+            <Icon name="mdi:open-in-new" class="nav-icon--small" /> 
+            <span class="nav-label">View Site</span>
           </NuxtLink>
-          <button class="sidebar-action sidebar-btn--logout" @click="doLogout">
-            <Icon name="mdi:logout" class="w-3.5 h-3.5" /> 
-            <span v-if="!isSidebarCollapsed">Logout</span>
+          <button class="sidebar-action sidebar-btn--logout" @click="doLogout" data-tooltip="Logout">
+            <Icon name="mdi:logout" class="nav-icon--small" /> 
+            <span class="nav-label">Logout</span>
           </button>
         </div>
       </aside>
@@ -1245,7 +1247,31 @@ type TabName =
   | "settings";
 const activeTab = ref<TabName>("dashboard");
 const isSidebarCollapsed = ref(false);
-const toggleSidebar = () => { isSidebarCollapsed.value = !isSidebarCollapsed.value; };
+
+const toggleSidebar = () => {
+  isSidebarCollapsed.value = !isSidebarCollapsed.value;
+  if (process.client) {
+    localStorage.setItem('admin_sidebar_collapsed', String(isSidebarCollapsed.value));
+  }
+};
+
+onMounted(() => {
+  if (process.client) {
+    const saved = localStorage.getItem('admin_sidebar_collapsed');
+    if (saved !== null) {
+      isSidebarCollapsed.value = saved === 'true';
+    }
+    
+    // Auto-collapse on mobile screens
+    const handleResize = () => {
+      if (window.innerWidth < 1024 && !isSidebarCollapsed.value) {
+        isSidebarCollapsed.value = true;
+      }
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+  }
+});
 
 const navItems = [
   { tab: "dashboard", icon: "mdi:view-dashboard-outline", label: "Dashboard" },
@@ -2046,152 +2072,228 @@ const handleImageDrop = (e: DragEvent) => {
   width: 240px;
   min-height: 100vh;
   flex-shrink: 0;
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(32px);
-  border-right: 1px solid rgba(0, 0, 0, 0.08);
+  background: #0b0b18; /* Solid dark background for SaaS feel */
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
   display: flex;
   flex-direction: column;
-  padding: 1.5rem 1rem;
+  padding: 1.25rem 0.75rem;
   position: sticky;
   top: 0;
   height: 100vh;
   overflow-y: auto;
-  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 100;
+  scrollbar-width: none;
 }
+.sidebar::-webkit-scrollbar { display: none; }
+
 .sidebar--collapsed {
-  width: 68px;
-  padding: 1.5rem 0.75rem;
-}
-.dark .sidebar {
-  background: rgba(7, 7, 24, 0.98);
-  border-right: 1px solid rgba(255, 255, 255, 0.07);
+  width: 72px;
 }
 
 .sidebar-brand {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
   padding: 0 0.5rem 1.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  margin-bottom: 1.25rem;
-  min-height: 56px;
+  margin-bottom: 1rem;
+  min-height: 48px;
 }
 .sidebar--collapsed .sidebar-brand {
   justify-content: center;
-  padding-left: 0;
-  padding-right: 0;
+  padding: 0 0 1.5rem;
 }
 
-.sidebar-toggle-mini {
-  width: 32px;
-  height: 32px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 0.5rem;
+.sidebar-toggle-btn {
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #a78bfa;
+  border-radius: 0.5rem;
+  color: rgba(255, 255, 255, 0.5);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.25s;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
-.sidebar-toggle-mini:hover {
-  background: rgba(124, 58, 237, 0.15);
-  color: #fff;
-  border-color: rgba(124, 58, 237, 0.4);
+.sidebar-toggle-btn:hover {
+  background: rgba(139, 92, 246, 0.1);
+  color: #a78bfa;
+  border-color: rgba(139, 92, 246, 0.2);
 }
 
 .sidebar-nav {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
-  margin-top: 1.25rem;
+  gap: 0.4rem;
   flex: 1;
 }
 
 .nav-item {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 0.85rem;
-  padding: 0.65rem 0.85rem;
+  height: 44px;
+  padding: 0 1rem;
   border-radius: 0.5rem;
-  font-size: 0.82rem;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.95);
-  transition: all 0.2s;
-  text-align: left;
-  width: 100%;
+  color: rgba(255, 255, 255, 0.6);
+  transition: all 0.25s ease-in-out;
+  cursor: pointer;
   border: 1px solid transparent;
+  overflow: hidden;
+  white-space: nowrap;
 }
+
+.nav-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  transition: all 0.25s;
+}
+
+.nav-label {
+  margin-left: 0.85rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.sidebar--collapsed .nav-label {
+  opacity: 0;
+  transform: translateX(-10px);
+  pointer-events: none;
+}
+
 .sidebar--collapsed .nav-item {
+  padding: 0;
   justify-content: center;
-  padding: 0.65rem;
 }
-.nav-item:hover {
-  color: rgba(200, 200, 240, 0.9);
-  background: rgba(255, 255, 255, 0.04);
+
+.active-indicator {
+  position: absolute;
+  left: 0;
+  top: 25%;
+  bottom: 25%;
+  width: 3px;
+  background: #a78bfa;
+  border-radius: 0 4px 4px 0;
+  opacity: 0;
+  transform: scaleY(0);
+  transition: all 0.2s;
 }
+
 .nav-item--active {
+  background: rgba(139, 92, 246, 0.1);
+  color: #fff;
+  border-color: rgba(139, 92, 246, 0.15);
+  box-shadow: inset 0 0 15px rgba(139, 92, 246, 0.05);
+}
+.nav-item--active .active-indicator {
+  opacity: 1;
+  transform: scaleY(1);
+}
+.nav-item--active .nav-icon {
   color: #a78bfa;
-  background: rgba(139, 92, 246, 0.15);
-  border-color: rgba(139, 92, 246, 0.3);
-  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.1);
+  transform: scale(1.1);
+}
+
+.nav-item:hover:not(.nav-item--active) {
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.95);
+}
+.nav-item:hover .nav-icon {
+  transform: scale(1.1);
+}
+
+/* ── Custom Tooltips ── */
+.sidebar--collapsed .nav-item::after,
+.sidebar--collapsed .sidebar-action::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: 100%;
+  margin-left: 0.75rem;
+  padding: 0.4rem 0.75rem;
+  background: #1a1a2e;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: 0.4rem;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-10px);
+  transition: all 0.2s;
+  pointer-events: none;
+  z-index: 200;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.sidebar--collapsed .nav-item:hover::after,
+.sidebar--collapsed .sidebar-action:hover::after {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+}
+
+.sidebar-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.06);
+  margin: 1rem 0.5rem;
 }
 
 .sidebar-footer {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
-  margin-top: 1.5rem;
-  padding-top: 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  gap: 0.5rem;
 }
 
 .sidebar-action {
+  height: 40px;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 0.75rem;
-  font-weight: 500;
-  padding: 0.4rem 0.75rem;
+  padding: 0 1rem;
   border-radius: 0.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.95);
-  transition: all 0.2s;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: all 0.25s;
+  border: 1px solid transparent;
+  color: rgba(255, 255, 255, 0.7);
 }
-.sidebar-action:hover {
-  color: rgba(220, 220, 250, 0.9);
-  border-color: rgba(139, 92, 246, 0.3);
+
+.sidebar--collapsed .sidebar-action {
+  padding: 0;
+  justify-content: center;
 }
+
+.nav-icon--small {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
 .sidebar-btn--view {
-  background: rgba(59, 130, 246, 0.1);
-  color: #60a5fa;
-  border-color: rgba(59, 130, 246, 0.2);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(59, 130, 246, 0.08);
+  color: #93c5fd;
+  border-color: rgba(59, 130, 246, 0.1);
 }
 .sidebar-btn--view:hover {
-  background: rgba(59, 130, 246, 0.18);
-  border-color: rgba(59, 130, 246, 0.4);
-  color: #93c5fd;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+  background: rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.3);
+  color: #fff;
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
 }
 
 .sidebar-btn--logout {
-  background: rgba(239, 68, 68, 0.1);
-  color: #f87171;
-  border-color: rgba(239, 68, 68, 0.2);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(239, 68, 68, 0.08);
+  color: #fca5a5;
+  border-color: rgba(239, 68, 68, 0.1);
 }
 .sidebar-btn--logout:hover {
-  background: rgba(239, 68, 68, 0.18);
-  border-color: rgba(239, 68, 68, 0.4);
-  color: #fca5a5;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.1);
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #fff;
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
 }
 
 /* ── Main content ── */

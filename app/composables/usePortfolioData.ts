@@ -14,6 +14,7 @@ export const usePortfolioData = () => {
   const certificates  = useState<any[]>('portfolio_certificates',  () => []);
   const cvUrl         = useState<string>('portfolio_cvUrl',        () => '');
   const isPdfEnabled  = useState<boolean>('portfolio_isPdfEnabled', () => false);
+  const visitorCount  = useState<number>('portfolio_visitorCount',  () => 0);
   const isDataReady   = useState<boolean>('portfolio_dataReady',   () => false);
 
   // ── Individual fetch functions ──
@@ -69,6 +70,7 @@ export const usePortfolioData = () => {
       const settings = await $fetch<any>(`${API_BASE}/settings`);
       if (settings.cvUrl)        cvUrl.value        = `${API_BASE}${settings.cvUrl}`;
       if (settings.enablePdfView) isPdfEnabled.value = settings.enablePdfView;
+      if (settings.visitorCount)  visitorCount.value = settings.visitorCount;
     } catch (e) {
       console.error('[usePortfolioData] settings:', e);
     }
@@ -89,6 +91,21 @@ export const usePortfolioData = () => {
     isDataReady.value = true;
   };
 
+  const fetchVisitorStats = async (range: string = '1m') => {
+    try {
+      const token = useCookie('admin_token').value;
+      const data = await $fetch<any[]>(`${API_BASE}/analytics/visitors?range=${range}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      return data;
+    } catch (e) {
+      console.error('[usePortfolioData] fetchVisitorStats:', e);
+      return [];
+    }
+  };
+
   return {
     projects,
     experiences,
@@ -96,7 +113,9 @@ export const usePortfolioData = () => {
     certificates,
     cvUrl,
     isPdfEnabled,
+    visitorCount,
     isDataReady,
     fetchAll,
+    fetchVisitorStats,
   };
 };

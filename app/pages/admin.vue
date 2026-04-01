@@ -181,15 +181,33 @@
             </div>
           </div>
 
-          <div class="dash-welcome w-full">
-            <Icon name="mdi:hand-wave" class="w-6 h-6 text-yellow-400" />
-            <div>
-              <p class="text-white font-semibold">
-                Welcome to your Admin Panel
-              </p>
-              <p class="text-gray-400 text-sm">
-                Manage all your portfolio content from the sidebar menu.
-              </p>
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 w-full mt-6">
+            <!-- Left side: Welcome and Stats summary -->
+            <div class="lg:col-span-1 space-y-6">
+              <div class="dash-welcome w-full !mt-0 h-full flex flex-col justify-center p-6">
+                <div class="flex items-center gap-2 mb-4">
+                  <Icon name="mdi:hand-wave" class="w-6 h-6 text-yellow-400" />
+                  <h2 class="text-white font-bold text-lg">Hello Admin!</h2>
+                </div>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                  Manage your portfolio content and track visitor growth from this central hub.
+                </p>
+                <div class="mt-8 pt-6 border-t border-white/5">
+                  <p class="text-[10px] uppercase tracking-wider font-bold text-gray-500 mb-1">Status</p>
+                  <p class="text-xs text-emerald-400 flex items-center gap-1.5 font-medium">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    System Online
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right side: Chart -->
+            <div class="lg:col-span-2">
+              <div class="mb-4">
+                <VisitorCounter class="!mx-0 !bg-white/5 !border-white/10" />
+              </div>
+              <VisitorChart class="!bg-transparent !p-0 !border-0 shadow-none h-full" />
             </div>
           </div>
         </section>
@@ -1262,7 +1280,8 @@ const siteSetting = ref({
   bannerColor: "#4f46e5",
   textColor: "#ffffff",
   animationSpeed: 25,
-  cvUrl: ""
+  cvUrl: "",
+  visitorCount: 0
 });
 const isSavingSettings = ref(false);
 
@@ -1363,14 +1382,6 @@ const stats = computed(() => [
     tab: "certificates" as TabName,
     bg: "rgba(236,72,153,0.12)",
     color: "#f472b6",
-  },
-  {
-    label: "About Cards",
-    count: aboutCards.value.length,
-    icon: "mdi:card-account-details-outline",
-    tab: "about" as TabName,
-    bg: "rgba(59,130,246,0.12)",
-    color: "#3b82f6",
   },
   {
     label: "Messages",
@@ -2184,19 +2195,19 @@ const handleImageDrop = (e: DragEvent) => {
 /* ── Stats ── */
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 0.75rem;
 }
 
 .stat-card {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.85rem;
   background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(32px);
   border: 1px solid rgba(0, 0, 0, 0.05);
-  border-radius: 1rem;
-  padding: 1.1rem 1.2rem;
+  border-radius: 0.85rem;
+  padding: 0.75rem 1rem;
   cursor: pointer;
   transition: all 0.25s;
 }
@@ -2212,19 +2223,19 @@ const handleImageDrop = (e: DragEvent) => {
 }
 
 .stat-icon-wrap {
-  width: 2.75rem;
-  height: 2.75rem;
-  border-radius: 0.65rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.5rem;
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .stat-count {
-  font-size: 1.6rem;
+  font-size: 1.25rem;
   font-weight: 800;
   color: #fff;
-  line-height: 1;
+  line-height: 1.1;
 }
 .stat-label {
   font-size: 0.7rem;
@@ -2235,11 +2246,11 @@ const handleImageDrop = (e: DragEvent) => {
 .dash-welcome {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.85rem;
   background: rgba(10, 8, 30, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 1rem;
-  padding: 1.25rem 1.5rem;
+  border-radius: 0.85rem;
+  padding: 1rem 1.25rem;
   backdrop-filter: blur(32px);
 }
 

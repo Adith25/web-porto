@@ -66,7 +66,7 @@
                     <img
                       src="/hero.png"
                       alt="Muhammad Aditya Yufnanda"
-                      class="w-full h-full object-cover brightness-90 group-hover:brightness-125 group-hover:scale-105 transition-all duration-700"
+                      class="w-full h-full object-cover brightness-90 group-hover:brightness-125 group-hover:scale-[1.2] transition-all duration-700"
                     />
                     
                     <!-- Transparent top half with gradient separator -->
@@ -114,7 +114,7 @@
                 <img
                   src="/profile.png"
                   alt="Muhammad Aditya Yufnanda"
-                  class="absolute inset-0 w-full h-full object-cover brightness-90 contrast-[1.05] group-hover:scale-110 transition-transform duration-700 ease-out z-0"
+                  class="absolute inset-0 w-full h-full object-cover brightness-90 contrast-[1.05] group-hover:scale-[1.2] transition-transform duration-700 ease-out z-0"
                 />
                 
                 <!-- Overlay effects matching home page -->
@@ -666,7 +666,7 @@ const contactInfo = [
   transition: transform 0.5s ease;
 }
 .profile-card:hover .photo-img {
-  transform: scale(1.03);
+  transform: scale(1.08);
 }
 .photo-overlay {
   position: absolute;

@@ -118,10 +118,13 @@
     <!-- ── LOGGED IN: Dashboard ── -->
     <div v-else class="dashboard-layout">
       <!-- Sidebar -->
-      <aside class="sidebar">
+      <aside class="sidebar" :class="{ 'sidebar--collapsed': isSidebarCollapsed }">
         <div class="sidebar-brand">
-          <span class="logo-text text-base">Adith</span>
-          <span class="text-gray-500 text-xs font-mono ml-1">admin</span>
+          <button class="sidebar-toggle-mini" @click="toggleSidebar">
+            <Icon name="mdi:menu" class="w-5 h-5" />
+          </button>
+          <span v-if="!isSidebarCollapsed" class="logo-text text-lg tracking-tighter ml-2">ADMIN</span>
+          <Icon v-else name="mdi:shield-account" class="w-5 h-5 text-accent ml-2" />
         </div>
 
         <nav class="sidebar-nav">
@@ -131,18 +134,21 @@
             class="nav-item"
             :class="{ 'nav-item--active': activeTab === item.tab }"
             @click="activeTab = item.tab"
+            :title="isSidebarCollapsed ? item.label : ''"
           >
             <Icon :name="item.icon" class="w-4 h-4 shrink-0" />
-            <span>{{ item.label }}</span>
+            <span v-if="!isSidebarCollapsed" class="nav-label">{{ item.label }}</span>
           </button>
         </nav>
 
         <div class="sidebar-footer">
           <NuxtLink to="/" target="_blank" class="sidebar-action sidebar-btn--view">
-            <Icon name="mdi:open-in-new" class="w-3.5 h-3.5" /> View Site
+            <Icon name="mdi:open-in-new" class="w-3.5 h-3.5" /> 
+            <span v-if="!isSidebarCollapsed">View Site</span>
           </NuxtLink>
           <button class="sidebar-action sidebar-btn--logout" @click="doLogout">
-            <Icon name="mdi:logout" class="w-3.5 h-3.5" /> Logout
+            <Icon name="mdi:logout" class="w-3.5 h-3.5" /> 
+            <span v-if="!isSidebarCollapsed">Logout</span>
           </button>
         </div>
       </aside>
@@ -1238,6 +1244,8 @@ type TabName =
   | "messages"
   | "settings";
 const activeTab = ref<TabName>("dashboard");
+const isSidebarCollapsed = ref(false);
+const toggleSidebar = () => { isSidebarCollapsed.value = !isSidebarCollapsed.value; };
 
 const navItems = [
   { tab: "dashboard", icon: "mdi:view-dashboard-outline", label: "Dashboard" },
@@ -2002,7 +2010,7 @@ const handleImageDrop = (e: DragEvent) => {
   color: #ffffff;
   font-weight: 700;
   font-size: 0.95rem;
-  border-radius: 0.625rem;
+  border-radius: 0.5rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   align-items: center;
@@ -2035,12 +2043,12 @@ const handleImageDrop = (e: DragEvent) => {
 
 /* ── Sidebar ── */
 .sidebar {
-  width: 220px;
+  width: 240px;
   min-height: 100vh;
   flex-shrink: 0;
   background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(32px);
-  border-right: 1px solid rgba(0, 0, 0, 0.05);
+  border-right: 1px solid rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;
   padding: 1.5rem 1rem;
@@ -2048,6 +2056,12 @@ const handleImageDrop = (e: DragEvent) => {
   top: 0;
   height: 100vh;
   overflow-y: auto;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 100;
+}
+.sidebar--collapsed {
+  width: 68px;
+  padding: 1.5rem 0.75rem;
 }
 .dark .sidebar {
   background: rgba(7, 7, 24, 0.98);
@@ -2056,10 +2070,36 @@ const handleImageDrop = (e: DragEvent) => {
 
 .sidebar-brand {
   display: flex;
-  align-items: baseline;
-  gap: 0.25rem;
+  align-items: center;
+  justify-content: flex-start;
   padding: 0 0.5rem 1.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 1.25rem;
+  min-height: 56px;
+}
+.sidebar--collapsed .sidebar-brand {
+  justify-content: center;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.sidebar-toggle-mini {
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #a78bfa;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.sidebar-toggle-mini:hover {
+  background: rgba(124, 58, 237, 0.15);
+  color: #fff;
+  border-color: rgba(124, 58, 237, 0.4);
 }
 
 .sidebar-nav {
@@ -2073,16 +2113,20 @@ const handleImageDrop = (e: DragEvent) => {
 .nav-item {
   display: flex;
   align-items: center;
-  gap: 0.65rem;
-  padding: 0.6rem 0.75rem;
-  border-radius: 0.6rem;
+  gap: 0.85rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: 0.5rem;
   font-size: 0.82rem;
   font-weight: 500;
-  color: rgba(191, 191, 220, 0.9);
+  color: rgba(255, 255, 255, 0.95);
   transition: all 0.2s;
   text-align: left;
   width: 100%;
   border: 1px solid transparent;
+}
+.sidebar--collapsed .nav-item {
+  justify-content: center;
+  padding: 0.65rem;
 }
 .nav-item:hover {
   color: rgba(200, 200, 240, 0.9);
@@ -2113,7 +2157,7 @@ const handleImageDrop = (e: DragEvent) => {
   padding: 0.4rem 0.75rem;
   border-radius: 0.5rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  color: rgba(191, 191, 220, 0.85);
+  color: rgba(255, 255, 255, 0.95);
   transition: all 0.2s;
 }
 .sidebar-action:hover {
@@ -2121,23 +2165,33 @@ const handleImageDrop = (e: DragEvent) => {
   border-color: rgba(139, 92, 246, 0.3);
 }
 .sidebar-btn--view {
-  background: #3b82f6;
-  color: #fff;
-  border-color: #3b82f6;
+  background: rgba(59, 130, 246, 0.1);
+  color: #60a5fa;
+  border-color: rgba(59, 130, 246, 0.2);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 .sidebar-btn--view:hover {
-  filter: brightness(1.1);
+  background: rgba(59, 130, 246, 0.18);
+  border-color: rgba(59, 130, 246, 0.4);
+  color: #93c5fd;
   transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
 }
 
 .sidebar-btn--logout {
-  background: #ef4444;
-  color: #fff;
-  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+  color: #f87171;
+  border-color: rgba(239, 68, 68, 0.2);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 .sidebar-btn--logout:hover {
-  filter: brightness(1.1);
+  background: rgba(239, 68, 68, 0.18);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #fca5a5;
   transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.1);
 }
 
 /* ── Main content ── */
@@ -2187,7 +2241,7 @@ const handleImageDrop = (e: DragEvent) => {
 }
 .tab-subtitle {
   font-size: 0.78rem;
-  color: rgba(191, 191, 220, 0.85);
+  color: rgba(255, 255, 255, 0.9);
   margin-top: 0.2rem;
   font-family: monospace;
 }
@@ -2202,29 +2256,29 @@ const handleImageDrop = (e: DragEvent) => {
 .stat-card {
   display: flex;
   align-items: center;
-  gap: 0.85rem;
+  gap: 0.5rem;
   background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(32px);
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  border-radius: 0.85rem;
-  padding: 0.75rem 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 0.5rem;
+  padding: 0.35rem 0.65rem;
   cursor: pointer;
   transition: all 0.25s;
 }
 .dark .stat-card {
   background: rgba(10, 8, 30, 0.95);
-  border-color: rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 .stat-card:hover {
-  border-color: rgba(139, 92, 246, 0.4);
-  transform: translateY(-3px);
+  border-color: rgba(139, 92, 246, 0.6);
+  transform: translateY(-2px);
   background: rgba(15, 12, 45, 0.98);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 20px -5px rgba(0, 0, 0, 0.3);
 }
 
 .stat-icon-wrap {
-  width: 2.25rem;
-  height: 2.25rem;
+  width: 1.85rem;
+  height: 1.85rem;
   border-radius: 0.5rem;
   flex-shrink: 0;
   display: flex;
@@ -2239,7 +2293,7 @@ const handleImageDrop = (e: DragEvent) => {
 }
 .stat-label {
   font-size: 0.7rem;
-  color: rgba(180, 180, 220, 0.55);
+  color: rgba(255, 255, 255, 0.7);
   margin-top: 0.15rem;
 }
 
@@ -2249,7 +2303,7 @@ const handleImageDrop = (e: DragEvent) => {
   gap: 0.85rem;
   background: rgba(10, 8, 30, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 0.85rem;
+  border-radius: 0.5rem;
   padding: 1rem 1.25rem;
   backdrop-filter: blur(32px);
 }
@@ -2257,7 +2311,7 @@ const handleImageDrop = (e: DragEvent) => {
 .settings-card {
   background: rgba(10, 8, 30, 0.95);
   border: 1px solid rgba(255, 255, 255, 0.09);
-  border-radius: 1.25rem;
+  border-radius: 0.5rem;
   box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
 }
 
@@ -2265,13 +2319,13 @@ const handleImageDrop = (e: DragEvent) => {
 .list-table {
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(32px);
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  border-radius: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.5rem;
   overflow: hidden;
 }
 .dark .list-table {
   background: rgba(10, 8, 30, 0.95);
-  border-color: rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 .list-head {
   display: grid;
@@ -2287,7 +2341,7 @@ const handleImageDrop = (e: DragEvent) => {
 .dark .list-head {
   background: rgba(255, 255, 255, 0.03);
   border-color: rgba(255, 255, 255, 0.07);
-  color: rgba(191, 191, 220, 0.75);
+  color: rgba(255, 255, 255, 0.9);
 }
 .list-head--exp {
   grid-template-columns: 2fr 2fr 1.5fr 0.7fr;
@@ -2319,7 +2373,7 @@ const handleImageDrop = (e: DragEvent) => {
 }
 
 .empty-state {
-  color: rgba(191, 191, 220, 0.7);
+  color: rgba(255, 255, 255, 0.75);
   font-size: 0.85rem;
   text-align: center;
   padding: 2.5rem 1rem;
@@ -2329,7 +2383,7 @@ const handleImageDrop = (e: DragEvent) => {
 .tag {
   font-size: 0.65rem;
   padding: 0.15rem 0.5rem;
-  border-radius: 9999px;
+  border-radius: 0.5rem;
   background: rgba(139, 92, 246, 0.1);
   border: 1px solid rgba(139, 92, 246, 0.2);
   color: #a78bfa;
@@ -2341,7 +2395,7 @@ const handleImageDrop = (e: DragEvent) => {
   justify-content: center;
   width: 1.75rem;
   height: 1.75rem;
-  border-radius: 0.4rem;
+  border-radius: 0.5rem;
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: rgba(200, 200, 240, 0.6);
@@ -2359,7 +2413,7 @@ const handleImageDrop = (e: DragEvent) => {
   align-items: center;
   justify-content: center;
   padding: 0.35rem;
-  border-radius: 0.4rem;
+  border-radius: 0.5rem;
   transition: all 0.2s;
 }
 .icon-btn--edit {
@@ -2386,7 +2440,7 @@ const handleImageDrop = (e: DragEvent) => {
   font-size: 0.8rem;
   font-weight: 600;
   background: linear-gradient(135deg, #7c3aed, #4f46e5);
-  border-radius: 0.65rem;
+  border-radius: 0.5rem;
   color: #fff;
   white-space: nowrap;
   transition: all 0.25s;
@@ -2410,7 +2464,7 @@ const handleImageDrop = (e: DragEvent) => {
   gap: 1rem;
   background: rgba(10, 8, 30, 0.95);
   border: 1px solid rgba(255, 255, 255, 0.09);
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   padding: 0.75rem 1rem;
   transition: all 0.2s;
 }
@@ -2460,7 +2514,7 @@ const handleImageDrop = (e: DragEvent) => {
   background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(64px);
   border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 1.25rem;
+  border-radius: 0.5rem;
   scrollbar-width: auto !important;
   -ms-overflow-style: auto !important;
 }
@@ -2519,7 +2573,7 @@ const handleImageDrop = (e: DragEvent) => {
   padding: 0.55rem 1.1rem;
   font-size: 0.8rem;
   font-weight: 500;
-  border-radius: 0.6rem;
+  border-radius: 0.5rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: rgba(180, 180, 220, 0.6);
   transition: all 0.2s;
@@ -2533,7 +2587,7 @@ const handleImageDrop = (e: DragEvent) => {
 .upload-zone {
   position: relative;
   border: 2px dashed rgba(255, 255, 255, 0.1);
-  border-radius: 0.75rem;
+  border-radius: 0.5rem;
   min-height: 130px;
   display: flex;
   align-items: center;
@@ -2597,7 +2651,7 @@ const handleImageDrop = (e: DragEvent) => {
 .field-label {
   font-size: 0.75rem;
   font-weight: 600;
-  color: rgba(191, 191, 220, 0.95);
+  color: #ffffff;
   letter-spacing: 0.02em;
 }
 .glass-input {
@@ -2605,7 +2659,7 @@ const handleImageDrop = (e: DragEvent) => {
   padding: 0.65rem 1rem;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 0.75rem;
+  border-radius: 0.5rem;
   color: #fff;
   font-size: 0.875rem;
   outline: none;
@@ -2613,7 +2667,7 @@ const handleImageDrop = (e: DragEvent) => {
   color-scheme: dark;
 }
 .glass-input::placeholder {
-  color: rgba(200, 200, 230, 0.25);
+  color: rgba(255, 255, 255, 0.45);
 }
 .glass-input:focus {
   border-color: rgba(139, 92, 246, 0.7);
@@ -2651,7 +2705,7 @@ const handleImageDrop = (e: DragEvent) => {
   display: inline-block;
 }
 .subtitle {
-  color: rgba(200, 200, 230, 0.6);
+  color: rgba(255, 255, 255, 0.85);
   font-size: 0.7rem;
   font-family: monospace;
   letter-spacing: 0.15em;
@@ -2664,14 +2718,14 @@ const handleImageDrop = (e: DragEvent) => {
   color: #fca5a5;
   background: rgba(239, 68, 68, 0.1);
   border: 1px solid rgba(239, 68, 68, 0.2);
-  border-radius: 0.6rem;
+  border-radius: 0.5rem;
   padding: 0.5rem 0.75rem;
 }
 
 .submit-btn {
   padding: 0.6rem 1.25rem;
   background: linear-gradient(135deg, #7c3aed, #4f46e5);
-  border-radius: 0.65rem;
+  border-radius: 0.5rem;
   color: #fff;
   font-size: 0.85rem;
   font-weight: 600;

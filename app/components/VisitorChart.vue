@@ -135,14 +135,19 @@ const loadData = async () => {
           ...chartOptions.value,
           xaxis: {
             ...chartOptions.value.xaxis,
-            categories: data.map((d: any) => {
-              // For 1m, show day. For others, show month.
-              const date = new Date(d.label);
-              if (range.value === '1m') {
-                 return date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' });
-              }
-              return date.toLocaleDateString('en-GB', { month: 'short', year: '2-digit' });
-            })
+              categories: data.map((d: any) => {
+                // For 1m, show day. For others, show month.
+                // Use a safer parsing method for YYYY-MM strings
+                const dateStr = d.label.includes('-') && d.label.split('-').length === 2 
+                  ? `${d.label}-01` 
+                  : d.label;
+                const date = new Date(dateStr);
+                
+                if (range.value === '1m') {
+                   return date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' });
+                }
+                return date.toLocaleDateString('en-GB', { month: 'short', year: '2-digit' });
+              })
           }
         };
       }

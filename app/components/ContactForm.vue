@@ -79,7 +79,7 @@ const isSubmitting = ref(false);
 const handleSubmit = async () => {
   isSubmitting.value = true;
   // Determine endpoint: prioritize local dev port 3001 to resolve env reload issues
-  const endpoint = 'http://localhost:3001/messages';
+  const endpoint = `${API_BASE}/messages`;
   
   try {
     await $fetch(endpoint, {

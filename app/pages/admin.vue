@@ -265,15 +265,21 @@
                     >
                       <Icon name="mdi:drag" class="w-4 h-4" />
                     </button>
-                    <Icon
-                      v-if="p.icon"
-                      :name="p.icon"
-                      class="w-4 h-4 text-accent-light shrink-0"
-                    />
-                    <span
-                      class="font-medium text-gray-900 dark:text-white text-sm truncate"
-                      >{{ p.title }}</span
-                    >
+                    <div class="flex items-center gap-3">
+                      <!-- Project Thumbnail Preview -->
+                      <div class="w-10 h-6 rounded bg-gray-800 overflow-hidden flex items-center justify-center border border-white/5 shrink-0">
+                        <img 
+                          v-if="p.imageUrl" 
+                          :src="`${API_BASE}${p.imageUrl}`" 
+                          class="w-full h-full object-cover"
+                        />
+                        <Icon v-else name="mdi:image-outline" class="w-3 h-3 text-gray-600" />
+                      </div>
+                      <span
+                        class="font-medium text-gray-900 dark:text-white text-sm truncate"
+                        >{{ p.title }}</span
+                      >
+                    </div>
                   </div>
                   <div class="flex flex-wrap gap-1">
                     <span
@@ -902,54 +908,95 @@
           <div class="modal-body">
             <!-- Project Form -->
             <template v-if="modal.type === 'project'">
+              <!-- Image Upload for Project -->
+              <div class="field-group mb-5">
+                <label class="field-label mb-2">Project Thumbnail (Optional)</label>
+                <div
+                  class="upload-zone"
+                  :class="{ 'upload-zone--active': isDragging }"
+                  @dragover.prevent="isDragging = true"
+                  @dragleave.prevent="isDragging = false"
+                  @drop.prevent="handleProjectImageDrop"
+                  @click="projectImageInput?.click()"
+                >
+                  <input
+                    ref="projectImageInput"
+                    type="file"
+                    accept="image/*"
+                    class="hidden"
+                    @change="handleProjectImageFileChange"
+                  />
+                  <!-- Preview Area -->
+                  <div
+                    v-if="projectUploadForm.imagePreview"
+                    class="upload-preview p-4"
+                  >
+                    <img
+                      :src="projectUploadForm.imagePreview"
+                      alt="Thumbnail Preview"
+                      class="upload-preview-img rounded-lg shadow-lg"
+                    />
+                    <button
+                      type="button"
+                      class="upload-remove"
+                      @click.stop="clearProjectImageFile"
+                    >
+                      <Icon name="mdi:close" class="w-4 h-4" />
+                    </button>
+                  </div>
+                  <!-- Empty state -->
+                  <div v-else class="upload-empty">
+                    <Icon name="mdi:image-plus" class="w-10 h-10 text-gray-500 mb-2" />
+                    <p class="text-sm text-gray-400 font-medium">
+                      Click or drag image here
+                    </p>
+                    <p class="text-[11px] text-gray-600 mt-1 uppercase tracking-wider">JPG, PNG, WEBP (Max 5MB)</p>
+                  </div>
+                </div>
+              </div>
+
               <div class="field-group">
-                <label class="field-label">Title *</label
-                ><input
+                <label class="field-label">Project Title *</label>
+                <input
                   v-model="form2.title"
                   class="glass-input"
-                  placeholder="e.g. My Awesome Project"
+                  placeholder="e.g. E-Commerce Dashboard"
                 />
               </div>
               <div class="field-group">
-                <label class="field-label">Description *</label
-                ><textarea
+                <label class="field-label">Description *</label>
+                <textarea
                   v-model="form2.description"
                   class="glass-input resize-none"
                   rows="3"
-                  placeholder="Brief description..."
+                  placeholder="Short description of the project..."
                 />
               </div>
               <div class="field-group">
-                <label class="field-label">Tech Stack (comma-separated)</label
-                ><input
+                <label class="field-label">Tech Stack (comma separated) *</label>
+                <input
                   v-model="form2.techStack"
                   class="glass-input"
-                  placeholder="e.g. Vue, NestJS, PostgreSQL"
+                  placeholder="Vue, TypeScript, Tailwind"
                 />
               </div>
-              <div class="field-group">
-                <label class="field-label">Icon (MDI name)</label
-                ><input
-                  v-model="form2.icon"
-                  class="glass-input"
-                  placeholder="e.g. mdi:code-braces"
-                />
-              </div>
-              <div class="field-group">
-                <label class="field-label">GitHub URL</label
-                ><input
-                  v-model="form2.githubUrl"
-                  class="glass-input"
-                  placeholder="https://github.com/..."
-                />
-              </div>
-              <div class="field-group">
-                <label class="field-label">Demo URL</label
-                ><input
-                  v-model="form2.demoUrl"
-                  class="glass-input"
-                  placeholder="https://..."
-                />
+              <div class="grid grid-cols-2 gap-4">
+                <div class="field-group">
+                  <label class="field-label">GitHub URL</label>
+                  <input
+                    v-model="form2.githubUrl"
+                    class="glass-input"
+                    placeholder="https://..."
+                  />
+                </div>
+                <div class="field-group">
+                  <label class="field-label">Demo URL</label>
+                  <input
+                    v-model="form2.demoUrl"
+                    class="glass-input"
+                    placeholder="https://..."
+                  />
+                </div>
               </div>
             </template>
 
@@ -1597,6 +1644,11 @@ const openModal = (type: string) => {
       pdfFile: null,
       pdfFileName: "",
     });
+  } else if (type === "project") {
+    Object.assign(projectUploadForm, {
+      imageFile: null,
+      imagePreview: "",
+    });
   } else if (type === "about-card") {
     Object.assign(form2, { textColor: "text-gray-600 dark:text-gray-400" });
   }
@@ -1612,6 +1664,11 @@ const editItem = (type: string, item: any) => {
   
   if (type === "experience") {
     parsePeriodStrToForm(item.period, form2);
+  } else if (type === "project") {
+    Object.assign(projectUploadForm, {
+      imageFile: null,
+      imagePreview: item.imageUrl ? `${API_BASE}${item.imageUrl}` : "",
+    });
   } else if (type === "certificate") {
     // Reset file fields but keep preview if image exists
     Object.assign(certForm, {
@@ -1636,29 +1693,32 @@ const saveItem = async () => {
   const id = modal.editId;
 
   try {
-    if (modal.type === "certificate") {
+    if (modal.type === "certificate" || modal.type === "project") {
       const fd = new FormData();
       fd.append("title", form2.title || "");
       if (form2.description) fd.append("description", form2.description);
-      if (form2.credentialUrl) fd.append("credentialUrl", form2.credentialUrl);
       
-      if (certForm.imageFile) {
-        fd.append("imageFile", certForm.imageFile);
-      }
-      if (certForm.pdfFile) {
-        fd.append("pdfFile", certForm.pdfFile);
+      if (modal.type === "certificate") {
+        if (form2.credentialUrl) fd.append("credentialUrl", form2.credentialUrl);
+        if (certForm.imageFile) fd.append("imageFile", certForm.imageFile);
+        if (certForm.pdfFile) fd.append("pdfFile", certForm.pdfFile);
+        
+        if (!isEdit && !certForm.imageFile) {
+          toast.error("Image Required", "A certificate image is required for new entries.");
+          isSaving.value = false;
+          return;
+        }
+      } else if (modal.type === "project") {
+        if (form2.techStack) fd.append("techStack", form2.techStack);
+        if (form2.githubUrl) fd.append("githubUrl", form2.githubUrl);
+        if (form2.demoUrl) fd.append("demoUrl", form2.demoUrl);
+        if (projectUploadForm.imageFile) fd.append("imageFile", projectUploadForm.imageFile);
       }
 
       const url = isEdit
-        ? `${API_BASE}/certificates/${id}`
-        : `${API_BASE}/certificates`;
+        ? `${API_BASE}/${modal.type}s/${id}`
+        : `${API_BASE}/${modal.type}s`;
       const method = isEdit ? "PATCH" : "POST";
-
-      if (!isEdit && !certForm.imageFile) {
-        toast.error("Image Required", "A certificate image is required for new entries.");
-        isSaving.value = false;
-        return;
-      }
 
       await $fetch(url, {
         method,
@@ -1855,6 +1915,43 @@ const handleImageDrop = (e: DragEvent) => {
   isDragging.value = false;
   const file = e.dataTransfer?.files[0];
   if (file) processImageFile(file);
+};
+
+// ── Project image upload ──
+const projectImageInput = ref<HTMLInputElement | null>(null);
+const projectUploadForm = reactive({
+  imageFile: null as File | null,
+  imagePreview: "",
+});
+
+const clearProjectImageFile = () => {
+  projectUploadForm.imageFile = null;
+  projectUploadForm.imagePreview = "";
+  if (projectImageInput.value) projectImageInput.value.value = "";
+};
+
+const processProjectImageFile = (file: File) => {
+  if (!file.type.startsWith('image/')) {
+    toast.error('Invalid File', 'Please select a valid image file (JPG, PNG, WEBP).');
+    return;
+  }
+  projectUploadForm.imageFile = file;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    projectUploadForm.imagePreview = e.target?.result as string;
+  };
+  reader.readAsDataURL(file);
+};
+
+const handleProjectImageFileChange = (e: Event) => {
+  const input = e.target as HTMLInputElement;
+  if (input.files?.[0]) processProjectImageFile(input.files[0]);
+};
+
+const handleProjectImageDrop = (e: DragEvent) => {
+  isDragging.value = false;
+  const file = e.dataTransfer?.files[0];
+  if (file) processProjectImageFile(file);
 };
 </script>
 

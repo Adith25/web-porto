@@ -239,7 +239,7 @@
         :centered="true"
         :hideLine="true"
       >
-        <div class="grid gap-6 sm:grid-cols-2">
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           <ScrollReveal
             v-for="(project, i) in projects"
             :key="project.title"
@@ -250,6 +250,7 @@
               :title="project.title"
               :description="project.description"
               :tags="project.tags"
+              :image="project.image"
               :icon="project.icon"
               :github="project.github"
               :demo="project.demo"

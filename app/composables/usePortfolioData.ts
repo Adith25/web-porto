@@ -41,6 +41,7 @@ export const usePortfolioData = () => {
       const data = await $fetch<any[]>(`${API_BASE}/projects`);
       projects.value = data.map((p: any) => ({
         ...p,
+        image: p.imageUrl ? `${API_BASE}${p.imageUrl}` : '',
         tags: p.techStack
           ? p.techStack.split(',').map((t: string) => t.trim()).filter(Boolean)
           : [],

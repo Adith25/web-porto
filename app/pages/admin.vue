@@ -1224,7 +1224,7 @@ useHead({
 });
 
 const config = useRuntimeConfig();
-const API_BASE = 'http://localhost:3001';
+const API_BASE = config.public.apiBase;
 const toast = useToast();
 
 // ── Auth ──

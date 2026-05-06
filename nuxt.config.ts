@@ -34,7 +34,7 @@ export default defineNuxtConfig({
   app: {
     head: {
       htmlAttrs: { lang: 'en' },
-      title: 'Adith — Software Developer & Machine Learning Engineer',
+      title: "Adith's Portfolio Website | Let's Get to Know Me Better",
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -52,7 +52,7 @@ export default defineNuxtConfig({
         },
         { property: 'og:type', content: 'website' },
       ],
-      link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+      link: [{ rel: 'icon', type: 'image/png', href: '/favicon-photo.png' }],
     },
     pageTransition: { name: 'page', mode: 'out-in' },
   },

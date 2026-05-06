@@ -15,7 +15,14 @@
 
 <script setup lang="ts">
 const { isLoading } = useLoading();
+const colorMode = useColorMode();
+
+// Force dark mode always — light mode is disabled
+onMounted(() => {
+  colorMode.preference = 'dark';
+});
 </script>
+
 
 <style>
   /* Critical CSS to prevent FOUC and layout shifts on refresh */

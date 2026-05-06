@@ -54,12 +54,11 @@
               "
             />
           </a>
-          <AnimatedThemeToggler class="ml-2" />
+
         </div>
 
         <!-- Mobile: Toggle + Hamburger -->
         <div class="md:hidden flex items-center gap-2">
-          <AnimatedThemeToggler />
           <button
           class="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
           aria-label="Toggle menu"
@@ -121,7 +120,7 @@
 </template>
 
 <script setup lang="ts">
-import AnimatedThemeToggler from '~/components/ui/animated-theme-toggler.vue';
+
 
 const { isBannerVisible } = useAnnouncement();
 const isOpen = ref(false);

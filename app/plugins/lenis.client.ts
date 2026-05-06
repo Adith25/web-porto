@@ -2,12 +2,13 @@ import Lenis from 'lenis';
 
 export default defineNuxtPlugin((nuxtApp) => {
   const lenis = new Lenis({
-    duration: 2.2,
-    lerp: 0.07,
-    wheelMultiplier: 0.5,
-    touchMultiplier: 1.5,
+    duration: 1.1,
+    lerp: 0.4,
+    wheelMultiplier: 0.8,
+    touchMultiplier: 1.9,
     infinite: false,
   });
+
 
   function raf(time: number) {
     lenis.raf(time);

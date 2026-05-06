@@ -38,7 +38,7 @@ onMounted(() => {
     position: fixed !important; 
     inset: 0 !important; 
     z-index: 99999 !important; 
-    background: #0a0a0f !important;
+    background: #000000 !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;

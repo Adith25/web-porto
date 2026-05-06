@@ -83,7 +83,7 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #000;
+  background: #000000; /* sama dengan dark:bg-black di halaman utama */
 }
 
 .splash-leave    { transition: opacity 0.5s ease; }

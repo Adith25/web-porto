@@ -1261,7 +1261,16 @@
 <script setup lang="ts">
 import draggable from "vuedraggable";
 
-definePageMeta({ layout: "admin" });
+definePageMeta({ 
+  layout: "admin",
+  middleware: [
+    function (to, from) {
+      // ── TEMPORARY DISABLE ADMIN ──
+      // Redirect to home page because admin is temporarily disabled
+      return navigateTo('/');
+    }
+  ]
+});
 useHead({
   title: "Admin — Adith",
   meta: [{ name: "robots", content: "noindex, nofollow" }],

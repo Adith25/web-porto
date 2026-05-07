@@ -56,6 +56,7 @@ export default defineNuxtConfig({
         },
         { property: 'og:type', content: 'website' },
       ],
+      // Custom circular photo favicon
       link: [{ rel: 'icon', type: 'image/png', href: '/favicon-photo.png' }],
     },
     pageTransition: { name: 'page', mode: 'out-in' },

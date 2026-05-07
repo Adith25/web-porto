@@ -582,9 +582,9 @@ const hardcodedTechStack = [
     category: "LANGUAGES & FRAMEWORKS",
     items: [
       { name: "JavaScript", icon: "logos:javascript", tooltip: "Core language" },
-      { name: "TypeScript", icon: "logos:typescript-icon", tooltip: "Typed JavaScript" },
+      { name: "TypeScript", icon: "logos:typescript-icon", tooltip: "Robust Typed JavaScript" },
       { name: "React", icon: "logos:react", tooltip: "Frontend Library" },
-      { name: "Nuxt.js", icon: "logos:nuxt-icon", tooltip: "Vue Framework" },
+      { name: "Nuxt.js", icon: "logos:nuxt-icon", tooltip: "Vue.js Meta-Framework" },
       { name: "Flutter", icon: "logos:flutter", tooltip: "Mobile UI framework" },
       { name: "Tailwind CSS", icon: "logos:tailwindcss-icon", tooltip: "Utility-first CSS" },
       { name: "Bootstrap", icon: "logos:bootstrap", tooltip: "UI framework" },

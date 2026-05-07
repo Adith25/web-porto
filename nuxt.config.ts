@@ -45,7 +45,7 @@ export default defineNuxtConfig({
         {
           name: 'description',
           content:
-            'Portfolio of Muhammad Aditya Yufnanda — Software Developer & Machine Learning Engineer specializing in Machine Learning, Mobile Development, and IoT Systems.',
+            'Official Portfolio of Muhammad Aditya Yufnanda — Software Developer & Machine Learning Engineer specializing in AI, Mobile Apps, and IoT Systems.',
         },
         { name: 'author', content: 'Muhammad Aditya Yufnanda' },
         { property: 'og:title', content: 'Adith | Personal Portfolio Website' },

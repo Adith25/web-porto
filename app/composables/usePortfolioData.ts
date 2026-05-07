@@ -17,7 +17,8 @@ export const usePortfolioData = () => {
   const isDataReady   = useState<boolean>('portfolio_dataReady',   () => false);
 
   /**
-   * Load ALL data (call once, from SplashScreen).
+   * Load ALL portfolio data (Experiences, About, Projects, Certificates, Settings).
+   * This is called once during the initial application loading phase.
    */
   const fetchAll = async () => {
     try {
@@ -52,6 +53,10 @@ export const usePortfolioData = () => {
     }
   };
 
+  /**
+   * Fetches dummy visitor statistics for the admin dashboard.
+   * Returns an empty array as the backend is currently offline.
+   */
   const fetchVisitorStats = async (range: string = '1m') => {
     // Return empty array since backend is offline
     return [];

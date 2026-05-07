@@ -375,7 +375,7 @@
   "settings": {
     "id": 1,
     "announcementText": "⚠️ This website is still under maintenance ⚠️",
-    "announcementActive": true,
+    "announcementActive": false,
     "bannerColor": "#4f46e5",
     "textColor": "#ffffff",
     "animationSpeed": 25,

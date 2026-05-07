@@ -132,7 +132,7 @@
           <div class="lg:col-span-2 flex flex-col justify-start">
             <!-- Main Bio & Tags -->
             <ScrollReveal animation="fade-up" :delay="150" class="h-full">
-              <div class="glass-card h-full p-5 sm:p-7 transition-all duration-300 hover:border-white/10 relative overflow-hidden group flex flex-col justify-center">
+              <div class="glass-card !bg-[#020202] h-full p-5 sm:p-7 transition-all duration-300 hover:border-white/10 relative overflow-hidden group flex flex-col justify-center">
                 <!-- Optional background glow -->
                 <div class="absolute -top-32 -right-32 w-64 h-64 bg-accent/10 rounded-full blur-[60px] group-hover:bg-accent/20 transition-colors duration-700 pointer-events-none"></div>
 

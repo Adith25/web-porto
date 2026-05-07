@@ -14,12 +14,10 @@ export const useAnnouncement = () => {
     if (settings.value || isLoading.value) return;
     
     isLoading.value = true;
-    const config = useRuntimeConfig();
-    const API_BASE = config.public.apiBase;
-    
     try {
-      const res = await $fetch<any>(`${API_BASE}/settings`);
-      settings.value = res;
+      // Import statically, it will be bundled
+      const portfolioData = await import('~/data/portfolioData.json');
+      settings.value = portfolioData.default.settings as any;
     } catch (err) {
       console.error('Failed to load site settings for banner:', err);
     } finally {

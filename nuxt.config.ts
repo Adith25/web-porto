@@ -38,7 +38,7 @@ export default defineNuxtConfig({
   app: {
     head: {
       htmlAttrs: { lang: 'en' },
-      title: "Adith's Portfolio Website | Let's Get to Know Me Better",
+      title: "Adith | Personal Portfolio Website",
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -48,7 +48,7 @@ export default defineNuxtConfig({
             'Portfolio of Muhammad Aditya Yufnanda — Software Developer & Machine Learning Engineer specializing in Machine Learning, Mobile Development, and IoT Systems.',
         },
         { name: 'author', content: 'Muhammad Aditya Yufnanda' },
-        { property: 'og:title', content: 'Adith — Software Developer & Machine Learning Engineer' },
+        { property: 'og:title', content: 'Adith | Personal Portfolio Website' },
         {
           property: 'og:description',
           content:

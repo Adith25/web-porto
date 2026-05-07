@@ -448,7 +448,7 @@
 
 <script setup lang="ts">
 useHead({
-  title: "Adith — Computer Engineer & Machine Learning Enthusiast",
+  title: "Adith | Personal Portfolio Website",
 });
 
 const scrollTo = (id: string) => {

@@ -113,6 +113,10 @@ onMounted(async () => {
 definePageMeta({
   layout: false // Custom full-page layout
 });
+
+useHead({
+  title: "Adith | Personal Portfolio Website - CV",
+});
 </script>
 
 <style scoped>

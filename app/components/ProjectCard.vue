@@ -14,7 +14,7 @@
         <Icon name="mdi:code-braces" class="w-12 h-12 text-accent/20" />
       </div>
 
-      <!-- Action Overlay (Demo & GitHub) -->
+      <!-- Action Overlay (Demo & GitHub) — Visible on hover -->
       <div
         class="absolute inset-0 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-all duration-300 z-20 pointer-events-none group-hover:pointer-events-auto bg-black/40 backdrop-blur-[2px]"
       >

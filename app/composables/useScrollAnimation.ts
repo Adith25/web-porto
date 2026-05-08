@@ -9,6 +9,7 @@ export const useScrollAnimation = () => {
           }
         })
       },
+      // Trigger when 10% of the element is visible
       {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px',

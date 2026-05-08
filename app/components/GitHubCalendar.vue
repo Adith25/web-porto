@@ -144,6 +144,9 @@ const contributionColors = [
   '#39D353'  // Level 4
 ]
 
+/**
+ * Returns the appropriate GitHub color based on the contribution count.
+ */
 const getColor = (count: number) => {
   if (count === 0) return contributionColors[0]
   if (count <= 3) return contributionColors[1]

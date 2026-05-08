@@ -18,6 +18,7 @@ export const useToast = () => {
     toasts.value.push(newToast);
 
     if (toast.type !== 'loading' && toast.duration !== 0) {
+      // Automatically remove non-loading toasts after the duration
       setTimeout(() => {
         removeToast(id);
       }, toast.duration || 4000);

@@ -26,6 +26,7 @@ export default defineNuxtConfig({
 
 
   googleFonts: {
+    // Curated font families for a premium look & feel
     families: {
       Inter: [300, 400, 500, 600, 700],
       Manrope: [400, 500, 600, 700, 800],

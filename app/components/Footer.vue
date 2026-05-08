@@ -46,6 +46,7 @@
 </template>
 
 <script setup lang="ts">
+// Application footer component
 import { ref, onMounted, onUnmounted } from 'vue';
 
 const socials = [

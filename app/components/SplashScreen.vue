@@ -13,6 +13,7 @@
 </template>
 
 <script setup lang="ts">
+// Initial splash screen component
 import { ref, onMounted, onUnmounted, watch } from 'vue';
 import { useLoading } from '~/composables/useLoading';
 import { usePortfolioData } from '~/composables/usePortfolioData';

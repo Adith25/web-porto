@@ -28,6 +28,7 @@
 </template>
 
 <script setup lang="ts">
+// Component for displaying certificates
 defineProps<{
   title: string;
   description?: string;

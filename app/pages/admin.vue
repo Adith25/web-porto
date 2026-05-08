@@ -1,3 +1,4 @@
+<!-- Admin dashboard page -->
 <template>
   <div class="admin-page">
     <!-- Animated Gradient Background -->

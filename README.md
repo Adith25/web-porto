@@ -1,3 +1,4 @@
+<!-- Repository Documentation -->
 # Web Portfolio - Adith
 
 An interactive and modern portfolio site belonging to **Adith — Software Developer & Machine Learning Engineer**. Built with bleeding-edge web technologies to showcase projects, experiences, certificates, and expertise in Machine Learning, Mobile Development, and IoT systems.

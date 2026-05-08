@@ -96,6 +96,9 @@ let currentIndex = 0
 let idCounter = 0
 let intervalId: ReturnType<typeof setInterval> | null = null
 
+/**
+ * Cycles through the social items and updates the visible list.
+ */
 const pushNextItem = () => {
   const sourceItem = items[currentIndex]
   visibleItems.value.unshift({ ...sourceItem, uniqueId: idCounter++ } as VisibleItem)

@@ -61,6 +61,9 @@ const socials = [
 const currentTime = ref('00:00:00');
 let timer: ReturnType<typeof setInterval>;
 
+/**
+ * Updates the clock every second using the Asia/Jakarta timezone.
+ */
 const updateClock = () => {
   try {
     const d = new Date();

@@ -14,6 +14,7 @@
 </template>
 
 <script setup lang="ts">
+// Main application component
 // Global loading state managed by the useLoading composable
 const { isLoading } = useLoading();
 const colorMode = useColorMode();

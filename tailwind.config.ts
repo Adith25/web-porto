@@ -1,3 +1,4 @@
+// Tailwind CSS configuration
 import type { Config } from 'tailwindcss'
 // Triggering cache invalidation after fixing CSS syntax
 

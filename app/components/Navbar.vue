@@ -149,7 +149,7 @@ onMounted(() => {
     scrolled.value = window.scrollY > 50;
   };
 
-  // Track active section via IntersectionObserver
+  // Track active section via IntersectionObserver for scroll-spy effect
   const sectionIds = navLinks.map((l) => l.id);
   const observers: IntersectionObserver[] = [];
 

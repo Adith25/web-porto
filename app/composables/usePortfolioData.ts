@@ -1,3 +1,4 @@
+// Composable for managing portfolio data
 import portfolioData from '~/data/portfolioData.json';
 
 /**

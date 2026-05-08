@@ -14,6 +14,7 @@ export const usePortfolioData = () => {
   const cvUrl         = useState<string>('portfolio_cvUrl',        () => '');
   const isPdfEnabled  = useState<boolean>('portfolio_isPdfEnabled', () => false);
   const visitorCount  = useState<number>('portfolio_visitorCount',  () => 0);
+  // Flag to track when all static data is loaded and mapped
   const isDataReady   = useState<boolean>('portfolio_dataReady',   () => false);
 
   /**

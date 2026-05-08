@@ -15,7 +15,7 @@
         <Icon name="mdi:certificate-outline" class="w-12 h-12 text-accent/20" />
       </div>
 
-      <!-- Hover shine overlay -->
+      <!-- Hover shine overlay for a premium glassy look -->
       <div class="cert-shine" />
     </div>
 

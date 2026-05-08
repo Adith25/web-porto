@@ -25,6 +25,7 @@ export const useAnnouncement = () => {
     }
   };
 
+  // Banner is visible only if active and has text content
   const isBannerVisible = computed(() => {
     return !!(settings.value?.announcementActive && settings.value?.announcementText);
   });

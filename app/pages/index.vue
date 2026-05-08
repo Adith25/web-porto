@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- Portfolio Main Sections: Hero, About, Projects, Experience, Certifications, Contact -->
     <!-- ==================== HERO ==================== -->
     <section id="hero" class="relative min-h-[100vh] flex items-center justify-center pt-0 overflow-hidden bg-[#f8fafc] dark:bg-black">
       

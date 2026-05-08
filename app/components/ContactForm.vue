@@ -76,6 +76,9 @@ const form = reactive({
 
 const isSubmitting = ref(false);
 
+/**
+ * Handles the contact form submission by sending data to the NestJS backend.
+ */
 const handleSubmit = async () => {
   isSubmitting.value = true;
   // Determine endpoint: prioritize local dev port 3001 to resolve env reload issues

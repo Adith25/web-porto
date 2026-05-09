@@ -60,6 +60,7 @@
 </template>
 
 <script setup lang="ts">
+// Component for toggling between light and dark themes with animation
 const colorMode = useColorMode();
 const isDark = computed(() => colorMode.value === 'dark');
 

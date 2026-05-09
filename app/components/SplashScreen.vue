@@ -34,6 +34,10 @@ const messages = [
 const currentMessage = ref(messages[0]);
 let messageInterval: any = null;
 
+/**
+ * Cycles through the loading messages to keep the user engaged.
+ * It changes the message every 1.2 seconds.
+ */
 const startMessageCycle = () => {
   let index = 0;
   messageInterval = setInterval(() => {
@@ -44,15 +48,21 @@ const startMessageCycle = () => {
   }, 1200);
 };
 
+/**
+ * Cleans up and hides the splash screen.
+ * Triggers the finishLoading action from the global loading store.
+ */
 const finish = () => {
   if (messageInterval) clearInterval(messageInterval);
   currentMessage.value = "Welcome!";
+  // Slight delay before hiding to show the "Welcome!" message
   setTimeout(() => finishLoading(), 400);
 };
 
 onMounted(async () => {
   startMessageCycle();
   
+  // Load the Lottie animation dynamically to reduce initial bundle size
   if (lottieContainer.value) {
     const lottie = (await import('lottie-web')).default;
     lottie.loadAnimation({
@@ -64,9 +74,16 @@ onMounted(async () => {
     });
   }
 
+  // Fetch all portfolio data (projects, experiences, etc.)
   const dataPromise    = fetchAll();
+  
+  // Set a maximum timeout (6 seconds) to ensure the splash screen doesn't get stuck forever
   const timeoutPromise = new Promise<void>(res => setTimeout(res, 6000));
+  
+  // Race the data fetch against the timeout
   await Promise.race([dataPromise, timeoutPromise]);
+  
+  // Proceed to finish the loading sequence
   finish();
 });
 

@@ -147,6 +147,7 @@ const contributionColors = [
 
 /**
  * Returns the appropriate GitHub color based on the contribution count.
+ * This mimics GitHub's contribution levels (0 to 4).
  */
 const getColor = (count: number) => {
   if (count === 0) return contributionColors[0]
@@ -156,14 +157,17 @@ const getColor = (count: number) => {
   return contributionColors[4]
 }
 
+/**
+ * Groups the flat list of days into weeks (arrays of 7 days).
+ * This makes it easier to render the grid column by column.
+ */
 const weeks = computed(() => {
   if (rawData.value.length === 0) return []
   
   const result: Day[][] = []
   let currentWeek: Day[] = []
   
-  // GitHub shows 52-53 weeks.
-  // We need to ensure we have full weeks (7 days)
+  // Iterate through all fetched days and chunk them into weeks
   rawData.value.forEach((day, index) => {
     currentWeek.push(day)
     if (currentWeek.length === 7) {
@@ -172,6 +176,7 @@ const weeks = computed(() => {
     }
   })
   
+  // Handle any remaining days in the last week
   if (currentWeek.length > 0) {
     result.push(currentWeek)
   }
@@ -183,6 +188,10 @@ const totalContributions = computed(() => {
   return rawData.value.reduce((acc, curr) => acc + curr.count, 0)
 })
 
+/**
+ * Generates month labels (Jan, Feb, etc.) and calculates their position.
+ * It identifies when a new month starts in the sequence of weeks.
+ */
 const monthLabels = computed(() => {
   if (weeks.value.length === 0) return []
   
@@ -197,13 +206,14 @@ const monthLabels = computed(() => {
     const firstDayDate = new Date(firstDay.date)
     const month = firstDayDate.getMonth()
     
+    // If the month of this week is different from the last labeled month...
     if (month !== lastMonth) {
       const lastLabel = labels[labels.length - 1]
-      // Avoid months being too close
+      // Ensure there's enough space (3 weeks) between labels to avoid overlap
       if (!lastLabel || index - lastLabel.offset > 3) {
         labels.push({
           name: monthNames[month] || '',
-          offset: index
+          offset: index // The week index used for positioning
         })
         lastMonth = month
       }
@@ -221,6 +231,10 @@ const tooltip = ref({
   date: ''
 })
 
+/**
+ * Positions and displays the tooltip when hovering over a contribution square.
+ * Calculates coordinates relative to the calendar container.
+ */
 const showTooltip = (event: MouseEvent, day: Day) => {
   const container = (event.currentTarget as HTMLElement).closest('.github-calendar-container')
   if (!container) return
@@ -230,7 +244,9 @@ const showTooltip = (event: MouseEvent, day: Day) => {
   
   tooltip.value = {
     show: true,
+    // Center the tooltip horizontally above the square
     x: cellRect.left - containerRect.left + cellRect.width / 2,
+    // Position it slightly above the square
     y: cellRect.top - containerRect.top - 8,
     count: day.count,
     date: formatDate(day.date)
@@ -249,16 +265,18 @@ const formatDate = (dateStr: string) => {
 
 onMounted(async () => {
   try {
+    // Fetch contribution data from a public API proxy
     const response = await fetch(`https://github-contributions-api.deno.dev/${props.username}.json`)
     const data = await response.json()
     
     // We want the last ~10 months (about 304 days), ensuring we start on a Sunday.
+    // GitHub's grid always starts on a Sunday for the first row.
     const contributions = data.contributions.flat()
     
     let startIndex = contributions.length - 304
     if (startIndex < 0) startIndex = 0
     
-    // Find the first Sunday in that window
+    // Find the nearest previous Sunday to ensure a clean grid start
     while (startIndex < contributions.length) {
       const day = new Date(contributions[startIndex].date)
       if (day.getDay() === 0) break
@@ -267,18 +285,12 @@ onMounted(async () => {
     
     const recentContributions = contributions.slice(startIndex)
     
+    // Map API data to our internal Day interface
     rawData.value = recentContributions.map((day: any) => ({
       date: day.date,
       count: day.contributionCount,
       dayOfWeek: new Date(day.date).getDay()
     }))
-    
-    if (rawData.value.length > 0) {
-      const firstDay = new Date(rawData.value[0].date).getDay()
-      if (firstDay !== 0) {
-        // Optional: Prepend empty days to start on Sunday
-      }
-    }
     
     loading.value = false
   } catch (error) {

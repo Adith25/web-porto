@@ -63,6 +63,7 @@
 </template>
 
 <script setup lang="ts">
+// Form component for handling user contact submissions via the backend API
 const config = useRuntimeConfig();
 const API_BASE = config.public.apiBase;
 const toast = useToast();

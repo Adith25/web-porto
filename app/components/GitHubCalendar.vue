@@ -114,6 +114,7 @@
 </template>
 
 <script setup lang="ts">
+// Component to fetch and display a GitHub contribution calendar for a specific user
 import { ref, computed, onMounted } from 'vue'
 
 interface Day {

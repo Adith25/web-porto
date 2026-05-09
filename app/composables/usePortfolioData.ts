@@ -7,7 +7,9 @@ import portfolioData from '~/data/portfolioData.json';
  * Pages consume this instead of re-fetching individually.
  */
 export const usePortfolioData = () => {
-  // ── Reactive state (shared across all components via useState) ──
+  // ── Reactive state (shared across all components via Nuxt useState) ──
+  // useState ensures that even if this composable is called in different pages, 
+  // they all share the same reactive values without re-fetching.
   const projects      = useState<any[]>('portfolio_projects',      () => []);
   const experiences   = useState<any[]>('portfolio_experiences',   () => []);
   const aboutCards    = useState<any[]>('portfolio_aboutCards',    () => []);
@@ -15,6 +17,7 @@ export const usePortfolioData = () => {
   const cvUrl         = useState<string>('portfolio_cvUrl',        () => '');
   const isPdfEnabled  = useState<boolean>('portfolio_isPdfEnabled', () => false);
   const visitorCount  = useState<number>('portfolio_visitorCount',  () => 0);
+  
   // Flag to track when all static data is loaded and mapped
   const isDataReady   = useState<boolean>('portfolio_dataReady',   () => false);
 
@@ -24,12 +27,15 @@ export const usePortfolioData = () => {
    */
   const fetchAll = async () => {
     try {
+      // Map basic arrays directly from the imported JSON file
       experiences.value = portfolioData.experiences;
       aboutCards.value = portfolioData.aboutCards;
       
+      // Map projects and transform some fields (like techStack string to array)
       projects.value = portfolioData.projects.map((p: any) => ({
         ...p,
         image: p.imageUrl ? p.imageUrl : '',
+        // Split the comma-separated tech stack into an array for easier rendering
         tags: p.techStack
           ? p.techStack.split(',').map((t: string) => t.trim()).filter(Boolean)
           : [],
@@ -37,12 +43,14 @@ export const usePortfolioData = () => {
         demo: p.demoUrl,
       }));
 
+      // Map certificates and normalize URL fields
       certificates.value = portfolioData.certificates.map((c: any) => ({
         ...c,
         image:  c.fileUrl ? c.fileUrl : '',
         pdfUrl: c.pdfUrl  ? c.pdfUrl  : '',
       }));
 
+      // Map global settings
       const settings = portfolioData.settings;
       if (settings.cvUrl) cvUrl.value = settings.cvUrl;
       if (settings.enablePdfView !== undefined) isPdfEnabled.value = settings.enablePdfView;
@@ -51,6 +59,7 @@ export const usePortfolioData = () => {
     } catch (e) {
       console.error('[usePortfolioData] Error loading static data:', e);
     } finally {
+      // Signal to the rest of the app that data is now available
       isDataReady.value = true;
     }
   };

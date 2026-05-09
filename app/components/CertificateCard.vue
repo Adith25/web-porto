@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-// Component for displaying certificates
+// Card component to display certificate information with hover effects and shine overlay
 defineProps<{
   title: string;
   description?: string;

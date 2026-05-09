@@ -51,6 +51,10 @@
       </div>
 
       <template v-else>
+        <!-- 
+          The CV is displayed using an iframe pointing to the PDF URL.
+          This relies on the browser's built-in PDF viewer. 
+        -->
         <iframe 
           v-if="cvFullUrl"
           :src="cvFullUrl" 
@@ -87,24 +91,29 @@ const fileName = computed(() => {
 
 onMounted(async () => {
   try {
+    // Attempt to fetch the CV URL from the backend settings
     const settings = await $fetch<any>(`${API_BASE}/settings`);
     if (settings.cvUrl) {
+      // Construct the full URL for the CV file
       cvFullUrl.value = `${API_BASE}${settings.cvUrl}`;
     } else {
-      // Fallback
+      // Fallback: Use a local public file if no URL is set in the backend
       cvFullUrl.value = "/cv.pdf";
-      // Check if fallback exists
+      
+      // Perform a HEAD request to check if the fallback file actually exists
       try {
         await $fetch("/cv.pdf", { method: 'HEAD' });
       } catch (e) {
-        // If fallback also fails, show error
+        // If neither backend nor local fallback exists, trigger the error UI
         error.value = true;
       }
     }
   } catch (err) {
     console.error('Failed to load CV for preview:', err);
+    // If API fetch fails, show the error state
     error.value = true;
   } finally {
+    // End the loading state regardless of outcome
     isLoading.value = false;
   }
 });

@@ -24,6 +24,7 @@
 </template>
 
 <script setup lang="ts">
+// Banner component for displaying scrolling announcements and notifications
 const { settings, fetchSettings } = useAnnouncement();
 
 onMounted(() => {

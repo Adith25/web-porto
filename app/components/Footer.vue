@@ -46,7 +46,7 @@
 </template>
 
 <script setup lang="ts">
-// Application footer component
+// Footer component containing social links, tech stack info, and a real-time clock
 import { ref, onMounted, onUnmounted } from 'vue';
 
 const socials = [

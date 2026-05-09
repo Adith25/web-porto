@@ -5,6 +5,7 @@
 </template>
 
 <script setup lang="ts">
+// Component to create a typing animation effect for text strings
 import { ref, onMounted, watch } from 'vue';
 
 const props = defineProps<{

@@ -33,6 +33,7 @@
 </template>
 
 <script setup lang="ts">
+// A button component with interactive hover effects and background expansion
 interface Props {
   hoverText?: string;
   hoverIcon?: string;

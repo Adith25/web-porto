@@ -19,6 +19,7 @@
 </template>
 
 <script setup lang="ts">
+// Card component with interactive "magic" spotlight and border glow effects
 interface Props {
   /** Spotlight color, default violet */
   gradientColor?: string;

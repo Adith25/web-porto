@@ -6,13 +6,20 @@
          color: settings.textColor || '#ffffff', 
          '--speed': (settings.animationSpeed || 25) + 's' 
        }">
+    <!-- 
+      The marquee-track contains two identical content blocks.
+      This is a common trick to create a seamless infinite scrolling effect.
+      When the first block finishes, the second one is right behind it.
+    -->
     <div class="marquee-track">
+      <!-- Primary content block -->
       <div class="marquee-content font-medium text-sm tracking-wide">
         <span class="mx-8" v-html="settings.announcementText"></span>
         <span class="mx-8" v-html="settings.announcementText"></span>
         <span class="mx-8" v-html="settings.announcementText"></span>
         <span class="mx-8" v-html="settings.announcementText"></span>
       </div>
+      <!-- Duplicate content block for seamless looping (hidden from screen readers) -->
       <div class="marquee-content font-medium text-sm tracking-wide" aria-hidden="true">
         <span class="mx-8" v-html="settings.announcementText"></span>
         <span class="mx-8" v-html="settings.announcementText"></span>
@@ -25,9 +32,11 @@
 
 <script setup lang="ts">
 // Banner component for displaying scrolling announcements and notifications
+// It fetches its configuration (text, color, active status) from a custom composable
 const { settings, fetchSettings } = useAnnouncement();
 
 onMounted(() => {
+  // Load settings when the component is added to the page
   fetchSettings();
 });
 </script>
@@ -52,6 +61,9 @@ onMounted(() => {
   flex-shrink: 0;
 }
 
+/* The marquee animation shifts the track horizontally. 
+   Starting at -50% (halfway) and moving to 0% creates the illusion of infinite flow 
+   when combined with the duplicated content blocks. */
 @keyframes marquee {
   0% { transform: translateX(-50%); }
   100% { transform: translateX(0); }

@@ -76,6 +76,7 @@
 </template>
 
 <script setup lang="ts">
+// Modal component for viewing certificate details in a fullscreen overlay
 const props = defineProps<{
   cert: {
     title: string;

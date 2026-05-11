@@ -127,6 +127,7 @@ const isOpen = ref(false);
 const scrolled = ref(false);
 const activeSection = ref("hero");
 
+// List of navigation links used in both desktop and mobile menus
 const navLinks = [
   { label: "Home", id: "hero" },
   { label: "About", id: "about" },

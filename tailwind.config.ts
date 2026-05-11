@@ -11,6 +11,7 @@ export default {
   ],
   darkMode: 'class',
   theme: {
+    // Custom theme extensions for the portfolio
     extend: {
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],

@@ -49,6 +49,7 @@
 // Footer component containing social links, tech stack info, and a real-time clock
 import { ref, onMounted, onUnmounted } from 'vue';
 
+// Social media links displayed in the footer center section
 const socials = [
   { label: "GitHub", icon: "mdi:github", url: "https://github.com/Adith25" },
   { label: "LinkedIn", icon: "mdi:linkedin", url: "https://www.linkedin.com/in/adityayufnanda/" },

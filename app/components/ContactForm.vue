@@ -68,6 +68,7 @@ const config = useRuntimeConfig();
 const API_BASE = config.public.apiBase;
 const toast = useToast();
 
+// Reactive form state to track user input
 const form = reactive({
   name: "",
   email: "",

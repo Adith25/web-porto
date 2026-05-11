@@ -52,6 +52,7 @@ interface Item {
   href: string;
 }
 
+// Configuration for social media links displayed in the animated list
 const items: Item[] = [
   {
     name: "Instagram",

@@ -19,6 +19,7 @@ import { useLoading } from '~/composables/useLoading';
 import { usePortfolioData } from '~/composables/usePortfolioData';
 
 const { isLoading, finishLoading } = useLoading();
+// Fetch data from the central portfolio composable on component mount
 const { fetchAll, isDataReady }    = usePortfolioData();
 const lottieContainer = ref<HTMLElement | null>(null);
 

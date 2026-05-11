@@ -35,6 +35,7 @@ defineProps<{
   image?: string;
 }>();
 
+// Emits 'select' event when the card is clicked to open the modal
 defineEmits<{ select: [] }>();
 </script>
 

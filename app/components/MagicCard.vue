@@ -51,6 +51,7 @@ const onMouseLeave = () => {
   mouseY.value = null;
 };
 
+// Computes the dynamic spotlight style based on cursor position
 const spotlightStyle = computed(() => {
   if (mouseX.value === null || mouseY.value === null) {
     return { opacity: '0' };

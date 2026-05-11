@@ -61,6 +61,7 @@
   </div>
 </template>
 
+<!-- Component properties for defining project details -->
 <script setup lang="ts">
 defineProps<{
   title: string;

@@ -33,6 +33,7 @@
 <script setup lang="ts">
 // Banner component for displaying scrolling announcements and notifications
 // It fetches its configuration (text, color, active status) from a custom composable
+// Fetch settings from the central announcement composable on component mount
 const { settings, fetchSettings } = useAnnouncement();
 
 onMounted(() => {

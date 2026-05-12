@@ -6,6 +6,10 @@ export interface SiteSetting {
   animationSpeed: number;
 }
 
+/**
+ * Composable for managing announcement banner settings.
+ * Handles fetching settings from local data and determining banner visibility.
+ */
 export const useAnnouncement = () => {
   const settings = useState<SiteSetting | null>('announcement-settings', () => null);
   const isLoading = useState<boolean>('announcement-loading', () => false);

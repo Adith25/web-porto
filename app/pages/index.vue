@@ -503,6 +503,11 @@ const selectedCert = ref<{
 } | null>(null);
 
 // ─── Shared data — pre-fetched during loading by SplashScreen ───
+/**
+ * Data is managed via the usePortfolioData composable.
+ * This data is typically fetched during the splash screen phase to ensure
+ * a smooth transition and that all components have necessary data immediately.
+ */
 const {
   projects,
   experiences,

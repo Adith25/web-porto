@@ -21,10 +21,16 @@
 <script setup lang="ts">
 // Card component with interactive "magic" spotlight and border glow effects
 interface Props {
-  /** Spotlight color, default violet */
+  /** 
+   * Spotlight color, default violet. 
+   * Supports any valid CSS color string (hex, rgb, rgba, etc.).
+   */
   gradientColor?: string;
+  /**
+   * The radius of the spotlight effect in pixels.
+   */
   gradientSize?: number;
-  /** Whether to show the border glow and static border */
+  /** Whether to show the interactive border glow and the static outer border */
   showBorder?: boolean;
 }
 

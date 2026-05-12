@@ -63,6 +63,11 @@
 
 <!-- Component properties for defining project details -->
 <script setup lang="ts">
+/**
+ * ProjectCard Component
+ * Displays a project item with an image, title, description, and action links.
+ * Features a hover effect with a glassy shine and tech stack tags.
+ */
 defineProps<{
   title: string;
   description?: string;

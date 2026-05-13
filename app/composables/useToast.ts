@@ -8,6 +8,10 @@ export interface Toast {
   duration?: number;
 }
 
+/**
+ * Composable for managing application-wide toast notifications.
+ * Provides methods for showing success, error, info, and loading toasts.
+ */
 export const useToast = () => {
   const toasts = useState<Toast[]>('toasts', () => []);
 

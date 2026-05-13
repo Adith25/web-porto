@@ -137,6 +137,10 @@ const navLinks = [
   { label: "Contact", id: "contact" },
 ];
 
+/**
+ * Smoothly scrolls to the section with the given ID.
+ * @param id The HTML element ID to scroll to.
+ */
 const scrollToSection = (id: string) => {
   const el = document.getElementById(id);
   if (el) {

@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     }
   },
 
+  // List of Nuxt modules to enhance the application with styling, fonts, icons, and animations
   modules: [
     '@nuxtjs/tailwindcss',
     '@nuxtjs/google-fonts',

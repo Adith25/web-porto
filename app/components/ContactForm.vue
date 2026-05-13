@@ -92,6 +92,7 @@ const handleSubmit = async () => {
       body: { ...form },
     });
     toast.success("Message Sent 🚀", "Thanks for reaching out! I'll get back to you soon.");
+    // Reset form fields after successful submission
     form.name = "";
     form.email = "";
     form.subject = "";

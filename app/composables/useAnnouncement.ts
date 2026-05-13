@@ -14,6 +14,10 @@ export const useAnnouncement = () => {
   const settings = useState<SiteSetting | null>('announcement-settings', () => null);
   const isLoading = useState<boolean>('announcement-loading', () => false);
 
+  /**
+   * Fetches site settings from the local portfolio data.
+   * Prevents multiple concurrent fetches and caches the result.
+   */
   const fetchSettings = async () => {
     if (settings.value || isLoading.value) return;
     

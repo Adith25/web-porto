@@ -1,6 +1,7 @@
 // Nuxt configuration file
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  // Defined compatibility date for Nuxt 3 core engine
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
   

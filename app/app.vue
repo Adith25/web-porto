@@ -1,3 +1,4 @@
+<!-- Ensures consistent rendering of core UI components -->
 <template>
   <div :data-loading="isLoading" class="app-root">
     <SplashScreen />

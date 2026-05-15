@@ -36,6 +36,7 @@ export default {
           light: '#a78bfa',  // Violet-400
         },
       },
+      // Custom animations for smooth UI transitions and interactive effects
       animation: {
         'fade-up': 'fadeUp 0.6s ease-out forwards',
         'fade-in': 'fadeIn 0.5s ease-out forwards',

@@ -147,7 +147,7 @@ const contributionColors = [
 
 /**
  * Returns the appropriate GitHub color based on the contribution count.
- * This mimics GitHub's contribution levels (0 to 4).
+ * Maps count ranges to the five standard GitHub contribution levels (0 to 4).
  */
 const getColor = (count: number) => {
   if (count === 0) return contributionColors[0]

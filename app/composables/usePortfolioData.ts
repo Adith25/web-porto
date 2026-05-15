@@ -9,7 +9,7 @@ import portfolioData from '~/data/portfolioData.json';
 export const usePortfolioData = () => {
   // ── Reactive state (shared across all components via Nuxt useState) ──
   // useState ensures that even if this composable is called in different pages, 
-  // they all share the same reactive values without re-fetching.
+  // they all share the same reactive values without re-fetching, providing a lightweight state management solution.
   const projects      = useState<any[]>('portfolio_projects',      () => []);
   const experiences   = useState<any[]>('portfolio_experiences',   () => []);
   const aboutCards    = useState<any[]>('portfolio_aboutCards',    () => []);

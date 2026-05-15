@@ -65,6 +65,7 @@ let timer: ReturnType<typeof setInterval>;
 
 /**
  * Updates the clock every second using the Asia/Jakarta timezone.
+ * This ensures the portfolio displays the creator's local time (UTC+7) accurately.
  */
 const updateClock = () => {
   try {

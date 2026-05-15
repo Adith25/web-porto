@@ -55,6 +55,7 @@ This project follows the standard Nuxt 4 directory structure, primarily located 
 - **Micro-Interactions & Animations:** A *magic card* effect tied to the user's cursor position (spotlight effect), smooth scroll transitions, bouncy visual indicators, and an interactive particle background.
 - **Dark Mode Support:** Supports seamless real-time switching between light and dark themes.
 - **Fully Responsive:** Beautifully tailored UI optimized for smartphones, tablets, and desktop displays using Tailwind CSS utility classes.
+- **Centralized State Management:** Utilizing the `usePortfolioData` composable to manage global application data (projects, experiences, etc.) with Nuxt's `useState`.
 
 ---
 

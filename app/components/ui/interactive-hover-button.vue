@@ -25,7 +25,7 @@
       <Icon v-if="hoverIcon" :name="hoverIcon" class="w-4 h-4" />
     </div>
 
-    <!-- Background Expansion Circle (Only visible on hover) -->
+    <!-- Background Expansion Circle: Animates from a small point to fill the entire button on hover -->
     <div
       class="absolute left-[15%] top-[40%] h-2 w-2 scale-0 opacity-0 rounded-full bg-accent transition-all duration-300 group-hover:left-0 group-hover:top-0 group-hover:h-full group-hover:w-full group-hover:scale-[1.8] group-hover:opacity-100 group-hover:bg-accent -z-10"
     />

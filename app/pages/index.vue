@@ -1,3 +1,8 @@
+<!-- 
+  index.vue
+  The main landing page for the portfolio website.
+  Aggregates major sections: Hero, About, Tech Stack, Projects, Experience, Certifications, and Contact.
+-->
 <template>
   <div>
     <!-- Portfolio Main Sections: Hero, About, Tech Stack, Projects, Experience, Certifications, Contact -->

@@ -23,6 +23,7 @@ const colorMode = useColorMode();
 const isDark = computed(() => colorMode.value === 'dark');
 
 const toggleTheme = () => {
+  // Toggle between 'light' and 'dark' preferences; @nuxtjs/color-mode handles the rest.
   colorMode.preference = isDark.value ? 'light' : 'dark';
 };
 </script>

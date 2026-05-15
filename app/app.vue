@@ -2,6 +2,7 @@
 <template>
   <div :data-loading="isLoading" class="app-root">
     <SplashScreen />
+    <!-- Main content is gated and hidden until the global loading state (isLoading) is false -->
     <div class="main-content-gate">
       <ParticlesBackground />
       <ClientOnly>

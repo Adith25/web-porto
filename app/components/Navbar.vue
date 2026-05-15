@@ -1,6 +1,7 @@
 <template>
   <nav
     class="fixed z-50 transition-all duration-[1200ms] [transition-timing-function:cubic-bezier(0.6,0.01,0.05,0.95)] shadow-indigo-500/5 mx-auto left-0 right-0"
+    <!-- Dynamic classes for sticky/floating navbar transition based on scroll position -->
     :class="[
       scrolled 
         ? 'mt-2 max-w-4xl rounded-full bg-white/40 dark:bg-dark/40 backdrop-blur-xl shadow-2xl px-2' 

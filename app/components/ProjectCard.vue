@@ -1,3 +1,8 @@
+<!-- 
+  ProjectCard.vue
+  Component for displaying individual project items in the portfolio.
+  Includes interactive hover states, tech stack labels, and external links.
+-->
 <template>
   <div
     class="project-card-container flex flex-col h-full group cursor-pointer bg-white dark:bg-[#0a081e]/45 p-0"
